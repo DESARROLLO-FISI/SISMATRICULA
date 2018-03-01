@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+  <head>
+    <title>Consulta General</title>
+  </head>
+  <body>
+    <div class="container" layout:fragment="content">
+      <div class="form-row">
+        <label for="codInput" class="my-3">Codigo Alumno</label>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <input type="text" id="codInput" class="ml-4" placeholder="Ingrese el codigo de Alumno">
+          <button type="button" class="btn btn-primary ml-2">Buscar</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <span class="mr-3 my-3">Nombre del alumno:</span>
+          <div class="d-inline-flex border rounded px-3 py-1">
+            <span class="">no existe - nombre</span>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-3">
+        <div class="">
+          <h4>Datos Registrados</h4>
+        </div>
+        <div class="pt-3">
+          <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Periodo Ultima Matricula</th>
+                    <th>Fecha de Abandono</th>
+                    <th>Periodo Regreso Matricula</th>
+                    <th>Fecha Matricula</th>
+                    <th>R.D</th>
+                    <th>Tipo Tramite</th>
+                </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

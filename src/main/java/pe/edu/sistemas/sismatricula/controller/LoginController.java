@@ -31,10 +31,8 @@ public class LoginController {
 		Usuario user = usuarioService.findUsuarioByCodigo(auth.getName());
 		modelAndView.addObject("userName", "Welcome " + user.getNombres() + " " + user.getApellidos() + " (" + user.getCodigo() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-		modelAndView.setViewName("modulos/home");
+		modelAndView.setViewName("modulos/consulta");
 		System.out.println( "Welcome " + user.getNombres() + " " + user.getApellidos() + " (" + user.getCodigo() + ")");
 		return modelAndView;
 	}
-	
-
 }

@@ -53,17 +53,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.defaultSuccessUrl("/modulos/home")
 				.usernameParameter("codigo")
 				.passwordParameter("password")
-				.and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling()
-				.accessDeniedPage("/access-denied");
+				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout=true").permitAll();
+				
+				// .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				// .logoutSuccessUrl("/login").and().exceptionHandling()
+				// .accessDeniedPage("/access-denied");
 	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web
 	       .ignoring()
-	       .antMatchers("/resources/**");
+	       .antMatchers("/resources/**","/templates/**","/static/**","/css/**","/js/**");
 	}
 
 }

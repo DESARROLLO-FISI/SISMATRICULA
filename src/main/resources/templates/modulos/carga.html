@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+  <head>
+    <title>Carga Matricula</title>
+  </head>
+  <body>
+    <div class="container" layout:fragment="content">
+      <h3 class="mt-3">Carga de Archivo</h3>
+      <div class="form-row">
+        <div class="col-md-3">
+          <label class="w-100 h-100 text-center pt-2" for="">Seleccionar un archivo:</label>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <div class="custom-file">
+              <label class="custom-file-label text-muted" for="file-matricula">matricula.xls</label>
+              <input type="file" class="custom-file-input" id="file-matricula" value="browse">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" name="btn-send" class="btn btn-primary">enviar</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

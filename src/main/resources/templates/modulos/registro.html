@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<head>
+  <title>Reserva y Reactualizacion</title>
+</head>
+
+<body>
+  <!--inicio -->
+  <div class="container" layout:fragment="content">
+    <h3 style="margin-top: 3%">Datos de reactualizacion</h3>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="codInput">Codigo Alumno</label>
+          <input type="text" class="form-control" id="codInput" placeholder="Ingrese el codigo">
+          <button type="button" name="buscarCod" class="btn btn-secondary btn-sm btn-block" style="margin-top: 10px">Buscar</button>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="nameInput">Nombre Alumno</label>
+          <input type="text" class="form-control" id="nameInput" placeholder="Ingrese el nombre">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="fechaUltMatricula">Ultima Matricula</label>
+          <input type="date" class="form-control" id="fechaUltMatricula">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="stateSelect">Estado</label>
+          <select id="stateSelect" class="custom-select">
+            <option value="1" selected>Activo</option>
+            <option value="0">Inactivo</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="periodoDejaInput">Ultimo Periodo Matriculado</label>
+          <input type="text" class="form-control" id="periodoDejaInput" placeholder="Ingrese el perido">
+        </div>
+        <div class="form-group col-md-3">
+          <label>Fecha</label>
+          <input type="date" class="form-control" id="fechaPUltMatricula">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="periodoRegInput">Periodo de Regreso</label>
+          <input type="text" class="form-control" id="periodoRegInput" placeholder="Ingrese el periodo">
+        </div>
+        <div class="form-group col-md-3">
+          <label>Fecha</label>
+          <input type="date" class="form-control" id="fechaRegreso">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="RDInput">R.D</label>
+          <input type="text" class="form-control" id="RDInput" placeholder="Ingrese la RD">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="tramiteSelect">Tipo de tramite</label>
+          <select id="tramiteSelect" class="custom-select">
+            <option value="1" selected>Reactualizacion</option>
+            <option value="0">Reserva</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-6">
+          <button type="submit" class="btn btn-primary">Registrar y Evaluar</button>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </form>
+  </div>
+  <!--fin-->
+</body>
+
+</html>
