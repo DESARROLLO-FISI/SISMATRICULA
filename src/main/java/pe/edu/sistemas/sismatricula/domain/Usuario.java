@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 27/02/2018 02:20:40 PM by Hibernate Tools 4.3.1.Final
+// Generated 02/03/2018 05:00:38 PM by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +15,6 @@ import javax.persistence.Table;
 @Table(name = "usuario", catalog = "modelomatriculafisi")
 public class Usuario implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private Integer idUsuario;
 	private Integer activo;
 	private String codigo;
