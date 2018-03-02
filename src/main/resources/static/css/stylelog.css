@@ -1,0 +1,15 @@
+body{
+	
+	
+	background-image: url("../images/fondomatricula.jpg");
+  no-repeat center center fixed;
+        background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+}
+
+h3{
+	color:white;
+}
+

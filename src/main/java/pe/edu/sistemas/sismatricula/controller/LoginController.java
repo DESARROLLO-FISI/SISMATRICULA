@@ -32,7 +32,7 @@ public class LoginController {
 		modelAndView.addObject("userName", "Welcome " + user.getNombres() + " " + user.getApellidos() + " (" + user.getCodigo() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("modulos/consulta");
-		System.out.println( "Welcome " + user.getNombres() + " " + user.getApellidos() + " (" + user.getCodigo() + ")");
+		System.out.println( "welcome " + user.getNombres() + " " + user.getApellidos() + " (" + user.getCodigo() + ")");
 		return modelAndView;
 	}
 }
