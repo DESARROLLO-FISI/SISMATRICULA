@@ -16,13 +16,13 @@
         <div class="col-md-5">
           <div class="input-group">
             <div class="custom-file">
-              <label class="custom-file-label text-muted" for="file-matricula">matricula.xls</label>
-              <input type="file" class="custom-file-input" id="file-matricula" value="Buscar">
+              <label class="custom-file-label text-muted" for="file-matricula">matricula.xlsx</label>
+              <input type="file" class="custom-file-input" id="file-matricula" value="Buscar" type="file" onchange="convertir(event)" >
             </div>
           </div>
         </div>
         <div class="col-md-2">
-          <button type="submit" name="btn-send" class="btn btn-primary">enviar</button>
+          <button id="botonExcel" type="button" class="btn btn-primary" onclick="enviarDataAlumnos()">Enviar Excel</button>
         </div>
       </div>
     </div>
