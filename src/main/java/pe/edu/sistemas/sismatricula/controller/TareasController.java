@@ -15,4 +15,14 @@ public class TareasController {
 	public String cargaMasivaAlumnos(Model model, @RequestBody String listAlumnos ){
 		return null;
 	}
+	
+	@PostMapping("/consulta")
+	public String consultarHistorialAlumno(Model model ){
+		return null;
+	}
+	
+	@PostMapping("/tramite")
+	public String registrarTramite(Model model ){
+		return null;
+	}
 }

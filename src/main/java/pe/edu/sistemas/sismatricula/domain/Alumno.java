@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 02/03/2018 05:00:38 PM by Hibernate Tools 4.3.1.Final
+// Generated 05/03/2018 12:43:09 PM by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,14 +26,12 @@ public class Alumno implements java.io.Serializable {
 	private String alumnoNombre;
 	private String alumnoEstado;
 	private Integer alumnoIngreso;
-	private String alumnoApellidos;
-	private String estado;
 
 	public Alumno() {
 	}
 
 	public Alumno(Periodo periodo, String alumnoCodigo, String alumnoAppaterno, String alumnoApmaterno,
-			String alumnoNombre, String alumnoEstado, Integer alumnoIngreso, String alumnoApellidos, String estado) {
+			String alumnoNombre, String alumnoEstado, Integer alumnoIngreso) {
 		this.periodo = periodo;
 		this.alumnoCodigo = alumnoCodigo;
 		this.alumnoAppaterno = alumnoAppaterno;
@@ -41,8 +39,6 @@ public class Alumno implements java.io.Serializable {
 		this.alumnoNombre = alumnoNombre;
 		this.alumnoEstado = alumnoEstado;
 		this.alumnoIngreso = alumnoIngreso;
-		this.alumnoApellidos = alumnoApellidos;
-		this.estado = estado;
 	}
 
 	@Id
@@ -58,7 +54,7 @@ public class Alumno implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ULTIMO_PERIODO")
+	@JoinColumn(name = "ALUMNO_ULTIMO_PERIODO")
 	public Periodo getPeriodo() {
 		return this.periodo;
 	}
@@ -119,24 +115,6 @@ public class Alumno implements java.io.Serializable {
 
 	public void setAlumnoIngreso(Integer alumnoIngreso) {
 		this.alumnoIngreso = alumnoIngreso;
-	}
-
-	@Column(name = "alumno_apellidos", length = 45)
-	public String getAlumnoApellidos() {
-		return this.alumnoApellidos;
-	}
-
-	public void setAlumnoApellidos(String alumnoApellidos) {
-		this.alumnoApellidos = alumnoApellidos;
-	}
-
-	@Column(name = "estado", length = 45)
-	public String getEstado() {
-		return this.estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
 	}
 
 }

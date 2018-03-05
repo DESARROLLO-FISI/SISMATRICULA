@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 02/03/2018 05:00:38 PM by Hibernate Tools 4.3.1.Final
+// Generated 05/03/2018 12:43:09 PM by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
