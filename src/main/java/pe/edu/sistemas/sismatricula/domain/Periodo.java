@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 27/02/2018 02:20:40 PM by Hibernate Tools 4.3.1.Final
+// Generated 02/03/2018 05:00:38 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,28 +27,20 @@ public class Periodo implements java.io.Serializable {
 	private Date periodoFechaIni;
 	private Date periodoFechaFin;
 	private Integer periodoValor;
-	private Set<Reserva> reservasForIdPeriodoRetorno = new HashSet<Reserva>(0);
-	private Set<Reactualizacion> reactualizacionsForIdPeriodoDejado = new HashSet<Reactualizacion>(0);
-	private Set<Reactualizacion> reactualizacionsForIdPeriodoRetomado = new HashSet<Reactualizacion>(0);
 	private Set<Alumno> alumnos = new HashSet<Alumno>(0);
-	private Set<Reserva> reservasForIdPeriodoDejado = new HashSet<Reserva>(0);
+	private Set<Alumno> alumnos_1 = new HashSet<Alumno>(0);
 
 	public Periodo() {
 	}
 
 	public Periodo(String periodoNombre, Date periodoFechaIni, Date periodoFechaFin, Integer periodoValor,
-			Set<Reserva> reservasForIdPeriodoRetorno, Set<Reactualizacion> reactualizacionsForIdPeriodoDejado,
-			Set<Reactualizacion> reactualizacionsForIdPeriodoRetomado, Set<Alumno> alumnos,
-			Set<Reserva> reservasForIdPeriodoDejado) {
+			Set<Alumno> alumnos, Set<Alumno> alumnos_1) {
 		this.periodoNombre = periodoNombre;
 		this.periodoFechaIni = periodoFechaIni;
 		this.periodoFechaFin = periodoFechaFin;
 		this.periodoValor = periodoValor;
-		this.reservasForIdPeriodoRetorno = reservasForIdPeriodoRetorno;
-		this.reactualizacionsForIdPeriodoDejado = reactualizacionsForIdPeriodoDejado;
-		this.reactualizacionsForIdPeriodoRetomado = reactualizacionsForIdPeriodoRetomado;
 		this.alumnos = alumnos;
-		this.reservasForIdPeriodoDejado = reservasForIdPeriodoDejado;
+		this.alumnos_1 = alumnos_1;
 	}
 
 	@Id
@@ -101,33 +93,6 @@ public class Periodo implements java.io.Serializable {
 		this.periodoValor = periodoValor;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodoByIdPeriodoRetorno")
-	public Set<Reserva> getReservasForIdPeriodoRetorno() {
-		return this.reservasForIdPeriodoRetorno;
-	}
-
-	public void setReservasForIdPeriodoRetorno(Set<Reserva> reservasForIdPeriodoRetorno) {
-		this.reservasForIdPeriodoRetorno = reservasForIdPeriodoRetorno;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodoByIdPeriodoDejado")
-	public Set<Reactualizacion> getReactualizacionsForIdPeriodoDejado() {
-		return this.reactualizacionsForIdPeriodoDejado;
-	}
-
-	public void setReactualizacionsForIdPeriodoDejado(Set<Reactualizacion> reactualizacionsForIdPeriodoDejado) {
-		this.reactualizacionsForIdPeriodoDejado = reactualizacionsForIdPeriodoDejado;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodoByIdPeriodoRetomado")
-	public Set<Reactualizacion> getReactualizacionsForIdPeriodoRetomado() {
-		return this.reactualizacionsForIdPeriodoRetomado;
-	}
-
-	public void setReactualizacionsForIdPeriodoRetomado(Set<Reactualizacion> reactualizacionsForIdPeriodoRetomado) {
-		this.reactualizacionsForIdPeriodoRetomado = reactualizacionsForIdPeriodoRetomado;
-	}
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodo")
 	public Set<Alumno> getAlumnos() {
 		return this.alumnos;
@@ -137,13 +102,13 @@ public class Periodo implements java.io.Serializable {
 		this.alumnos = alumnos;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodoByIdPeriodoDejado")
-	public Set<Reserva> getReservasForIdPeriodoDejado() {
-		return this.reservasForIdPeriodoDejado;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodo")
+	public Set<Alumno> getAlumnos_1() {
+		return this.alumnos_1;
 	}
 
-	public void setReservasForIdPeriodoDejado(Set<Reserva> reservasForIdPeriodoDejado) {
-		this.reservasForIdPeriodoDejado = reservasForIdPeriodoDejado;
+	public void setAlumnos_1(Set<Alumno> alumnos_1) {
+		this.alumnos_1 = alumnos_1;
 	}
 
 }
