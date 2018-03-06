@@ -12,59 +12,83 @@ public class AlumnoModel {
 	
 	
 	public AlumnoModel(){}
+
 	
-	
-	
-	
-	public AlumnoModel( String alumnoCodigo, String alumnoAppaterno,
-			String alumnoApmaterno, String alumnoNombre, String alumnoEstado, Integer alumnoIngreso) {
+
+	public AlumnoModel(String cod_alumno, String ape_paterno, String ape_materno, String nom_alumno, String estado,
+			Integer ingreso) {
 		super();
-		this.cod_alumno = alumnoCodigo;
-		this.ape_paterno = alumnoAppaterno;
-		this.ape_materno = alumnoApmaterno;
-		this.nom_alumno = alumnoNombre;
-		this.estado = alumnoEstado;
-		this.ingreso = alumnoIngreso;
+		this.cod_alumno = cod_alumno;
+		this.ape_paterno = ape_paterno;
+		this.ape_materno = ape_materno;
+		this.nom_alumno = nom_alumno;
+		this.estado = estado;
+		this.ingreso = ingreso;
 	}
 
 
 
-	public String getAlumnoCodigo() {
+	public String getCod_alumno() {
 		return cod_alumno;
 	}
-	public void setAlumnoCodigo(String alumnoCodigo) {
-		this.cod_alumno = alumnoCodigo;
+
+
+	public void setCod_alumno(String cod_alumno) {
+		this.cod_alumno = cod_alumno;
 	}
-	public String getAlumnoAppaterno() {
+
+
+	public String getApe_paterno() {
 		return ape_paterno;
 	}
-	public void setAlumnoAppaterno(String alumnoAppaterno) {
-		this.ape_paterno = alumnoAppaterno;
+
+
+	public void setApe_paterno(String ape_paterno) {
+		this.ape_paterno = ape_paterno;
 	}
-	public String getAlumnoApmaterno() {
+
+
+	public String getApe_materno() {
 		return ape_materno;
 	}
-	public void setAlumnoApmaterno(String alumnoApmaterno) {
-		this.ape_materno = alumnoApmaterno;
+
+
+	public void setApe_materno(String ape_materno) {
+		this.ape_materno = ape_materno;
 	}
-	public String getAlumnoNombre() {
+
+
+	public String getNom_alumno() {
 		return nom_alumno;
 	}
-	public void setAlumnoNombre(String alumnoNombre) {
-		this.nom_alumno = alumnoNombre;
+
+
+	public void setNom_alumno(String nom_alumno) {
+		this.nom_alumno = nom_alumno;
 	}
-	public String getAlumnoEstado() {
+
+
+	public String getEstado() {
 		return estado;
 	}
-	public void setAlumnoEstado(String alumnoEstado) {
-		this.estado = alumnoEstado;
+
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
-	public Integer getAlumnoIngreso() {
+
+
+	public Integer getIngreso() {
 		return ingreso;
 	}
-	public void setAlumnoIngreso(Integer alumnoIngreso) {
-		this.ingreso = alumnoIngreso;
+
+
+	public void setIngreso(Integer ingreso) {
+		this.ingreso = ingreso;
 	}
+	
+	
+
 	
 	
 }

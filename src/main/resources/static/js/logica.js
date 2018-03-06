@@ -54,15 +54,16 @@ var string_ws;
              type: 'POST', 
              contentType: "application/json; charset=utf-8",
              // el tipo de información que se espera de respuesta
-             dataType: "json",
+             dataType: "html",
              // la información a enviar
              // (también es posible utilizar una cadena de datos)
              data: string_ws,
-             timeout: 1000000,
              // código a ejecutar si la petición es satisfactoria;
              // la respuesta es pasada como argumento a la función
              success: function(data) {            	             	 
-            	 console.log(data);
+            	 console.log("se entrego datos");
+            	 $("#file-matricula").val("");
+            	 $("#cargaExterna").html(data);
              },
              error : function(xhr, status) {
                  alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
