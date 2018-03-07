@@ -1,5 +1,7 @@
 package pe.edu.sistemas.sismatricula.service;
 
-public interface AlumnoService {
+import pe.edu.sistemas.sismatricula.domain.Alumno;
 
+public interface AlumnoService {
+	public Alumno findAlumnoByCodigo(String codigo);
 }

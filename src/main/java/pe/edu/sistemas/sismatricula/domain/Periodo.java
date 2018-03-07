@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 05/03/2018 12:43:09 PM by Hibernate Tools 4.3.1.Final
+// Generated 05/03/2018 04:18:39 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,21 +28,29 @@ public class Periodo implements java.io.Serializable {
 	private Date periodoFechaFin;
 	private Integer periodoValor;
 	private Set<Tramite> tramitesForTramitePeriodoIni = new HashSet<Tramite>(0);
+	private Set<Tramite> tramitesForTramitePeriodoIni_1 = new HashSet<Tramite>(0);
 	private Set<Alumno> alumnos = new HashSet<Alumno>(0);
+	private Set<Alumno> alumnos_1 = new HashSet<Alumno>(0);
 	private Set<Tramite> tramitesForTramitePeriodoFin = new HashSet<Tramite>(0);
+	private Set<Tramite> tramitesForTramitePeriodoFin_1 = new HashSet<Tramite>(0);
 
 	public Periodo() {
 	}
 
 	public Periodo(String periodoNombre, Date periodoFechaIni, Date periodoFechaFin, Integer periodoValor,
-			Set<Tramite> tramitesForTramitePeriodoIni, Set<Alumno> alumnos, Set<Tramite> tramitesForTramitePeriodoFin) {
+			Set<Tramite> tramitesForTramitePeriodoIni, Set<Tramite> tramitesForTramitePeriodoIni_1, Set<Alumno> alumnos,
+			Set<Alumno> alumnos_1, Set<Tramite> tramitesForTramitePeriodoFin,
+			Set<Tramite> tramitesForTramitePeriodoFin_1) {
 		this.periodoNombre = periodoNombre;
 		this.periodoFechaIni = periodoFechaIni;
 		this.periodoFechaFin = periodoFechaFin;
 		this.periodoValor = periodoValor;
 		this.tramitesForTramitePeriodoIni = tramitesForTramitePeriodoIni;
+		this.tramitesForTramitePeriodoIni_1 = tramitesForTramitePeriodoIni_1;
 		this.alumnos = alumnos;
+		this.alumnos_1 = alumnos_1;
 		this.tramitesForTramitePeriodoFin = tramitesForTramitePeriodoFin;
+		this.tramitesForTramitePeriodoFin_1 = tramitesForTramitePeriodoFin_1;
 	}
 
 	@Id
@@ -104,6 +112,15 @@ public class Periodo implements java.io.Serializable {
 		this.tramitesForTramitePeriodoIni = tramitesForTramitePeriodoIni;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodoByTramitePeriodoIni")
+	public Set<Tramite> getTramitesForTramitePeriodoIni_1() {
+		return this.tramitesForTramitePeriodoIni_1;
+	}
+
+	public void setTramitesForTramitePeriodoIni_1(Set<Tramite> tramitesForTramitePeriodoIni_1) {
+		this.tramitesForTramitePeriodoIni_1 = tramitesForTramitePeriodoIni_1;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodo")
 	public Set<Alumno> getAlumnos() {
 		return this.alumnos;
@@ -113,6 +130,15 @@ public class Periodo implements java.io.Serializable {
 		this.alumnos = alumnos;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodo")
+	public Set<Alumno> getAlumnos_1() {
+		return this.alumnos_1;
+	}
+
+	public void setAlumnos_1(Set<Alumno> alumnos_1) {
+		this.alumnos_1 = alumnos_1;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodoByTramitePeriodoFin")
 	public Set<Tramite> getTramitesForTramitePeriodoFin() {
 		return this.tramitesForTramitePeriodoFin;
@@ -120,6 +146,15 @@ public class Periodo implements java.io.Serializable {
 
 	public void setTramitesForTramitePeriodoFin(Set<Tramite> tramitesForTramitePeriodoFin) {
 		this.tramitesForTramitePeriodoFin = tramitesForTramitePeriodoFin;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "periodoByTramitePeriodoFin")
+	public Set<Tramite> getTramitesForTramitePeriodoFin_1() {
+		return this.tramitesForTramitePeriodoFin_1;
+	}
+
+	public void setTramitesForTramitePeriodoFin_1(Set<Tramite> tramitesForTramitePeriodoFin_1) {
+		this.tramitesForTramitePeriodoFin_1 = tramitesForTramitePeriodoFin_1;
 	}
 
 }

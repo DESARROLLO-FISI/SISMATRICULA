@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#example').DataTable( {
+    $('#table').DataTable( {
       
       "language": {
         "emptyTable":     "No se hallaron resultados",
@@ -26,4 +26,8 @@ $(document).ready(function() {
       },
       "bFilter":false
     } );
+    
+    $('#table').css("background","white");
+    
+    
 } );

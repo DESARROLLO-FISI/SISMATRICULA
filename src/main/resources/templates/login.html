@@ -3,11 +3,12 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Spring Security Tutorial</title>
+	<title>SISTEMA DE MATRICULA</title>
 	<link rel="stylesheet" href="../../css/bootstrap.min.css">
   	<script src=https://code.jquery.com/jquery-3.3.1.min.js></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   	<link rel="stylesheet" th:href="@{/css/stylelog.css}" href="../../css/stylelog.css"/>
+  	<script th:src="@{/js/scripts.js}"></script>
 </head>
 
 <body>
@@ -23,18 +24,24 @@
 				id="password" name="password" class="form-control" /> <br /> 
 				
 			<div align="center" th:if="${param.error}">
-				<div class="alert alert-danger d-inline-flex p-2">
+				<div class="alert alert-danger d-inline-flex p-2 ">
 					Usuario o Password invalido, verifiquelos
 				</div>
 				<!--  <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>-->
 			</div>
 			<div align="center" th:if="${param.logout}">
-				<div class="alert alert-warning d-inline-flex p-2">
+				<div class="alert alert-warning d-inline-flex p-2 log-msg">
 					Logout succes
 				</div>
 			</div>
 			<button class="btn btn-lg btn-primary btn-block " name="Submit" value="Login" type="Submit" th:text="Login"></button>
 		</form>
 	</div>
+	
+	<script>
+		
+		
+	
+	</script>
 </body>
 </html>
