@@ -37,7 +37,6 @@ public class AlumnoServiceImpl implements AlumnoService{
 		
 		List<Alumno> alumnosExistentes = new ArrayList<Alumno>();
 		Alumno alumno = null, alumnoBusqueda = null;
-		Boolean existe;
 		
 		for(int i=0; i< alumnosModel.size(); i++){
 			System.out.println("GUARDAR ALUMNOS: ");
@@ -46,14 +45,12 @@ public class AlumnoServiceImpl implements AlumnoService{
 				System.out.println("ACTUALIZAR ");
 				alumnoBusqueda = alumnoRepository.findByAlumnoCodigo(alumnosModel.get(i).getCod_alumno());
 				alumno = actualizarAlumnoConAlumnoModel(alumnoBusqueda, alumnosModel.get(i));
-				
 			}else{
 				System.out.println("NUEVO ");
 				//Si no existe el alumno lo registramos en la BD por primera vez
 				alumno = convertirAlumnoModelEnAlumno(alumnosModel.get(i));
 			}
-			
-			alumnoRepository.save(alumno);
+			alumnosExistentes.add( alumnoRepository.save(alumno)) ;
 		}
 		
 		return alumnosExistentes;	
@@ -85,6 +82,7 @@ public class AlumnoServiceImpl implements AlumnoService{
 		
 		//Actualizamos su ultimo periodo
 		alumno.setPeriodo(asignarUltimoPeriodoMatricula(alumno, 1));
+		System.out.println("ACTUALIZACION TERMINADA");
 		return alumno;
 	}
 

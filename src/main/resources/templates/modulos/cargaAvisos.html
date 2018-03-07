@@ -8,10 +8,27 @@
 	<div th:fragment="cargaExitosa" class="text-center">
 		<br />
 		<p class="lead" style="border-left: 6px solid blue;
-    background-color: LightCyan;">Se registraron alumnos exitosamente</p>
+    		background-color: LightCyan;">Se registraron alumnos exitosamente: </p>
+		<br />
+		
+		<p class="lead" style="border-left: 6px solid blue;
+    		background-color: LightCyan;" th:text=${cantidadAlumnosGuardados}></p>
+	</div>
+	
+	<div th:fragment="cargaErrorHeaders" class="text-center">
+		<br />
+		<p class="lead" style="border-left: 6px solid blue;
+    background-color: LightCyan;">Hubo problemas con el formato del archivo subido</p>
 		<br />
 	</div>
-
+	
+	
+	<div th:fragment="cargaErrorReferencias" class="text-center">
+		<br />
+		<p class="lead" style="border-left: 6px solid blue;
+    background-color: LightCyan;">Hubo problemas con las referencias en el archivo</p>
+		<br />
+	</div>
 
 </body>
 </html>

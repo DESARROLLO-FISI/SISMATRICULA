@@ -117,4 +117,13 @@ public class Alumno implements java.io.Serializable {
 		this.alumnoIngreso = alumnoIngreso;
 	}
 
+	@Override
+	public String toString() {
+		return "Alumno [idAlumno=" + idAlumno + ", alumnoCodigo=" + alumnoCodigo + ", alumnoAppaterno="
+				+ alumnoAppaterno + ", alumnoApmaterno=" + alumnoApmaterno + ", alumnoNombre=" + alumnoNombre
+				+ ", alumnoEstado=" + alumnoEstado + ", alumnoIngreso=" + alumnoIngreso + "]";
+	}
+	
+	
+
 }

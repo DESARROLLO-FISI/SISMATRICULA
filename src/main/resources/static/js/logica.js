@@ -1,23 +1,5 @@
-/**
-class AlumnoModel {
-		
-		constructor(idAlumno,idPeriodo,alumnoCodigo,alumnoAppaterno,
-			alumnoApmaterno,alumnoNombre,alumnoEstado,alumnoIngreso) {
-		this.idAlumno = idAlumno;
-		this.idPeriodo = idPeriodo;
-		this.alumnoCodigo = alumnoCodigo;
-		this.alumnoAppaterno = alumnoAppaterno;
-		this.alumnoApmaterno = alumnoApmaterno;
-		this.alumnoNombre = alumnoNombre;
-		this.alumnoEstado = alumnoEstado;
-		this.alumnoIngreso = alumnoIngreso;
-	}
-		
-}**/
-
 var json_ws;
 var string_ws;
-
 
 	function convertir (event) {
 	 
@@ -26,6 +8,8 @@ var string_ws;
             var workbook = XLSX.read(data,{type:'binary'});
             
             var first_sheet_name = workbook.SheetNames[0];
+            
+            document.getElementById("label-matricula").textContent = (document.getElementById("file-matricula").value).substring(12);
 
             var worksheet = workbook.Sheets[first_sheet_name]; 
             
@@ -47,7 +31,6 @@ var string_ws;
             reader.readAsBinaryString(files[0]);
     }
     
-    
     function enviarDataAlumnos(){
     	$.ajax({
              url: '/carga',
@@ -68,7 +51,6 @@ var string_ws;
              error : function(xhr, status) {
                  alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
              },
-             
            });
     }	
     	

@@ -45,20 +45,21 @@ public class TareasController {
 		
 		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayAlumno.length());
 		
-		
-		
 		if(jsonArrayAlumno.length()!=alumnosModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO NRO "+(alumnosModel.size()+1));
-			return "modulos/cargaAvisos :: cargaExitosa";
+			return "modulos/cargaAvisos :: cargaErrorHeaders";
 		}else{
 			try{
 				resultado = alumnoService.guardarAlumnos(alumnosModel);
 			
 			}catch(Exception e){
 				logger.warn("ERROR EN LOS ID's");
-				return "modulos/cargaAvisos :: cargaExitosa";
+				return "modulos/cargaAvisos :: cargaErrorReferencias";
 			}
+
+			
 		}
+		model.addAttribute("cantidadAlumnosGuardados",resultado.size());
 		return "modulos/cargaAvisos :: cargaExitosa";
 	}
 	
