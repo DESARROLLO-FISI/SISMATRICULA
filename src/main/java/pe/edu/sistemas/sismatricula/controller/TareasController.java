@@ -1,5 +1,6 @@
 package pe.edu.sistemas.sismatricula.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -17,6 +18,7 @@ import pe.edu.sistemas.sismatricula.domain.Alumno;
 import pe.edu.sistemas.sismatricula.domain.Usuario;
 import pe.edu.sistemas.sismatricula.model.AlumnoModel;
 import pe.edu.sistemas.sismatricula.model.RegAlumno;
+import pe.edu.sistemas.sismatricula.model.ProcAlumno;
 import pe.edu.sistemas.sismatricula.service.AlumnoService;
 import pe.edu.sistemas.sismatricula.service.UsuarioService;
 import pe.edu.sistemas.sismatricula.util.DeserealizarJSON;
@@ -62,7 +64,17 @@ protected final Log logger = LogFactory.getLog(TareasController.class);
 		Alumno existAlum=alumnoService.findAlumnoByCodigo(alumAux.getCodAlumno());
 		
 		if(existAlum!=null) {
+			ArrayList<ProcAlumno> listaProcAlumno;
 			
+			alumAux.setNombre(existAlum.getAlumnoNombre()+" "+ existAlum.getAlumnoAppaterno()+" "+existAlum.getAlumnoApmaterno());
+			
+			//valores prueba
+			alumAux.setPeriodUsados(1);
+			alumAux.setPeriodRestantes(5);
+			alumAux.setMatriculaDisp(true);
+			
+			//generar la lista de registros 
+			//alumAux.setProcAlumno(listaProcAlumno);
 			return alumAux;
 		}
 		

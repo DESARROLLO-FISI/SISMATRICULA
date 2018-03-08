@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout">
   <head>
@@ -14,14 +14,14 @@
       <div class="form-row">
         <div class="form-group">
           <input type="text" id="codInput" class="ml-4" placeholder="Ingrese el codigo de Alumno">
-          <button type="button" class="btn btn-primary ml-2">Buscar</button>
+          <button type="button" id="btnBuscar" class="btn btn-primary ml-2">Buscar</button>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
           <span class="mr-3 my-3">Nombre del alumno:</span>
           <div class="d-inline-flex border rounded px-3 py-1 bg-white text-muted">
-            <span class="">no existe - nombre</span>
+            <span id="txtNombre" class="">no existe - nombre</span>
           </div>
         </div>
       </div>
@@ -45,6 +45,6 @@
         </div>
       </div>
     </div>
-    
+
   </body>
 </html>
