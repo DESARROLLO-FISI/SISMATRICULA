@@ -1,6 +1,8 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 05/03/2018 12:43:09 PM by Hibernate Tools 4.3.1.Final
+// Generated 09-mar-2018 16:55:26 by Hibernate Tools 4.3.1.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,12 +29,13 @@ public class Alumno implements java.io.Serializable {
 	private String alumnoNombre;
 	private String alumnoEstado;
 	private Integer alumnoIngreso;
+	private Set<Tramite> tramites = new HashSet<Tramite>(0);
 
 	public Alumno() {
 	}
 
 	public Alumno(Periodo periodo, String alumnoCodigo, String alumnoAppaterno, String alumnoApmaterno,
-			String alumnoNombre, String alumnoEstado, Integer alumnoIngreso) {
+			String alumnoNombre, String alumnoEstado, Integer alumnoIngreso, Set<Tramite> tramites) {
 		this.periodo = periodo;
 		this.alumnoCodigo = alumnoCodigo;
 		this.alumnoAppaterno = alumnoAppaterno;
@@ -39,6 +43,7 @@ public class Alumno implements java.io.Serializable {
 		this.alumnoNombre = alumnoNombre;
 		this.alumnoEstado = alumnoEstado;
 		this.alumnoIngreso = alumnoIngreso;
+		this.tramites = tramites;
 	}
 
 	@Id
@@ -101,6 +106,15 @@ public class Alumno implements java.io.Serializable {
 
 	@Column(name = "ALUMNO_ESTADO", length = 4)
 	public String getAlumnoEstado() {
+		if(this.alumnoEstado.equals("AC")){
+			this.alumnoEstado="1";
+		}
+		if(this.alumnoEstado.equals("RSV")){
+			this.alumnoEstado="2";
+		}
+		if(this.alumnoEstado.equals("INAC")){
+			this.alumnoEstado="0";
+		}
 		return this.alumnoEstado;
 	}
 
@@ -115,6 +129,15 @@ public class Alumno implements java.io.Serializable {
 
 	public void setAlumnoIngreso(Integer alumnoIngreso) {
 		this.alumnoIngreso = alumnoIngreso;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "alumno")
+	public Set<Tramite> getTramites() {
+		return this.tramites;
+	}
+
+	public void setTramites(Set<Tramite> tramites) {
+		this.tramites = tramites;
 	}
 
 }

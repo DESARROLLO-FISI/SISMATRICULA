@@ -1,0 +1,29 @@
+#label1 {
+  background-color: green;
+  background-size: 40%;
+  color: white;
+  font-weight: bold;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#label2 {
+  background-color: yellow;
+  background-size: 40%;
+  color: black;
+  font-weight: bold;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#label0 {
+  background-color: red;
+  background-size: 40%;
+  color: black;
+  font-weight: bold;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
