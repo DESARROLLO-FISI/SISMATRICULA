@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pe.edu.sistemas.sismatricula.domain.Alumno;
+import pe.edu.sistemas.sismatricula.domain.Tramite;
 import pe.edu.sistemas.sismatricula.domain.Usuario;
 import pe.edu.sistemas.sismatricula.model.AlumnoModel;
 import pe.edu.sistemas.sismatricula.model.RegAlumno;
 import pe.edu.sistemas.sismatricula.model.ProcAlumno;
 import pe.edu.sistemas.sismatricula.service.AlumnoService;
+import pe.edu.sistemas.sismatricula.service.TramiteService;
 import pe.edu.sistemas.sismatricula.service.UsuarioService;
 import pe.edu.sistemas.sismatricula.util.DeserealizarJSON;
 
@@ -32,30 +34,13 @@ protected final Log logger = LogFactory.getLog(TareasController.class);
 	public AlumnoService alumnoService;
 	@Autowired
 	public UsuarioService usuarioService;
+	@Autowired
+	public TramiteService tramiteService;
 	
 	@PostMapping("/carga")
-	public @ResponseBody Usuario cargaMasivaAlumnos( @RequestBody String listAlumnoModel ) throws JSONException{
-		logger.info("CADENA RECIBIDA: "+ listAlumnoModel);		
-		JSONArray jsonArrayAlumno = new JSONArray(listAlumnoModel);
-		DeserealizarJSON<AlumnoModel> deserealizador = new DeserealizarJSON<AlumnoModel>(AlumnoModel.class);
-		List<AlumnoModel> alumnosModel = null;
-		List<Alumno> resultado = null;
-		logger.info("CANTIDAD DE REGISTROS: "+jsonArrayAlumno.length());
-		Usuario usr = usuarioService.findUsuarioByCodigo("14200130");
-		alumnosModel = deserealizador.deserealiza(jsonArrayAlumno);
+	public @ResponseBody Usuario cargaMasivaAlumnos( @RequestBody String listAlumnoModel ) {
+		return null;
 		
-		if(jsonArrayAlumno.length()!=alumnosModel.size()){
-			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO NRO "+(alumnosModel.size()+1));
-			return usr;
-		}else
-			try{
-				logger.info("SE GUARDARON DATOS");
-			
-			}catch(Exception e){
-				logger.warn("ERROR EN LOS ID's");
-				return usr;
-			}
-		return usr;
 	}
 	
 	@PostMapping("/consulta")
@@ -64,17 +49,55 @@ protected final Log logger = LogFactory.getLog(TareasController.class);
 		Alumno existAlum=alumnoService.findAlumnoByCodigo(alumAux.getCodAlumno());
 		
 		if(existAlum!=null) {
-			ArrayList<ProcAlumno> listaProcAlumno;
+			ArrayList<ProcAlumno> listaProcAlumno = new ArrayList<>();
+			ProcAlumno procAlumno;
+			int contRsv=0;
+			int contReact=0;
 			
 			alumAux.setNombre(existAlum.getAlumnoNombre()+" "+ existAlum.getAlumnoAppaterno()+" "+existAlum.getAlumnoApmaterno());
 			
-			//valores prueba
-			alumAux.setPeriodUsados(1);
-			alumAux.setPeriodRestantes(5);
-			alumAux.setMatriculaDisp(true);
+			System.out.println("Codigo:"+alumAux.getCodAlumno()+
+					"\nNombre:"+alumAux.getNombre()+
+					"\nPUsad: "+alumAux.getPeriodUsados()+
+					"\nPRest: "+alumAux.getPeriodRestantes());
 			
-			//generar la lista de registros 
-			//alumAux.setProcAlumno(listaProcAlumno);
+			System.out.println("Tramites:");
+			
+			for (Tramite tramite : tramiteService.obtenerListaTramites(alumAux.getCodAlumno())) {
+				procAlumno=new ProcAlumno();
+				procAlumno.setpUltMatricula(tramite.getPeriodoByTramitePeriodoIni().getPeriodoNombre());
+				procAlumno.setFechaAbandono(tramite.getTramiteFechaIni().toString());
+				procAlumno.setFechaRegreso(tramite.getTramiteFechaFin().toString());
+				procAlumno.setpRegMatricula(tramite.getPeriodoByTramitePeriodoFin().getPeriodoNombre());
+				procAlumno.setRd(tramite.getTramiteRd());
+				procAlumno.setTramite(tramite.getTramiteTipo());
+				
+				switch(tramite.getTramiteTipo()) {
+					case "Reserva":
+						contRsv=contRsv+(tramite.getPeriodoByTramitePeriodoFin().getPeriodoValor() - 
+								tramite.getPeriodoByTramitePeriodoIni().getPeriodoValor())-1;
+						break;
+					case "Reactualizacion": 
+						contReact=contReact+(tramite.getPeriodoByTramitePeriodoFin().getPeriodoValor() - 
+								tramite.getPeriodoByTramitePeriodoIni().getPeriodoValor())-1;
+						break;
+				}
+				
+				listaProcAlumno.add(procAlumno);
+			}
+			alumAux.setProcAlumno(listaProcAlumno);
+			alumAux.setPeriodUsados(contReact);
+			alumAux.setPeriodResvUsados(contRsv);
+			alumAux.setPeriodRestantes(0);
+			alumAux.setPeriodResvRestantes(0);
+			alumAux.setMatriculaDisp(false);
+			
+			if(6-contReact>=0) {
+				alumAux.setPeriodRestantes(6-contReact);alumAux.setMatriculaDisp(true);
+			}else if(6-contRsv>=0){
+				alumAux.setPeriodResvRestantes(6-contRsv);alumAux.setMatriculaDisp(true);
+			}
+			
 			return alumAux;
 		}
 		

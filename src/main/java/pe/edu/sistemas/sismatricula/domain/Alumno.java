@@ -1,6 +1,8 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 05/03/2018 04:18:39 PM by Hibernate Tools 4.3.1.Final
+// Generated 09/03/2018 02:41:50 PM by Hibernate Tools 4.3.5.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,6 +21,10 @@ import javax.persistence.Table;
 @Table(name = "alumno", catalog = "modelomatriculafisi")
 public class Alumno implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer idAlumno;
 	private Periodo periodo;
 	private String alumnoCodigo;
@@ -26,12 +33,13 @@ public class Alumno implements java.io.Serializable {
 	private String alumnoNombre;
 	private String alumnoEstado;
 	private Integer alumnoIngreso;
+	private Set<Tramite> tramites = new HashSet<Tramite>(0);
 
 	public Alumno() {
 	}
 
 	public Alumno(Periodo periodo, String alumnoCodigo, String alumnoAppaterno, String alumnoApmaterno,
-			String alumnoNombre, String alumnoEstado, Integer alumnoIngreso) {
+			String alumnoNombre, String alumnoEstado, Integer alumnoIngreso, Set<Tramite> tramites) {
 		this.periodo = periodo;
 		this.alumnoCodigo = alumnoCodigo;
 		this.alumnoAppaterno = alumnoAppaterno;
@@ -39,6 +47,7 @@ public class Alumno implements java.io.Serializable {
 		this.alumnoNombre = alumnoNombre;
 		this.alumnoEstado = alumnoEstado;
 		this.alumnoIngreso = alumnoIngreso;
+		this.tramites = tramites;
 	}
 
 	@Id
@@ -115,6 +124,15 @@ public class Alumno implements java.io.Serializable {
 
 	public void setAlumnoIngreso(Integer alumnoIngreso) {
 		this.alumnoIngreso = alumnoIngreso;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "alumno")
+	public Set<Tramite> getTramites() {
+		return this.tramites;
+	}
+
+	public void setTramites(Set<Tramite> tramites) {
+		this.tramites = tramites;
 	}
 
 }

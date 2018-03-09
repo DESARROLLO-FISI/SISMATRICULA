@@ -13,11 +13,21 @@ function obtenerRegistros(jsonObj){
 		datatype: "json",
 		data: jsonObj,
 		success: function(data){
-			$("#txtNombre").val(data.nombre);
+			
+			$("#txtNombre").text(data.nombre);
+			$("#resvUsada").text(data.periodResvUsados);
+			$("#reactUsada").text(data.periodUsados);
+			if(data.matriculaDisp)
+				$("#stMatric").text('matricula disponible');
+			else
+				$("#stMatric").text('matricula no disponible');
+			$("#state").attr("style","display:block");
+			$("#divStMatric").addClass("bg-success text-white");
 
 			let tableData = data.listaProcAlumno;
 
 			if(tableData !=null && $.isArray(tableData)){
+				$('#table').dataTable().fnClearTable();
 				$.each(tableData,function(index,value){
 					$('#table').dataTable().fnAddData(
 						[

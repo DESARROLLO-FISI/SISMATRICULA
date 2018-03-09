@@ -9,6 +9,8 @@ public class RegAlumno {
 	private int periodRestantes;
 	private int periodUsados;
 	private boolean matriculaDisp;
+	private int periodResvRestantes;
+	private int periodResvUsados;
 	private List<ProcAlumno> listaProcAlumno;
 	
 	public RegAlumno(){}
@@ -72,10 +74,27 @@ public class RegAlumno {
 		this.listaProcAlumno = listaProcAlumno;
 	}
 
+	public int getPeriodResvRestantes() {
+		return periodResvRestantes;
+	}
+
+	public void setPeriodResvRestantes(int periodResvRestantes) {
+		this.periodResvRestantes = periodResvRestantes;
+	}
+
+	public int getPeriodResvUsados() {
+		return periodResvUsados;
+	}
+
+	public void setPeriodResvUsados(int periodResvUsados) {
+		this.periodResvUsados = periodResvUsados;
+	}
+
 	@Override
 	public String toString() {
 		return "RegAlumno [codAlumno=" + codAlumno + ", nombre=" + nombre + ", periodRestantes=" + periodRestantes
-				+ ", periodUsados=" + periodUsados + ", matriculaDisp=" + matriculaDisp + ", listaProcAlumno="
+				+ ", periodUsados=" + periodUsados + ", matriculaDisp=" + matriculaDisp + ", periodResvRestantes="
+				+ periodResvRestantes + ", periodResvUsados=" + periodResvUsados + ", listaProcAlumno="
 				+ listaProcAlumno + "]";
 	}
 }

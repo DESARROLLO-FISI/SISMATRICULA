@@ -1,5 +1,10 @@
 package pe.edu.sistemas.sismatricula.service.impl;
 
-public class PeriodoServiceImpl {
+import org.springframework.stereotype.Service;
+
+import pe.edu.sistemas.sismatricula.service.PeriodoService;
+
+@Service
+public class PeriodoServiceImpl implements PeriodoService{
 
 }
