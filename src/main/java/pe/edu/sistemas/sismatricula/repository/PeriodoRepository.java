@@ -9,4 +9,6 @@ import pe.edu.sistemas.sismatricula.domain.Periodo;
 public interface PeriodoRepository extends JpaRepository<Periodo, Integer>{
 	
 	public abstract Periodo findFirstByOrderByIdPeriodoDesc();
+
+	public abstract Periodo findByPeriodoActual(Integer estado);
 }

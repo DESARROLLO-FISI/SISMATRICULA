@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 05/03/2018 04:18:39 PM by Hibernate Tools 4.3.1.Final
+// Generated 09/03/2018 12:41:48 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,9 +22,9 @@ import javax.persistence.TemporalType;
 public class Tramite implements java.io.Serializable {
 
 	private Integer idTramite;
+	private Alumno alumno;
 	private Periodo periodoByTramitePeriodoIni;
 	private Periodo periodoByTramitePeriodoFin;
-	private int tramiteIdAlumno;
 	private String tramiteTipo;
 	private Date tramiteFechaIni;
 	private Date tramiteFechaFin;
@@ -33,15 +33,15 @@ public class Tramite implements java.io.Serializable {
 	public Tramite() {
 	}
 
-	public Tramite(int tramiteIdAlumno) {
-		this.tramiteIdAlumno = tramiteIdAlumno;
+	public Tramite(Alumno alumno) {
+		this.alumno = alumno;
 	}
 
-	public Tramite(Periodo periodoByTramitePeriodoIni, Periodo periodoByTramitePeriodoFin, int tramiteIdAlumno,
+	public Tramite(Alumno alumno, Periodo periodoByTramitePeriodoIni, Periodo periodoByTramitePeriodoFin,
 			String tramiteTipo, Date tramiteFechaIni, Date tramiteFechaFin, String tramiteRd) {
+		this.alumno = alumno;
 		this.periodoByTramitePeriodoIni = periodoByTramitePeriodoIni;
 		this.periodoByTramitePeriodoFin = periodoByTramitePeriodoFin;
-		this.tramiteIdAlumno = tramiteIdAlumno;
 		this.tramiteTipo = tramiteTipo;
 		this.tramiteFechaIni = tramiteFechaIni;
 		this.tramiteFechaFin = tramiteFechaFin;
@@ -58,6 +58,16 @@ public class Tramite implements java.io.Serializable {
 
 	public void setIdTramite(Integer idTramite) {
 		this.idTramite = idTramite;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "TRAMITE_ID_ALUMNO", nullable = false)
+	public Alumno getAlumno() {
+		return this.alumno;
+	}
+
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -78,15 +88,6 @@ public class Tramite implements java.io.Serializable {
 
 	public void setPeriodoByTramitePeriodoFin(Periodo periodoByTramitePeriodoFin) {
 		this.periodoByTramitePeriodoFin = periodoByTramitePeriodoFin;
-	}
-
-	@Column(name = "TRAMITE_ID_ALUMNO", nullable = false)
-	public int getTramiteIdAlumno() {
-		return this.tramiteIdAlumno;
-	}
-
-	public void setTramiteIdAlumno(int tramiteIdAlumno) {
-		this.tramiteIdAlumno = tramiteIdAlumno;
 	}
 
 	@Column(name = "TRAMITE_TIPO", length = 15)

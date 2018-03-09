@@ -18,5 +18,10 @@ public class PeriodoServiceImpl implements PeriodoService{
 		return periodoRepository.findFirstByOrderByIdPeriodoDesc();
 	
 	}
+
+	@Override
+	public Periodo obtenerPeriodoActual() {
+		return periodoRepository.findByPeriodoActual(1);
+	}
 	
 }

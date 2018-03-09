@@ -61,7 +61,7 @@ public class AlumnoServiceImpl implements AlumnoService{
 		Periodo periodo = null;
 		if(alumno.getAlumnoEstado().equals("AC  ")){
 			//Si el alumno estuvo activo hasta el ultimo periodo le corresponde el este periodo
-			periodo = periodoService.obtenerUltimoPeriodo();
+			periodo = periodoService.obtenerPeriodoActual();
 			System.out.println("ASIGNANDO PERIODO");
 			return periodo;
 		}
