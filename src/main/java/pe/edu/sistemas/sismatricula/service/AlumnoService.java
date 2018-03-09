@@ -8,7 +8,7 @@ import pe.edu.sistemas.sismatricula.model.AlumnoModel;
 
 public interface AlumnoService {
 
-	List<Alumno> guardarAlumnos(List<AlumnoModel> alumnosModel);
+	List<String> guardarAlumnos(List<AlumnoModel> alumnosModel);
 
 	Alumno convertirAlumnoModelEnAlumno(AlumnoModel alumnoModel);
 

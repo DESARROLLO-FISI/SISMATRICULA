@@ -1,6 +1,5 @@
 package pe.edu.sistemas.sismatricula.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import pe.edu.sistemas.sismatricula.domain.Alumno;
 import pe.edu.sistemas.sismatricula.model.AlumnoModel;
 import pe.edu.sistemas.sismatricula.service.AlumnoService;
 import pe.edu.sistemas.sismatricula.service.UsuarioService;
@@ -33,7 +31,7 @@ public class TareasController {
 	@PostMapping("/carga")
 	public String cargaMasivaAlumnos(Model model, @RequestBody String listAlumnoModel ) throws JSONException {
 		List<AlumnoModel> alumnosModel = null;
-		List<Alumno> resultado = null;
+		List<String> resultado = null;
 		
 		logger.info("CADENA RECIBIDA: "+ listAlumnoModel);		
 		
@@ -47,6 +45,7 @@ public class TareasController {
 		
 		if(jsonArrayAlumno.length()!=alumnosModel.size()){
 			logger.error("ENVIANDO MENSAJE DE ERROR EN REGISTRO NRO "+(alumnosModel.size()+1));
+			logger.error("NO SE GUARDO NINGUN REGISTRO");
 			return "modulos/cargaAvisos :: cargaErrorHeaders";
 		}else{
 			try{
@@ -56,11 +55,20 @@ public class TareasController {
 				logger.warn("ERROR EN LOS ID's");
 				return "modulos/cargaAvisos :: cargaErrorReferencias";
 			}
-
-			
 		}
+		
 		model.addAttribute("cantidadAlumnosGuardados",resultado.size());
-		return "modulos/cargaAvisos :: cargaExitosa";
+		
+		if(!resultado.isEmpty()){
+			model.addAttribute("listaOcurrencias", resultado);
+			logger.warn("EXISTEN "+resultado.size() +" OCURRENCIAS");
+			return "modulos/cargaAvisos :: cargaErrorOcurrencias";
+			
+		}else{
+			logger.info("SE REGISTRO EXITOSAMENTE ALUMNOS");
+			return "modulos/cargaAvisos :: cargaExitosa";
+		}	
+		
 	}
 	
 	
