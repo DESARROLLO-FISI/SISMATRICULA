@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Alumno implements java.io.Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer idAlumno;
@@ -110,6 +110,15 @@ public class Alumno implements java.io.Serializable {
 
 	@Column(name = "ALUMNO_ESTADO", length = 4)
 	public String getAlumnoEstado() {
+		if(this.alumnoEstado.equals("AC")){
+			this.alumnoEstado="1";
+		}
+		if(this.alumnoEstado.equals("RSV")){
+			this.alumnoEstado="2";
+		}
+		if(this.alumnoEstado.equals("INAC")){
+			this.alumnoEstado="0";
+		}
 		return this.alumnoEstado;
 	}
 

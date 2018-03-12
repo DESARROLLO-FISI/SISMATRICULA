@@ -9,16 +9,30 @@ import pe.edu.sistemas.sismatricula.domain.Tramite;
 import pe.edu.sistemas.sismatricula.repository.TramiteRepository;
 import pe.edu.sistemas.sismatricula.service.TramiteService;
 
+
 @Service
-public class TramiteServiceImpl implements TramiteService{
+public class TramiteServiceImpl implements TramiteService {
 
 	@Autowired
-	private TramiteRepository tramiteRepository; 
-	
+	private TramiteRepository tramiteRepository;
+
 	@Override
 	public List<Tramite> obtenerListaTramites(String Codigo) {
 		List<Tramite> listaTramites=tramiteRepository.findByAlumnoAlumnoCodigo(Codigo);
 		return listaTramites;
 	}
 
+	boolean x;
+
+	@Override
+	public boolean GenerarTramite(Tramite tram){
+		try{
+		tramiteRepository.save(tram);
+		return true;
+		}
+		catch(Exception e){
+			System.out.println("error al escribir");
+			return false;
+		}
+	}
 }

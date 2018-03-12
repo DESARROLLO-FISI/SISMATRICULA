@@ -1,5 +1,5 @@
 package pe.edu.sistemas.sismatricula.domain;
-// Generated 09/03/2018 02:41:50 PM by Hibernate Tools 4.3.5.Final
+// Generated 09-mar-2018 16:55:26 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Rol implements java.io.Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer idRol;

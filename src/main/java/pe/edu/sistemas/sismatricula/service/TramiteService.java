@@ -5,5 +5,7 @@ import java.util.List;
 import pe.edu.sistemas.sismatricula.domain.Tramite;
 
 public interface TramiteService {
-	public List<Tramite> obtenerListaTramites(String Codigo);
+		public List<Tramite> obtenerListaTramites(String Codigo);
+		boolean GenerarTramite(Tramite tram);
+
 }

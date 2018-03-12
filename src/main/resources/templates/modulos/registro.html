@@ -6,75 +6,173 @@
 
 <head>
   <title>Reserva y Reactualizacion</title>
+
+  <link rel="stylesheet" th:href="@{/css/styleregistro.css}" href="../../../css/styleregistro.css"/>
 </head>
 
 <body>
+
+
   <!--inicio -->
   <div class="container" layout:fragment="content">
-    <h3 style="margin-top: 3%">Datos de reactualizacion</h3>
-    <form>
+  	<h3>Buscar alumno</h3>
+	  <div class="row">
+	  	<div class="col-md-3">
+	  		<input type="text" class="form-control" id="codInput" placeholder="Ingrese el codigo">
+	  	</div>
+	  	<div class="col-md-2">
+	  		<button type="button" name="buscarCod" id="buscarCod" class="btn btn-secondary btn-sm btn-block" style="margin-top: 2px">Buscar</button>
+	    </div>
+	    
+	    
+	    <div class="col-md-4" >
+	    	<div id='encontrado' style='display:none;'>
+	    		<h3>Se encontro al alumno</h3>
+	    	</div>
+	    	<div id='noencontrado' style='display:none;'>
+	    		<h3>No se encontro al alumno</h3>
+	    	</div>
+	    </div>
+	   	
+   	 </div>
+    <h3 style="margin-top: 3%">Datos del alumno</h3>
+    
+  	<div id='datosAlumno' style='display:none'>
+    <form >
       <div class="form-row">
-        <div class="form-group col-md-2">
-          <label for="codInput">Codigo Alumno</label>
-          <input type="text" class="form-control" id="codInput" placeholder="Ingrese el codigo">
-          <button type="button" name="buscarCod" class="btn btn-secondary btn-sm btn-block" style="margin-top: 10px">Buscar</button>
+        <div class="col-md-2">
+        	<div class="form-group">
+          		<label for="codInput">Codigo Alumno</label>
+          		<input type="text" class="form-control" id="codInput2" placeholder="Ingrese el codigo">
+        	</div>
         </div>
-        <div class="form-group col-md-4">
-          <label for="nameInput">Nombre Alumno</label>
-          <input type="text" class="form-control" id="nameInput" placeholder="Ingrese el nombre">
+        <div class="col-md-5">
+          <div class="form-group">
+          	<label for="nameInput">Nombre Alumno</label>
+          	<input type="text" class="form-control" id="nameInput" placeholder="Ingrese el nombre">
+          </div>
         </div>
-        <div class="form-group col-md-3">
-          <label for="fechaUltMatricula">Ultima Matricula</label>
-          <input type="date" class="form-control" id="fechaUltMatricula">
-        </div>
-        <div class="form-group col-md-3">
-          <label for="stateSelect">Estado</label>
-          <select id="stateSelect" class="custom-select">
-            <option value="1" selected>Activo</option>
-            <option value="0">Inactivo</option>
-          </select>
+
+        <div class="col-md-4">
+           <div class="form-group">
+            <label>Estado</label>
+            
+        	<div id='ActivoOpt' style='display:none;'>
+	    		<div id='label1' class='d-inline-flex'>Activo</div>
+	    	</div>
+
+        	<div id='InactivoOpt' style='display:none;'>
+	    		<div id='label0' class='d-inline-flex'>Inactivo</div>
+	    	</div>
+	    	
+        	<div id='ReservaOpt' style='display:none;'>
+	    		<div id='label2' class='d-inline-flex'>En Reserva</div>
+	    	</div>
+	    	
+	    	</div>
+          
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="periodoDejaInput">Ultimo Periodo Matriculado</label>
-          <input type="text" class="form-control" id="periodoDejaInput" placeholder="Ingrese el perido">
+   </form>
+   </div>
+   
+   	  <br/>
+      <div id='TramiteT' style='display:none;'>
+      <h3>Tramite</h3>
+      <div class="row">
+	  	<div class="col-md-2">
+	  	<input type="button" id="reactualizacionB"value="Reactualizacion" onclick="reactualizacion()">
+	  	</div>
+	  	<div class="col-md-1">
+	  	<input type="button" id="reservaB" value="Reserva" onclick="reserva()">
+	  	</div>
+	  </div>
+	  </div>
+	  <br/>
+	  
+	  
+	  <div id='reactualizacion' style='display:none;'>
+		  <div class="row">
+		  	<div class="col-md-4">
+		  		<h2>Reactualizacion</h2>
+		  	</div>
+		  </div>
+	  				<br/>
+		  <div class="form-row">
+			  <div class="form-group col-md-3">
+		          <label for="periodoDejaInput">Periodo Ausente</label>
+		          <input type="text" class="form-control" id="periodoDejaInputReact" placeholder="Ingrese el perido">
+		      </div>
+		      <div class="form-group col-md-3">
+		          <label>Inicio de Periodo</label>
+		          <input type="date" class="form-control" id="fechaPUltMatriculaReact">
+		      </div>
+		      <div class="form-group col-md-3">
+		          <label for="periodoRegInput">Periodo de Regreso</label>
+		          <input type="text" class="form-control" id="periodoRegInputReact" placeholder="Ingrese el periodo">
+		      </div>
+		      <div class="form-group col-md-3">
+		          <label>Fecha</label>
+		          <input type="date" class="form-control" id="fechaRegresoReact">
+		      </div>
+		  </div>
+	      <div class="form-row">
+	        <div class="form-group col-md-3">
+	          <label for="RDInput">R.D</label>
+	          <input type="text" class="form-control" id="RDInputReact" placeholder="Ingrese la RD">
+	        </div>
+	      </div>
+      <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-6">
+          <button type="button" id="RegistrarReact"class="btn btn-primary">Registrar y Evaluar</button>
         </div>
-        <div class="form-group col-md-3">
-          <label>Fecha</label>
-          <input type="date" class="form-control" id="fechaPUltMatricula">
-        </div>
-        <div class="form-group col-md-3">
-          <label for="periodoRegInput">Periodo de Regreso</label>
-          <input type="text" class="form-control" id="periodoRegInput" placeholder="Ingrese el periodo">
-        </div>
-        <div class="form-group col-md-3">
-          <label>Fecha</label>
-          <input type="date" class="form-control" id="fechaRegreso">
-        </div>
+        <div class="col-md-3"></div>
       </div>
+      </div>
+      
+      <div id='reserva' style='display:none;'>
+      <div class="row">
+        <div class="col-md-4">
+	  	<h2>Reserva</h2>
+	  	</div>
+	  </div>
+	  <br/>
+		  <div class="form-row">
+			  <div class="form-group col-md-3">
+		          <label for="periodoDejaInput">Periodo inicio reserva</label>
+		          <input type="text" class="form-control" id="periodoDejaInputRes" placeholder="Ingrese el perido">
+		      </div>
+		      <div class="form-group col-md-3">
+		          <label>Fecha de solicitud de reserva</label>
+		          <input type="date" class="form-control" id="fechaPUltMatriculaRes">
+		      </div>
+		      <div class="form-group col-md-3">
+		          <label for="periodoRegInput">Periodo de Regreso</label>
+		          <input type="text" class="form-control" id="periodoRegInputRes" placeholder="Ingrese el periodo">
+		      </div>
+		      <div class="form-group col-md-3">
+		          <label>Fecha</label>
+		          <input type="date" class="form-control" id="fechaRegresoRes">
+		      </div>
+		  </div>
       <div class="form-row">
         <div class="form-group col-md-3">
           <label for="RDInput">R.D</label>
-          <input type="text" class="form-control" id="RDInput" placeholder="Ingrese la RD">
-        </div>
-        <div class="form-group col-md-3">
-          <label for="tramiteSelect">Tipo de tramite</label>
-          <select id="tramiteSelect" class="custom-select">
-            <option value="1" selected>Reactualizacion</option>
-            <option value="0">Reserva</option>
-          </select>
+          <input type="text" class="form-control" id="RDInputRes" placeholder="Ingrese la RD">
         </div>
       </div>
       <div class="row">
         <div class="col-md-5"></div>
         <div class="col-md-6">
-          <button type="submit" class="btn btn-primary">Registrar y Evaluar</button>
+          <button type="submit" id="RegistrarRes" class="btn btn-primary">Registrar y Evaluar</button>
         </div>
         <div class="col-md-3"></div>
       </div>
-    </form>
-  </div>
+      </div>
+      
+      </div>
+
   <!--fin-->
 </body>
 
