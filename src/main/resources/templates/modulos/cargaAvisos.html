@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+	<!--**********************IAvisoAjax********************** -->
+	<div th:fragment="cargaExitosa" class="text-center">
+		<br />
+		<p class="lead" style="border-left: 6px solid blue;
+    		background-color: LightCyan;">Se registraron alumnos exitosamente: </p>
+		<br />
+		
+		<p class="lead" style="border-left: 6px solid blue;
+    		background-color: LightCyan;" th:text=${cantidadAlumnosGuardados}></p>
+	</div>
+	
+	<div th:fragment="cargaErrorHeaders" class="text-center">
+		<br />
+		<p class="lead" style="border-left: 6px solid blue;
+    background-color: LightCyan;">Hubo problemas con el formato del archivo subido</p>
+		<br />
+	</div>
+	
+	
+	<div th:fragment="cargaErrorReferencias" class="text-center">
+		<br />
+		<p class="lead" style="border-left: 6px solid blue;
+    background-color: LightCyan;">Hubo problemas con las referencias en el archivo</p>
+		<br />
+	</div>
+	
+	
+	<div th:fragment="cargaErrorOcurrencias" class="text-center">
+		
+		
+		<br />
+		<details>
+		<summary class="lead" style="border-left: 6px solid blue;
+    			background-color: LightCyan;">
+			Hubo diversas ocurrencias al cargar los datos
+    	</summary>
+    	
+ 		<p class="lead" style="font-size: 15px; border-left: 6px solid blue;  margin-bottom: 0px;
+    			background-color: LightCyan;" th:each="ocurrencia : ${listaOcurrencias}" 
+              th:value="${ocurrencia}" th:text="${ocurrencia}"></p>
+ 	
+		</details>
+		<br />
+	</div>
+
+</body>
+</html>

@@ -14,14 +14,14 @@ import pe.edu.sistemas.sismatricula.repository.PeriodoRepository;
 public class PeriodoServiceImpl implements PeriodoService{
 
 	@Autowired
-	PeriodoRepository periodorepository;
+	protected PeriodoRepository periodoRepository;
 
 	Periodo p;
 
 	@Override
 	public Periodo buscarPeriodo(String periodo){
 		try{
-			p=periodorepository.findByperiodoNombre(periodo);
+			p=periodoRepository.findByPeriodoNombre(periodo);
 			return p;
 
 		}
@@ -33,6 +33,15 @@ public class PeriodoServiceImpl implements PeriodoService{
 
 	}
 
+	@Override
+	public Periodo obtenerUltimoPeriodo() {
+		return periodoRepository.findFirstByOrderByIdPeriodoDesc();
 
+	}
+
+	@Override
+	public Periodo obtenerPeriodoActual() {
+		return periodoRepository.findByPeriodoActual(1);
+	}
 
 }

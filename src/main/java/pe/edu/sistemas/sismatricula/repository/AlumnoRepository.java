@@ -8,5 +8,8 @@ import pe.edu.sistemas.sismatricula.domain.Alumno;
 
 @Repository
 public interface AlumnoRepository extends JpaRepository<Alumno, Integer> {
-	Alumno findByAlumnoCodigo(String codigo);
+
+	public abstract Alumno findByAlumnoCodigo(String codigo);
+
+	public abstract Boolean existsByAlumnoCodigo(String codigo);
 }

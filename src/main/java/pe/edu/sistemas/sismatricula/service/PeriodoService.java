@@ -6,4 +6,8 @@ public interface PeriodoService {
 	
 	Periodo buscarPeriodo(String periodo);
 
+	Periodo obtenerUltimoPeriodo();
+
+	Periodo obtenerPeriodoActual();
+
 }
