@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title></title>
-	<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+	<!-- Bootstrap -->
+    <link th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet"/> 
+    <!-- Font Awesome -->
+    <link th:href="@{/webjars/font-awesome/4.6.1/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Data Table -->
     <link rel="stylesheet" type="text/css" th:href="@{/DataTables/datatables.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/stylefondo.css}" href="../../css/stylefondo.css"/>
   </head>
@@ -19,12 +23,18 @@
 		<div layout:fragment="content">
 			
 		</div>
-  	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <script th:src="@{/js/bootstrap.js}"></script>
+  	<!-- jQuery -->
+	<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}" ></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.min.js}"></script>
+	<!-- DataTables -->
     <script type="text/javascript" th:src="@{/DataTables/datatables.min.js}"></script>
-    <script th:src="@{/js/custom.js}"></script>
-    <!-- Excel y funciones -->
+    <!-- Excel -->
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.3/xlsx.core.min.js"></script>	
+		
+    <!-- Scripts Propios-->
+    
+    <script th:src="@{/js/custom.js}"></script>
 	<script th:src="@{/js/logica.js}"></script>
 	<script th:src="@{/js/logica2.js}"></script>
   </body>
