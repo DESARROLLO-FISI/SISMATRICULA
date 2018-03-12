@@ -120,12 +120,7 @@ public class TareasController {
 
 			alumAux.setNombre(existAlum.getAlumnoNombre()+" "+ existAlum.getAlumnoAppaterno()+" "+existAlum.getAlumnoApmaterno());
 
-			System.out.println("Codigo:"+alumAux.getCodAlumno()+
-					"\nNombre:"+alumAux.getNombre()+
-					"\nPUsad: "+alumAux.getPeriodUsados()+
-					"\nPRest: "+alumAux.getPeriodRestantes());
-
-			System.out.println("Tramites:");
+			
 
 			for (Tramite tramite : tramiteService.obtenerListaTramites(alumAux.getCodAlumno())) {
 				procAlumno=new ProcAlumno();
@@ -140,10 +135,12 @@ public class TareasController {
 					case "Reserva":
 						contRsv=contRsv+(tramite.getPeriodoByTramitePeriodoFin().getPeriodoValor() -
 								tramite.getPeriodoByTramitePeriodoIni().getPeriodoValor())-1;
+						System.out.println(contRsv);
 						break;
 					case "Reactualizacion":
 						contReact=contReact+(tramite.getPeriodoByTramitePeriodoFin().getPeriodoValor() -
 								tramite.getPeriodoByTramitePeriodoIni().getPeriodoValor())-1;
+						System.out.println(contRsv);
 						break;
 				}
 
@@ -154,13 +151,17 @@ public class TareasController {
 			alumAux.setPeriodResvUsados(contRsv);
 			alumAux.setPeriodRestantes(0);
 			alumAux.setPeriodResvRestantes(0);
-			alumAux.setMatriculaDisp(false);
+			alumAux.setMatriculaDisp(true);
 
-			if(6-contReact>=0) {
-				alumAux.setPeriodRestantes(6-contReact);alumAux.setMatriculaDisp(true);
-			}else if(6-contRsv>=0){
-				alumAux.setPeriodResvRestantes(6-contRsv);alumAux.setMatriculaDisp(true);
-			}
+			if(6-contReact>=0) 
+				alumAux.setPeriodRestantes(6-contReact);
+			else
+				alumAux.setMatriculaDisp(false);
+			
+			if(6-contRsv>=0)
+				alumAux.setPeriodResvRestantes(6-contRsv);
+			else
+				alumAux.setMatriculaDisp(false);
 
 			return alumAux;
 		}

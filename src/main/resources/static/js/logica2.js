@@ -17,12 +17,12 @@ function obtenerRegistros(jsonObj){
 			$("#txtNombre").text(data.nombre);
 			$("#resvUsada").text(data.periodResvUsados);
 			$("#reactUsada").text(data.periodUsados);
-			if(data.matriculaDisp)
-				$("#stMatric").text('matricula disponible');
-			else
-				$("#stMatric").text('matricula no disponible');
+			if(data.matriculaDisp){
+				$("#stMatric").text('matricula disponible');$("#divStMatric").addClass("bg-success text-white");}
+			else{
+				$("#stMatric").text('matricula no disponible');$("#divStMatric").addClass("bg-danger text-white");}
+			
 			$("#state").attr("style","display:block");
-			$("#divStMatric").addClass("bg-success text-white");
 
 			let tableData = data.listaProcAlumno;
 

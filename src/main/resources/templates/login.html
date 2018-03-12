@@ -13,31 +13,38 @@
 
 <body>
 
-	<div class="container">
-		<form th:action="@{/login}" method="POST" class="form-signin">
-			<h3 class="form-signin-heading">BIENVENIDO AL SISTEMA</h3>
-			<br/>
-			 
-			<input type="text" id="codigo" name="codigo"  th:placeholder="Codigo"
-				class="form-control" /> <br/> 
-			<input type="password"  th:placeholder="Password"
-				id="password" name="password" class="form-control" /> <br /> 
-				
-			<div align="center" th:if="${param.error}">
-				<div class="alert alert-danger d-inline-flex p-2 ">
-					Usuario o Password invalido, verifiquelos
-				</div>
-				<!--  <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>-->
+	<div class="container mt-5 ">
+		<div class="row justify-content-center">
+			<div class="col-md-8" align="center">
+				<h3 class="form-signin-heading">BIENVENIDO AL SISTEMA DE RESERVA Y REACTUALIZACION DE MATRICULA</h3>
+					<br/>
 			</div>
-			<div align="center" th:if="${param.logout}">
-				<div class="alert alert-warning d-inline-flex p-2 log-msg">
-					Logout succes
-				</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="border rounded col-md-4 col-sm-6 col-xs-11 px-4 py-3 ">
+				<form th:action="@{/login}" method="POST" class="form-signin">
+						<input type="text" id="codigo" name="codigo"  th:placeholder="Codigo"
+							class="form-control" /> <br/> 
+						<input type="password"  th:placeholder="Password"
+							id="password" name="password" class="form-control" /> <br /> 
+							
+						<div align="center" th:if="${param.error}">
+							<div class="alert alert-danger d-inline-flex p-2 ">
+								Usuario o Password invalido, verifiquelos
+							</div>
+							<!--  <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>-->
+						</div>
+						<div align="center" th:if="${param.logout}">
+							<div class="alert alert-warning d-inline-flex p-2 log-msg">
+								Logout succes
+							</div>
+						</div>
+						<button class="btn btn-lg btn-primary btn-block " name="Submit" value="Login" type="Submit" th:text="Login"></button>
+					
+				</form>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block " name="Submit" value="Login" type="Submit" th:text="Login"></button>
-		</form>
+		</div>
 	</div>
-	
 	<script>
 		
 		
