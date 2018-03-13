@@ -5,6 +5,10 @@ class RegAlumno{
 	}
 }
 
+$("input[placeholder]").each(function () {
+    $(this).attr('size', $(this).attr('placeholder').length);
+});
+
 function obtenerRegistros(jsonObj){
 	$.ajax({
 		url: "/consulta",

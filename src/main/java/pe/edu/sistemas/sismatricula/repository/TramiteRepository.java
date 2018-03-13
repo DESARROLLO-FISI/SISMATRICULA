@@ -10,9 +10,6 @@ import pe.edu.sistemas.sismatricula.domain.Tramite;
 @Repository
 public interface TramiteRepository extends JpaRepository<Tramite, Integer>{
 
-	List<Tramite> findByAlumnoAlumnoCodigo(String alumnoCodigo);
-
-
-	void findByidTramite(Integer tram);
+	public abstract List<Tramite> findByAlumnoAlumnoCodigo(String alumnoCodigo);
 
 }
