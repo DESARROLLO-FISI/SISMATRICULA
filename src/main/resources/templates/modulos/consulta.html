@@ -9,12 +9,19 @@
   <body>
     <div class="container" layout:fragment="content">
       <div class="form-row">
-        <label for="codInput" class="my-3">Codigo Alumno</label>
+        <label for="Inpt" class="my-3">Codigo Alumno</label>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <input type="text" id="codInput" class="ml-4" placeholder="Ingrese el codigo de Alumno">
-          <button type="button" id="btnBuscar" class="btn btn-primary ml-2">Buscar</button>
+      	<div class="col-md-4">
+	        <div class="form-group">
+	          <input type="text" id="Inpt" class="ml-4" placeholder="Ingrese el codigo de Alumno">
+	          <button type="button" id="btnBuscar" class="btn btn-primary ml-2">Buscar</button>
+	        </div>
+        </div>
+        <div id="div-clear" class="col-md-3" style="display:none">
+          <a href="#" id="limpiarDatos">
+          	<i class="fa fa-trash-o" style="font-size:2rem;color:red"></i>
+          </a>
         </div>
       </div>
       <div class="form-row">

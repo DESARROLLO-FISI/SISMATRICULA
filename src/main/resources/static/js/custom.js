@@ -62,6 +62,7 @@ $(document).ready(function() {
     $('#table').css("background","white");
     
     
+    
 } );
 
 function reactualizacion(){
@@ -141,14 +142,25 @@ function registrarAlumnoReact(ReactobjDPjson){
 	});
 }
 
+function BuscarCod(){
+	console.log("hola");
+	let objDP = getObjectDP();
+	let objDPjson = JSON.stringify(objDP);
+	console.log("Se envia:"+objDPjson);
+	obtenerYmostrarAlumno(objDPjson);		
+}
+
+
 $(document).ready(function(){
 	$("#buscarCod").click(function(){
-		console.log("hola");
-		let objDP = getObjectDP();
-		let objDPjson = JSON.stringify(objDP);
-		console.log("Se envia:"+objDPjson);
-		obtenerYmostrarAlumno(objDPjson);		
-	});	
+		BuscarCod();		
+	});
+	
+	$('#codInput').keyup(function(event){
+		if(event.which==13){
+			BuscarCod();
+		}
+	});
 });
 
 $(document).ready(function(){

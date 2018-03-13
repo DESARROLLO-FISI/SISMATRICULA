@@ -15,17 +15,18 @@ public class GeneralController {
 	
 	@GetMapping(value="/registro")
 	public ModelAndView registro(){
-		return new ModelAndView("modulos/registro");
+		
+		return new ModelAndView("modulos/registro").addObject("optSelect","registro");
 	}
 	
 	@GetMapping(value="/carga")
 	public ModelAndView carga(){
-		return new ModelAndView("modulos/carga");
+		return new ModelAndView("modulos/carga").addObject("optSelect","carga");
 	}
 	
 	@GetMapping(value="/consulta")
 	public ModelAndView consulta(){
-		return new ModelAndView("modulos/consulta");
+		return new ModelAndView("modulos/consulta").addObject("optSelect","consulta");
 	}
 	
 }

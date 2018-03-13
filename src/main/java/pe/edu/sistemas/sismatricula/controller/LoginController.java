@@ -33,9 +33,8 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Usuario user = usuarioService.findUsuarioByCodigo(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getNombres() + " " + user.getApellidos() + " (" + user.getCodigo() + ")");
-		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("modulos/consulta");
+		modelAndView.addObject("optSelect","consulta");
 		System.out.println( "welcome " + user.getNombres() + " " + user.getApellidos() + " (" + user.getCodigo() + ")");
 		return modelAndView;
 	}
