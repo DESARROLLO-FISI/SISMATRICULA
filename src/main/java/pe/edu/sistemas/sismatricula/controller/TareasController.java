@@ -41,10 +41,6 @@ public class TareasController {
 	public UsuarioService usuarioService;
 	@Autowired
 	public TramiteService tramiteService;
-
-	@Autowired
-	public AlumnoService alumnoservice;
-
 	@Autowired
 	public PeriodoService periodoservice;
 
@@ -94,7 +90,7 @@ public class TareasController {
 			}
 		}
 
-		model.addAttribute("cantidadAlumnosGuardados",resultado.size());
+		model.addAttribute("cantidadAlumnosGuardados",alumnosModel.size());
 
 		if(!resultado.isEmpty()){
 			model.addAttribute("listaOcurrencias", resultado);
@@ -107,30 +103,28 @@ public class TareasController {
 		}
 
 	}
+	
 	@PostMapping("/consulta")
 	public @ResponseBody RegAlumno consultarHistorialAlumno( @RequestBody RegAlumno alumnoReg ){
 		RegAlumno alumAux=alumnoReg;
-		Alumno existAlum=alumnoService.findAlumnoByCodigo(alumAux.getCodAlumno());
+		Alumno existAlum=alumnoService.obtenerAlumnoPorCodigo(alumAux.getCodAlumno());
 
 		if(existAlum!=null) {
 			ArrayList<ProcAlumno> listaProcAlumno = new ArrayList<>();
 			ProcAlumno procAlumno;
-			int contRsv=0;
-			int contReact=0;
-
-			alumAux.setNombre(existAlum.getAlumnoNombre()+" "+ existAlum.getAlumnoAppaterno()+" "+existAlum.getAlumnoApmaterno());
-
+			int contRsv=0,contReact=0;
+			alumAux.setNombre(alumnoService.obtenerNombreAlumno(existAlum.getAlumnoCodigo()));
 			
+			System.out.println("Codigo:"+alumAux.getCodAlumno()+
+					"\nNombre:"+alumAux.getNombre()+
+					"\nPUsad: "+alumAux.getPeriodUsados()+
+					"\nPRest: "+alumAux.getPeriodRestantes());
+
+			System.out.println("Tramites:");
 
 			for (Tramite tramite : tramiteService.obtenerListaTramites(alumAux.getCodAlumno())) {
-				procAlumno=new ProcAlumno();
-				procAlumno.setpUltMatricula(tramite.getPeriodoByTramitePeriodoIni().getPeriodoNombre());
-				procAlumno.setFechaAbandono(tramite.getTramiteFechaIni().toString());
-				procAlumno.setFechaRegreso(tramite.getTramiteFechaFin().toString());
-				procAlumno.setpRegMatricula(tramite.getPeriodoByTramitePeriodoFin().getPeriodoNombre());
-				procAlumno.setRd(tramite.getTramiteRd());
-				procAlumno.setTramite(tramite.getTramiteTipo());
-
+				procAlumno = alumnoService.obtenerProcesoAlumno(tramite);
+				
 				switch(tramite.getTramiteTipo()) {
 					case "Reserva":
 						contRsv=contRsv+(tramite.getPeriodoByTramitePeriodoFin().getPeriodoValor() -
@@ -143,25 +137,10 @@ public class TareasController {
 						System.out.println(contRsv);
 						break;
 				}
-
 				listaProcAlumno.add(procAlumno);
 			}
-			alumAux.setProcAlumno(listaProcAlumno);
-			alumAux.setPeriodUsados(contReact);
-			alumAux.setPeriodResvUsados(contRsv);
-			alumAux.setPeriodRestantes(0);
-			alumAux.setPeriodResvRestantes(0);
-			alumAux.setMatriculaDisp(true);
-
-			if(6-contReact>=0) 
-				alumAux.setPeriodRestantes(6-contReact);
-			else
-				alumAux.setMatriculaDisp(false);
 			
-			if(6-contRsv>=0)
-				alumAux.setPeriodResvRestantes(6-contRsv);
-			else
-				alumAux.setMatriculaDisp(false);
+			alumAux = alumnoService.obtenerRegAlumno(alumAux,listaProcAlumno, contReact, contRsv);
 
 			return alumAux;
 		}
@@ -169,6 +148,8 @@ public class TareasController {
 		alumAux.setNombre("no existe - nombre");
 		return alumAux;
 	}
+	
+	
 
 	@PostMapping("/tramite")
 	public String registrarTramite(Model model ){
@@ -181,17 +162,16 @@ public class TareasController {
 			System.out.println(Codigo);
 
 			try{
-			alumnomf=new AlumnoMF();;
-			alumno = alumnoservice.obtenerDatosAlumno(Codigo);
-			alumnomf.setNombreAlumno(alumnoservice.obtenerNombreAlumno(Codigo));
+			alumnomf=new AlumnoMF();
+			alumno = alumnoService.obtenerAlumnoPorCodigo(Codigo);
+			alumnomf.setNombreAlumno(alumnoService.obtenerNombreAlumno(Codigo));
 			alumnomf.setEstado(alumno.getAlumnoEstado());
 			alumnomf.setCodigoAlumno(alumno.getAlumnoCodigo());
 			return alumnomf;
 			}catch(Exception e){
-				System.out.println("NO SE PUDO");
+				logger.error("NO SE PUDO");
 				return null;
 			}
-
 	}
 
 
@@ -202,7 +182,8 @@ public class TareasController {
 			Periodo periodox = new Periodo();
 			Periodo periodof = new Periodo();
 			Codigo=tramMF.getAlumnoCodigo().replaceAll("\"","");
-			alumno = alumnoservice.obtenerDatosAlumno(Codigo);
+			
+			alumno = alumnoService.obtenerAlumnoPorCodigo(Codigo);
 			periodoini=tramMF.getPeriodoByTramitePeriodoIni();
 			periodofin=tramMF.getPeriodoByTramitePeriodoFin();
 			periodonombre=periodoini.replaceAll("\"","");

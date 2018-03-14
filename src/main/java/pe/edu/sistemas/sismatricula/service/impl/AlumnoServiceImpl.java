@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 
 import pe.edu.sistemas.sismatricula.domain.Alumno;
 import pe.edu.sistemas.sismatricula.domain.Periodo;
+import pe.edu.sistemas.sismatricula.domain.Tramite;
 import pe.edu.sistemas.sismatricula.model.AlumnoModel;
+import pe.edu.sistemas.sismatricula.model.ProcAlumno;
+import pe.edu.sistemas.sismatricula.model.RegAlumno;
 import pe.edu.sistemas.sismatricula.repository.AlumnoRepository;
 import pe.edu.sistemas.sismatricula.service.AlumnoService;
 import pe.edu.sistemas.sismatricula.service.PeriodoService;
@@ -46,7 +49,6 @@ public class AlumnoServiceImpl implements AlumnoService{
 
 		Calendar cal= Calendar.getInstance();
 		int year= cal.get(Calendar.YEAR);
-		logger.info(year);
 
 		//Empezamos a recorrer la lista de alumnos
 		for(int i=0; i< alumnosModel.size(); i++){
@@ -55,24 +57,20 @@ public class AlumnoServiceImpl implements AlumnoService{
 			logger.info("GUARDANDO ALUMNOS");
 
 			if(estadoalumno.equals("AC")||estadoalumno.equals("INAC")||estadoalumno.equals("RM")){
-
+				
 				if(alumnom.getIngreso()<2000 || alumnom.getIngreso()>year){
-
 					reporteProblemasAlumnos.add( "[Registro N°"+(i+1)+"] El año asignado al alumno con codigo "+ alumnom.getCod_alumno() + " no es correcto") ;
 				}else{
-
-					if(existeAlumnoPorCodigo(alumnosModel.get(i).getCod_alumno())){
+					if(existeAlumnoPorCodigo(alumnom.getCod_alumno())){
 						logger.info("ACTUALIZAR");
 						//Si existe el alumno en la BD actualizamos sus datos
-						alumnoBusqueda = alumnoRepository.findByAlumnoCodigo(alumnosModel.get(i).getCod_alumno());
-						alumno = actualizarAlumnoConAlumnoModel(alumnoBusqueda, alumnosModel.get(i));
-
+						alumnoBusqueda = alumnoRepository.findByAlumnoCodigo(alumnom.getCod_alumno());
+						alumno = actualizarAlumnoConAlumnoModel(alumnoBusqueda, alumnom);
 					}else{
 						logger.info("NUEVO");
 						//Si no existe el alumno lo registramos en la BD por primera vez
-						alumno = convertirAlumnoModelEnAlumno(alumnosModel.get(i));
+						alumno = convertirAlumnoModelEnAlumno(alumnom);
 					}
-
 					insertarYActualizarAlumno(alumno);
 				}
 			}else{
@@ -80,7 +78,6 @@ public class AlumnoServiceImpl implements AlumnoService{
 												+ alumnom.getCod_alumno() + " no es correcto") ;
 			}
 		}
-
 		return reporteProblemasAlumnos;
 	}
 
@@ -88,13 +85,12 @@ public class AlumnoServiceImpl implements AlumnoService{
 	public Periodo asignarUltimoPeriodoMatricula(Alumno alumno, int tipoGuardado) {
 		Periodo periodo = null;
 		if(alumno.getAlumnoEstado().equals("AC")){
-			//Si el alumno estuvo activo hasta el ultimo periodo le corresponde el este periodo
+			//Si el alumno estuvo activo hasta el ultimo periodo le corresponde este periodo
 			periodo = periodoService.obtenerPeriodoActual();
 			logger.info("ASIGNANDO PERIODO");
 			return periodo;
 		}
 		//FALTA AGREGAR CASOS DE RESERVA Y REACTUALIZACION
-
 		return periodo;
 
 	}
@@ -138,19 +134,14 @@ public class AlumnoServiceImpl implements AlumnoService{
 
 
 	@Override
-	public	Alumno findAlumnoByCodigo(String codigo) {
+	public	Alumno obtenerAlumnoPorCodigo(String codigo) {
 		return alumnoRepository.findByAlumnoCodigo(codigo);
 	}
 
-	@Override
-	public Alumno obtenerDatosAlumno(String codigo) {
-		Alumno alumno= alumnoRepository.findByAlumnoCodigo(codigo);
-		return alumno;
-	}
 
 	@Override
 	public String obtenerNombreAlumno(String codigo){
-		Alumno alumno = obtenerDatosAlumno(codigo);
+		Alumno alumno = obtenerAlumnoPorCodigo(codigo);
 		String 	nombre = alumno.getAlumnoAppaterno()+ " "
 						+ alumno.getAlumnoApmaterno()+ " "
 						+ alumno.getAlumnoNombre();
@@ -158,14 +149,34 @@ public class AlumnoServiceImpl implements AlumnoService{
 	}
 
 	@Override
-	public boolean verificarAlumno(String codigo) {
-		Alumno alumnox= alumnoRepository.findByAlumnoCodigo(codigo);
-		if(alumnox.getAlumnoCodigo().equals(codigo)){
-			return true;
+	public ProcAlumno obtenerProcesoAlumno(Tramite tramite) {
+		ProcAlumno procAlumno= new ProcAlumno();
+		procAlumno.setpUltMatricula(tramite.getPeriodoByTramitePeriodoIni().getPeriodoNombre());
+		procAlumno.setFechaAbandono(tramite.getTramiteFechaIni().toString());
+		procAlumno.setFechaRegreso(tramite.getTramiteFechaFin().toString());
+		procAlumno.setpRegMatricula(tramite.getPeriodoByTramitePeriodoFin().getPeriodoNombre());
+		procAlumno.setRd(tramite.getTramiteRd());
+		procAlumno.setTramite(tramite.getTramiteTipo());
+		
+		return procAlumno;
+	}
+
+	@Override
+	public RegAlumno obtenerRegAlumno(RegAlumno alumAux, ArrayList<ProcAlumno> listaProcAlumno, int contReact,
+			int contRsv) {
+		RegAlumno alum = alumAux;
+		alum.setProcAlumno(listaProcAlumno);
+		alum.setPeriodUsados(contReact);
+		alum.setPeriodResvUsados(contRsv);
+		alum.setPeriodRestantes(0);
+		alum.setPeriodResvRestantes(0);
+		alum.setMatriculaDisp(false);
+
+		if(6-contReact>=0) {
+			alumAux.setPeriodRestantes(6-contReact);alum.setMatriculaDisp(true);
+		}else if(6-contRsv>=0){
+			alumAux.setPeriodResvRestantes(6-contRsv);alum.setMatriculaDisp(true);
 		}
-		else{
-		System.out.print("No se encontro al susodicho alumnito");
-		return false;
-		}
+		return alum;
 	}
 }

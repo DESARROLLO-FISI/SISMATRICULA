@@ -1,17 +1,20 @@
 package pe.edu.sistemas.sismatricula.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pe.edu.sistemas.sismatricula.domain.Alumno;
 import pe.edu.sistemas.sismatricula.domain.Periodo;
+import pe.edu.sistemas.sismatricula.domain.Tramite;
 import pe.edu.sistemas.sismatricula.model.AlumnoModel;
+import pe.edu.sistemas.sismatricula.model.ProcAlumno;
+import pe.edu.sistemas.sismatricula.model.RegAlumno;
 
 public interface AlumnoService {
-	public Alumno findAlumnoByCodigo(String codigo);
-
-	Alumno obtenerDatosAlumno(String codigo);
+	
+	Alumno obtenerAlumnoPorCodigo(String codigo);
+	
 	String obtenerNombreAlumno(String codigo);
-	boolean verificarAlumno(String codigo);
 
 	List<String> guardarAlumnos(List<AlumnoModel> alumnosModel);
 
@@ -24,5 +27,9 @@ public interface AlumnoService {
 	Alumno actualizarAlumnoConAlumnoModel(Alumno alumnoBusqueda, AlumnoModel alumnoModel);
 
 	Periodo asignarUltimoPeriodoMatricula(Alumno alumno, int tipoGuardado);
+
+	ProcAlumno obtenerProcesoAlumno(Tramite tramite);
+
+	RegAlumno obtenerRegAlumno(RegAlumno alumAux, ArrayList<ProcAlumno> listaProcAlumno, int contReact, int contRsv);
 
 }

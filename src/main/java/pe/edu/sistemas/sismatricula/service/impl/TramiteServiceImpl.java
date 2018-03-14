@@ -27,7 +27,7 @@ public class TramiteServiceImpl implements TramiteService {
 	boolean x;
 
 	@Override
-	public boolean GenerarTramite(Tramite tram){
+	public Boolean GenerarTramite(Tramite tram){
 		try{
 		tramiteRepository.save(tram);
 		return true;
