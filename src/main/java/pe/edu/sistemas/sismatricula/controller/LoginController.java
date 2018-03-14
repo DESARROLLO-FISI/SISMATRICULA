@@ -18,8 +18,6 @@ public class LoginController {
 	
 	protected final Log logger = LogFactory.getLog(LoginController.class);
 	
-	@Autowired
-	private UsuarioService usuarioService;
 
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -31,11 +29,8 @@ public class LoginController {
 	@RequestMapping(value="/modulos/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Usuario user = usuarioService.findUsuarioByCodigo(auth.getName());
 		modelAndView.setViewName("modulos/consulta");
 		modelAndView.addObject("optSelect","consulta");
-		System.out.println( "welcome " + user.getNombres() + " " + user.getApellidos() + " (" + user.getCodigo() + ")");
 		return modelAndView;
 	}
 }
