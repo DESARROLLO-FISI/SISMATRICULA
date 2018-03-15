@@ -6,35 +6,44 @@
 
 <head>
   <title>Reserva y Reactualizacion</title>
+  <meta charset="UTF-8">
 
   <link rel="stylesheet" th:href="@{/css/styleregistro.css}" href="../../../css/styleregistro.css"/>
 </head>
 
 <body>
 
+	  			
+	  
 
   <!--inicio -->
-  <div class="container" layout:fragment="content">
+  <div class="container" id="todo" layout:fragment="content">
+  
+  <!-- BUSQUEDA DEL ALUMNO POR CODIGO -->
   	<h3>Buscar alumno</h3>
+  	<form action="">
 	  <div class="row">
+	  
 	  	<div class="col-md-3">
-	  		<input type="text" class="form-control" id="codInput" placeholder="Ingrese el codigo">
+	  		<input type="text" 	class="form-control" id="codInput" placeholder="Ingrese el codigo">
 	  	</div>
+	  	
 	  	<div class="col-md-2">
 	  		<button type="button" name="buscarCod" id="buscarCod" class="btn btn-secondary btn-sm btn-block" style="margin-top: 2px">Buscar</button>
 	    </div>
 	    
-	    
 	    <div class="col-md-4" >
 	    	<div id='encontrado' style='display:none;'>
-	    		<h3>Se encontro al alumno</h3>
+	    		<h3 style="color:DarkBlue;">Se encontro al alumno</h3>
 	    	</div>
 	    	<div id='noencontrado' style='display:none;'>
-	    		<h3>No se encontro al alumno</h3>
+	    		<h3 style="color:Crimson;">No se encontro al alumno</h3>
 	    	</div>
 	    </div>
-	   	
    	 </div>
+   	</form>
+   	
+   	<!-- DATOS DEL ALUMNO MOSTRADOS -->
     <h3 style="margin-top: 3%">Datos del alumno</h3>
     
   	<div id='datosAlumno' style='display:none'>
@@ -43,13 +52,13 @@
         <div class="col-md-2">
         	<div class="form-group">
           		<label for="codInput">Codigo Alumno</label>
-          		<input type="text" class="form-control" id="codInput2" placeholder="Ingrese el codigo">
+          		<input type="text" class="form-control" id="codInput2" placeholder="Ingrese el codigo" readonly>
         	</div>
         </div>
         <div class="col-md-5">
           <div class="form-group">
           	<label for="nameInput">Nombre Alumno</label>
-          	<input type="text" class="form-control" id="nameInput" placeholder="Ingrese el nombre">
+          	<input type="text" class="form-control" id="nameInput" placeholder="Ingrese el nombre" readonly>
           </div>
         </div>
 
@@ -68,14 +77,13 @@
         	<div id='ReservaOpt' style='display:none;'>
 	    		<div id='label2' class='d-inline-flex'>En Reserva</div>
 	    	</div>
-	    	
 	    	</div>
-          
         </div>
       </div>
    </form>
    </div>
    
+   <!-- SELECCIONAREMOS EL TIPO DE TRAMITE -->
    	  <br/>
       <div id='TramiteT' style='display:none;'>
       <h3>Tramite</h3>
@@ -89,91 +97,119 @@
 	  </div>
 	  </div>
 	  <br/>
-	  
-	  
+	  	
+	<!-- TRAMITE DE REACTUALIZACION -->
 	  <div id='reactualizacion' style='display:none;'>
 		  <div class="row">
 		  	<div class="col-md-4">
 		  		<h2>Reactualizacion</h2>
 		  	</div>
 		  </div>
-	  				<br/>
+	  	  <br/>
 		  <div class="form-row">
+		  
 			  <div class="form-group col-md-3">
-		          <label for="periodoDejaInput">Periodo Ausente</label>
-		          <input type="text" class="form-control" id="periodoDejaInputReact" placeholder="Ingrese el perido">
+		          	<label for="periodoRectIni">Ultima Matricula</label>
+		          	<select class="form-control has-feedback-left" id="periodoReactIni" >
+					<option th:each="periodoReactIni : ${listaPeriodoIni}"  th:text="${periodoReactIni}"></option>
+					</select>
 		      </div>
+		      
 		      <div class="form-group col-md-3">
-		          <label>Inicio de Periodo</label>
+		          <label>Fecha de Matricula</label>
 		          <input type="date" class="form-control" id="fechaPUltMatriculaReact">
 		      </div>
+		      
 		      <div class="form-group col-md-3">
-		          <label for="periodoRegInput">Periodo de Regreso</label>
-		          <input type="text" class="form-control" id="periodoRegInputReact" placeholder="Ingrese el periodo">
+		          <label for="periodoReactFin">Periodo de Regreso</label>
+		          <select class="form-control has-feedback-left" id="periodoReactFin" >
+					<option th:each="periodoReactFin : ${listaPeriodo}"  th:text="${periodoReactFin}"></option>
+					</select>
 		      </div>
+		      
 		      <div class="form-group col-md-3">
-		          <label>Fecha</label>
+		          <label>Fecha de Regreso</label>
 		          <input type="date" class="form-control" id="fechaRegresoReact">
 		      </div>
 		  </div>
+
 	      <div class="form-row">
 	        <div class="form-group col-md-3">
 	          <label for="RDInput">R.D</label>
 	          <input type="text" class="form-control" id="RDInputReact" placeholder="Ingrese la RD">
 	        </div>
 	      </div>
-      <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-6">
-          <button type="button" id="RegistrarReact"class="btn btn-primary">Registrar y Evaluar</button>
-        </div>
-        <div class="col-md-3"></div>
-      </div>
+	      
+	      <div class="row">
+	        <div class="col-md-5"></div>
+	        <div class="col-md-6">
+	          <button type="button" class="btn btn-primary" onclick="enviarReactualizacion()">Registrar y Evaluar</button>
+	        </div>
+	        <div class="col-md-3"></div>
+	      </div>
       </div>
       
+    <!-- TRAMITE DE RESERVA -->
+      
       <div id='reserva' style='display:none;'>
-      <div class="row">
-        <div class="col-md-4">
-	  	<h2>Reserva</h2>
-	  	</div>
-	  </div>
-	  <br/>
+	      <div class="row">
+	        <div class="col-md-4">
+		  	<h2>Reserva</h2>
+		  	</div>
+		  </div>
+	  	  <br/>
 		  <div class="form-row">
+		  
 			  <div class="form-group col-md-3">
-		          <label for="periodoDejaInput">Periodo inicio reserva</label>
-		          <input type="text" class="form-control" id="periodoDejaInputRes" placeholder="Ingrese el perido">
+		          <label for="periodoResIni">Periodo inicio reserva</label>
+		          <select class="form-control has-feedback-left" id="periodoResIni" >
+					<option th:each="periodoResIni : ${listaPeriodoIni}"  th:text="${periodoResIni}"></option>
+				  </select>
 		      </div>
+		      
 		      <div class="form-group col-md-3">
 		          <label>Fecha de solicitud de reserva</label>
 		          <input type="date" class="form-control" id="fechaPUltMatriculaRes">
 		      </div>
+		      
 		      <div class="form-group col-md-3">
-		          <label for="periodoRegInput">Periodo de Regreso</label>
-		          <input type="text" class="form-control" id="periodoRegInputRes" placeholder="Ingrese el periodo">
+		          <label for="periodoResFin">Periodo de Regreso</label>
+		          <select class="form-control has-feedback-left" id="periodoResFin" >
+					<option th:each="periodoResFin : ${listaPeriodo}"  th:text="${periodoResFin}"></option>
+				  </select>
 		      </div>
+		      
 		      <div class="form-group col-md-3">
-		          <label>Fecha</label>
+		          <label>Fecha de Regreso</label>
 		          <input type="date" class="form-control" id="fechaRegresoRes">
 		      </div>
 		  </div>
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="RDInput">R.D</label>
-          <input type="text" class="form-control" id="RDInputRes" placeholder="Ingrese la RD">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-6">
-          <button type="submit" id="RegistrarRes" class="btn btn-primary">Registrar y Evaluar</button>
-        </div>
-        <div class="col-md-3"></div>
-      </div>
+		  
+	      <div class="form-row">
+	      
+	        <div class="form-group col-md-3">
+	          <label for="RDInput">R.D</label>
+	          <input type="text" class="form-control" id="RDInputRes" placeholder="Ingrese la RD">
+	        </div>
+	      </div>
+	      
+	      <div class="row">
+	        <div class="col-md-5"></div>
+	        <div class="col-md-6">
+	          <button type="submit" class="btn btn-primary"onclick="enviarReserva()">Registrar y Evaluar</button>
+	        </div>
+	        <div class="col-md-3"></div>
+	      </div>
       </div>
       
+ <!-- VALIDACION -->
+      <div class="form-row">
+      	<div class="col-md-4"></div>
+      	<div id="ValidarRegistro" class="text-center"></div>
       </div>
-
-  <!--fin-->
+      
+    </div>
+ <!--fin-->
+ 
 </body>
-
 </html>
