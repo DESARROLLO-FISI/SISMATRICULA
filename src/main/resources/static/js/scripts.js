@@ -202,6 +202,8 @@
 * FUNCIONALIDAD: REGISTRO DE TRAMITE
 */
 
+		var string_ws;
+
 		class TramiteMF{
 			constructor (periodoByTramitePeriodoIni,periodoByTramitePeriodoFin,alumnoCodigo,tramiteTipo,tramiteFechaIni,tramiteFechaFin,tramiteRd){
 			this.periodoByTramitePeriodoIni = periodoByTramitePeriodoIni;
@@ -222,8 +224,8 @@
 		}
 
 		function RegistrarObjReact(){
-			let PeriodoAusente = $("#periodoDejaInputReact").val();
-			let PeriodoRegreso = $("#periodoRegInputReact").val();
+			let PeriodoAusente = $("#periodoReactIni").val();
+			let PeriodoRegreso = $("#periodoReactFin").val();
 			let CodigoAlumno =$("#codInput2").val();
 			let tipoTramite = $("#reactualizacionB").val();
 			let InicPeriodo = $("#fechaPUltMatriculaReact").val();
@@ -233,6 +235,17 @@
 			return tramite;
 		}
 
+		function RegistrarObjRes(){
+			let PeriodoAusente = $("#periodoResIni").val();
+			let PeriodoRegreso = $("#periodoResFin").val();
+			let CodigoAlumno =$("#codInput2").val();
+			let tipoTramite = $("#reservaB").val();
+			let InicPeriodo = $("#fechaPUltMatriculaRes").val();
+			let FechaRegreso = $("#fechaRegresoRes").val();
+			let RD = $("#RDInputRes").val();
+			let tramite = new TramiteMF(PeriodoAusente,PeriodoRegreso,CodigoAlumno,tipoTramite,InicPeriodo,FechaRegreso,RD);
+			return tramite;
+		}
 
 
 		function reactualizacion(){
@@ -245,6 +258,9 @@
 			document.getElementById('reactualizacion').style.display = 'none';
 			}
 
+		function sumar(){
+			return 2;
+		}
 
 		function obtenerYmostrarAlumno(objDPjson){
 			$.ajax({
@@ -295,53 +311,108 @@
 			});
 		}
 
-		function registrarAlumnoReact(ReactobjDPjson){
+		function registrarTramite(objDPjson){
 			$.ajax({
 				 url: '/jsonDP',    // cambiar: url: /jsonDP para pruebas 
 		         type: 'POST', 
 		         contentType: "application/json; charset=utf-8",
 		         dataType: "json",
-		         data: ReactobjDPjson,
+		         data: objDPjson,
 		         success: function(data){
 		        	 //console.log(data);        	 
-		             
+
 		         },
 		         error : function(xhr, status) {
 		             alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
 		         },		
 			});
 		}
+		function check_text(input) {  
+		    if (input.validity.patternMismatch){  
+		        input.setCustomValidity("Debe ingresar solo NUMEROS");  
+		    }  
+		    else {  
+		        input.setCustomValidity("");  
+		    }                 
+		}
 
-		function BuscarCod(){
-			console.log("hola");
-			let objDP = getObjectDP();
-			let objDPjson = JSON.stringify(objDP);
-			console.log("Se envia:"+objDPjson);
-			obtenerYmostrarAlumno(objDPjson);		
+		function enviarReactualizacion(){
+			let ReactobjDP = RegistrarObjReact();
+			let ReactobjDPjson = JSON.stringify(ReactobjDP);
+			string_ws=ReactobjDPjson;
+			
+			$.ajax({
+		        url: '/confirmartramitereact',
+		        type: 'POST', 
+		        contentType: "application/json; charset=utf-8",
+
+
+		        dataType: "html",
+		        data: string_ws,
+
+		        success: function(data) {      
+		        	var response=$('<div/>').html(data);
+		        	var exito=response.find("#exito");
+		        	console.log("se entrego datoas");
+		          	console.log(data);
+		          	console.log("exito"+exito.text());
+		          	if(exito.text().length!=0){
+		          		console.log("exitox2x2x2");
+		          		$("#todo").html(data);
+		          	 }
+		          	else{
+		          		$("#ValidarRegistro").html(data);
+		          	}
+		    
+		        },
+		        error : function(xhr, status) {
+		            alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
+		        },
+		      });
+		}
+
+		function enviarReserva(){
+			let ResobjDP = RegistrarObjRes();
+			let ResobjDPjson = JSON.stringify(ResobjDP);
+			string_ws=ResobjDPjson;
+			
+			$.ajax({
+		        url: '/confirmartramiteres',
+		        type: 'POST', 
+		        contentType: "application/json; charset=utf-8",
+
+
+		        dataType: "html",
+		        data: string_ws,
+
+		        success: function(data) {            	             	 
+		        	var response=$('<div/>').html(data);
+		        	var exito=response.find("#exito");
+		        	console.log("se entrego datoas");
+		          	console.log(data);
+		          	console.log("exito"+exito.text());
+		          	if(exito.text().length!=0){
+		          		console.log("exitox2x2x2");
+		          		$("#todo").html(data);
+		          	 }
+		          	else{
+		          		$("#ValidarRegistro").html(data);
+		          	}
+		    
+		        },
+		        error : function(xhr, status) {
+		            alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
+		        },
+		      });
 		}
 
 
 		$(document).ready(function(){
 			$("#buscarCod").click(function(){
-				BuscarCod();		
-			});
-			
-			$('#codInput').keyup(function(event){
-				if(event.which==13){
-					BuscarCod();
-				}
-			});
-		});
-
-		$(document).ready(function(){
-			$("#RegistrarReact").click(function(){
-				console.log("holax1");
-				let ReactobjDP = RegistrarObjReact();
-				console.log("holax2");
-				let ReactobjDPjson = JSON.stringify(ReactobjDP);
 				console.log("hola");
-				registrarAlumnoReact(ReactobjDPjson);		
+				let objDP = getObjectDP();
+				let objDPjson = JSON.stringify(objDP);
+				console.log("Se envia:"+objDPjson);
+				obtenerYmostrarAlumno(objDPjson);		
 			});	
 		});
-
-

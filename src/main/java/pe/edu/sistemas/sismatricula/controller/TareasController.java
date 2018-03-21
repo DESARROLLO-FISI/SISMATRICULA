@@ -44,7 +44,17 @@ public class TareasController {
 	@Autowired
 	public PeriodoService periodoservice;
 
-
+	/*@ModelAttribute("listaPeriodo")
+	public List<String> listaPeriodo(){		
+		List<String> periodosnombre = null;		
+		List<Periodo> periodos = periodoservice.listarperiodos();	
+		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
+		for(String x:periodosnombre){
+			System.out.println(x);
+			System.out.println("x");
+		}
+		return periodosnombre;
+	}*/
 
 	AlumnoMF alumnomf;
 
@@ -60,6 +70,128 @@ public class TareasController {
 
 	boolean validez;
 
+	@PostMapping("/confirmartramitereact")
+	public String confirmarTramiteAlumnoReact(Model model,@RequestBody TramiteMF tramMF )throws JSONException{
+		Periodo periodox = new Periodo();
+		Periodo periodof = new Periodo();
+		Codigo=tramMF.getAlumnoCodigo().replaceAll("\"","");
+		alumno = alumnoService.obtenerAlumnoPorCodigo(Codigo);
+		periodoini=tramMF.getPeriodoByTramitePeriodoIni();
+		periodofin=tramMF.getPeriodoByTramitePeriodoFin();
+		periodonombre=periodoini.replaceAll("\"","");
+		periodox=periodoservice.buscarPeriodo(periodonombre);
+		periodonombre=periodofin.replaceAll("\"","");
+		periodof=periodoservice.buscarPeriodo(periodonombre);
+
+		tramite.setPeriodoByTramitePeriodoFin(periodof);
+		tramite.setPeriodoByTramitePeriodoIni(periodox);
+		tramite.setTramiteFechaFin(tramMF.getTramiteFechaFin());
+		tramite.setTramiteFechaIni(tramMF.getTramiteFechaIni());
+		tramite.setTramiteRd(tramMF.getTramiteRd());
+		tramite.setTramiteTipo(tramMF.getTramiteTipo());
+		tramite.setAlumno(alumno);
+
+		if(periodof.getPeriodoNombre().equals(periodox.getPeriodoNombre())){
+			System.out.println("LA ULTIMA MATRICULA NO PUEDE SER IGUAL AL PERIODO FINAL!");
+			return "modulos/registroAvisos :: registroErrorIguales";
+		}
+		else{
+			System.out.println("OK PERIODOS NO SON IGUALES!");
+		}
+		
+		if(periodox.getPeriodoValor()>= periodof.getPeriodoValor()){
+			System.out.println("EL PERIODO DE INICIO NO PUEDE MAYOR QUE EL PERIODO FINAL");
+			return "modulos/registroAvisos :: registroErrorUltimaMatriculaMayor";
+		}
+		else{
+			System.out.println("OK ULTIMA MATRICULA NO ES MAYOR!");
+		}
+		
+	    if(periodof.getPeriodoValor()-periodox.getPeriodoValor()>=6){
+	    	System.out.println("NO SE PUEDE RESERVAR O REACTUALIZAR MAS DE 6 CICLOS");
+	    	return "modulos/registroAvisos :: registroErrorLimite";
+	    }
+	    else{
+	    	if(periodof.getPeriodoValor()-periodox.getPeriodoValor()<2){
+	    		System.out.print("EROR: EL ALUMNO SE MATRICULO EN AMBOS PERIODOS ,SE CONSIDERA REGULAR");
+	    		return "modulos/registroAvisos :: registroErrorRegular";
+	    	}
+	    	else{
+	    		System.out.println("OK REACTUALIZACION MAYOR DE 2 CICLOS");
+	    	}
+	    }
+	    
+	    
+	    validez=tramiteService.GenerarTramite(tramite);
+	    
+	   
+	    
+		if(validez){
+			System.out.println("EXITO!");
+		}
+		else{
+			System.out.println("FRACASO!");
+		}
+		model.addAttribute("exito","exito");
+	    return "modulos/registroAvisos :: registroExito";
+	}
+	
+	
+	@PostMapping("/confirmartramiteres")
+	public String confirmarTramiteAlumnoRes(Model model,@RequestBody TramiteMF tramMF )throws JSONException{
+		Periodo periodox = new Periodo();
+		Periodo periodof = new Periodo();
+		Codigo=tramMF.getAlumnoCodigo().replaceAll("\"","");
+		alumno = alumnoService.obtenerAlumnoPorCodigo(Codigo);
+		periodoini=tramMF.getPeriodoByTramitePeriodoIni();
+		periodofin=tramMF.getPeriodoByTramitePeriodoFin();
+		periodonombre=periodoini.replaceAll("\"","");
+		periodox=periodoservice.buscarPeriodo(periodonombre);
+		periodonombre=periodofin.replaceAll("\"","");
+		periodof=periodoservice.buscarPeriodo(periodonombre);
+
+		tramite.setPeriodoByTramitePeriodoFin(periodof);
+		tramite.setPeriodoByTramitePeriodoIni(periodox);
+		tramite.setTramiteFechaFin(tramMF.getTramiteFechaFin());
+		tramite.setTramiteFechaIni(tramMF.getTramiteFechaIni());
+		tramite.setTramiteRd(tramMF.getTramiteRd());
+		tramite.setTramiteTipo(tramMF.getTramiteTipo());
+		tramite.setAlumno(alumno);
+
+		if(periodof.getPeriodoNombre().equals(periodox.getPeriodoNombre())){
+			System.out.println("PERIODO INICIO NO PUEDE SER IGUAL AL PERIODO DE REGRESO!");
+			return "modulos/registroAvisos :: registroErrorIgualesRES";
+		}
+		else{
+			System.out.println("OK PERIODOS NO SON IGUALES!");
+		}
+		
+		if(periodox.getPeriodoValor()>= periodof.getPeriodoValor()){
+			System.out.println("EL PERIODO DE INICIO NO PUEDE MAYOR QUE EL PERIODO FINAL");
+			return "modulos/registroAvisos :: registroErrorUltimaMatriculaMayorRES";
+		}
+		else{
+			System.out.println("OK PERIODO INICIO NO ES MAYOR!");
+		}
+		
+	    if(periodof.getPeriodoValor()-periodox.getPeriodoValor()>6){
+	    	System.out.println("NO SE PUEDE RESERVAR MAS DE 6 CICLOS");
+	    	return "modulos/registroAvisos :: registroErrorLimiteRES";
+	    }
+	    else{
+	    	System.out.println("OK NO SOBREPASA 6 CICLOS");
+	    }
+	    validez=tramiteService.GenerarTramite(tramite);
+
+	    
+		if(validez){
+			System.out.println("EXITO!");
+		}
+		else{
+			System.out.println("FRACASO!");
+		}
+	    return "modulos/registroAvisos :: registroExito";
+	}
 
 	@PostMapping("/carga")
 	public String cargaMasivaAlumnos(Model model, @RequestBody String listAlumnoModel ) throws JSONException {
@@ -173,10 +305,11 @@ public class TareasController {
 				return null;
 			}
 	}
+}
 
 
 
-	@PostMapping("/jsonDP")
+	/*@PostMapping("/jsonDP")
 	public @ResponseBody TramiteMF JSONTramite(@RequestBody TramiteMF tramMF ) throws JSONException{
 
 			Periodo periodox = new Periodo();
@@ -211,4 +344,4 @@ public class TareasController {
 
 		return tramMF;
 	}
-}
+}*/

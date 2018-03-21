@@ -83,8 +83,16 @@ public class AlumnoMF {
 	public String getEstado() {
 		return estado;
 	}
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setEstado(String estadox) {
+		if(estadox.equals("AC")){
+			this.estado="1";
+		}
+		if(estadox.equals("RSV")){
+			this.estado="2";
+		}
+		if(estadox.equals("INAC")){
+			this.estado="0";
+		}
 	}
 	public String getTramiteRD() {
 		return tramiteRD;

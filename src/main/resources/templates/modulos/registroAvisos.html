@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+	<!--**********************IAvisoAjax********************** -->
+	<div th:fragment="registroExito" class="text-center">
+		<br />
+		<p class="lead" style="
+    		background-color: rgb(102, 255, 102); font-weight: 500;" id="exito">SE REGISTRO EXITOSAMENTE EL TRAMITE</p>
+		<br />
+		
+	</div>
+	
+	
+	<!---------------- MENSAJES DE ERROR REACTUALIZACION ------------------------------->
+	<div th:fragment="registroErrorIguales" id="restar" class="text-center">
+		<br />
+		<p class="lead" style="
+    background-color: rgb(255, 77, 77); font-weight: 500;">ERROR: PERIODO ULTIMA MATRICULA NO PUEDE SER IGUAL AL PERIODO DE REGRESO</p>
+		<br />
+	</div>
+	
+	<div th:fragment="registroErrorUltimaMatriculaMayor" class="text-center">
+		<br />
+		<p class="lead" style="
+    background-color: rgb(255, 77, 77); font-weight: 500;">ERROR: PERIODO ULTIMA MATRICULA NO PUEDE SER MAYOR QUE EL PERIODO DE REGRESO</p>
+		<br />
+	</div>
+	
+	<div th:fragment="registroErrorLimite" class="text-center">
+		<br />
+		<p class="lead" style="
+    background-color: rgb(255, 77, 77); font-weight: 500;">ERROR: PERIODO DE REGRESO SOBREPASA 3 AÑOS DESDE LA ULTIMA MATRICULA</p>
+		<br />
+	</div>
+	
+	<div th:fragment="registroErrorRegular" class="text-center">
+		<br />
+		<p class="lead" style="
+    background-color: rgb(255, 77, 77); font-weight: 500;">ERROR: EL ALUMNO SE MATRICULO EN PERIODOS SEGUIDOS , ES UNA MATRICULA REGULAR </p>
+		<br />
+	</div>
+	
+	<!-- ------------------FIN MENSAJES-------------------------- -->
+	<!---------------- MENSAJES DE ERROR REACTUALIZACION RESERVA------------------------------->
+	
+	<div th:fragment="registroErrorIgualesRES" class="text-center">
+		<br />
+		<p class="lead" style="
+    background-color: rgb(255, 77, 77); font-weight: 500;">ERROR: PERIODO INICIO NO PUEDE SER IGUAL AL PERIODO DE REGRESO</p>
+		<br />
+	</div>
+	
+	<div th:fragment="registroErrorUltimaMatriculaMayorRES" class="text-center">
+		<br />
+		<p class="lead" style="
+    background-color: rgb(255, 77, 77); font-weight: 500;">ERROR: PERIODO INICIO NO PUEDE SER MAYOR QUE EL PERIODO DE REGRESO</p>
+		<br />
+	</div>
+	
+	<div th:fragment="registroErrorLimiteRES" class="text-center">
+		<br />
+		<p class="lead" style="
+    background-color: rgb(255, 77, 77); font-weight: 500;">ERROR: NO SE PUEDE RESERVAR MAS DE 3 AÑOS O 6 CICLOS</p>
+		<br />
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div th:fragment="cargaErrorReferencias" class="text-center">
+		<br />
+		<p class="lead" style="border-left: 6px solid blue;
+    background-color: LightCyan;">Hubo problemas con las referencias en el archivo</p>
+		<br />
+	</div>
+	
+	
+	<div th:fragment="cargaErrorOcurrencias" class="text-center">
+		
+		
+		<br />
+		<details>
+		<summary class="lead" style="border-left: 6px solid blue;
+    			background-color: LightCyan;">
+			Hubo diversas ocurrencias al cargar los datos
+    	</summary>
+    	
+ 		<p class="lead" style="font-size: 15px; border-left: 6px solid blue;  margin-bottom: 0px;
+    			background-color: LightCyan;" th:each="ocurrencia : ${listaOcurrencias}" 
+              th:value="${ocurrencia}" th:text="${ocurrencia}"></p>
+ 	
+		</details>
+		<br />
+	</div>
+
+</body>
+</html>
