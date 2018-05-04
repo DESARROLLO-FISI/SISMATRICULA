@@ -152,8 +152,10 @@ public class AlumnoServiceImpl implements AlumnoService{
 	public ProcAlumno obtenerProcesoAlumno(Tramite tramite) {
 		ProcAlumno procAlumno= new ProcAlumno();
 		procAlumno.setpUltMatricula(tramite.getPeriodoByTramitePeriodoIni().getPeriodoNombre());
-		procAlumno.setFechaAbandono(tramite.getTramiteFechaIni().toString());
-		procAlumno.setFechaRegreso(tramite.getTramiteFechaFin().toString());
+		if(tramite.getTramiteFechaIni()!=null)
+			procAlumno.setFechaAbandono(tramite.getTramiteFechaIni().toString());
+		if(tramite.getTramiteFechaFin()!=null)	
+			procAlumno.setFechaRegreso(tramite.getTramiteFechaFin().toString());
 		procAlumno.setpRegMatricula(tramite.getPeriodoByTramitePeriodoFin().getPeriodoNombre());
 		procAlumno.setRd(tramite.getTramiteRd());
 		procAlumno.setTramite(tramite.getTramiteTipo());

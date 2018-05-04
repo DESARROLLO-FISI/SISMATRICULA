@@ -1,4 +1,4 @@
-package pe.edu.sistemas.sismatricula.service.modelform;
+package pe.edu.sistemas.sismatricula.model;
 
 import java.util.Date;
 

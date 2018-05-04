@@ -16,7 +16,7 @@
 
 			loadBinaryFile(event,function(data){
 
-				var workbook = XLSX.read(data,{type:'binary'});
+				var workbook = X LSX.read(data,{type:'binary'});
 
 				var first_sheet_name = workbook.SheetNames[0];
 
@@ -85,7 +85,20 @@
 		
 
 		$(document).ready(function() {
-		    $('#table').DataTable( {
+		   $('#table').DataTable( {
+			   
+			   "columnDefs": [ 
+		    		{
+		    			"targets": -1,
+		    			"data": null,
+		    			"defaultContent": "<button>Modificar</button>"
+		    		},
+		    		{
+			            "targets":[0],
+			            "visible": false
+			        }
+		        
+		    	],
 		      
 		      "language": {
 		        "emptyTable":     "No se hallaron resultados",
@@ -110,8 +123,28 @@
 		        }
 
 		      },
-		      "bFilter":false
+		      "bFilter":false,
+		      "sPaginationType": "full_numbers",
+		  		dom: 'Bfrtip',        // Needs button container
+		            select: 'single',
+		            responsive: true,
+		            altEditor: true,     // Enable altEditor
+		            buttons: [{
+		              text: 'Add',
+		              name: 'add'        // do not change name
+		            },
+		            {
+		              extend: 'selected', // Bind to Selected row
+		              text: 'Edit',
+		              name: 'edit'        // do not change name
+		            },
+		            {
+		              extend: 'selected', // Bind to Selected row
+		              text: 'Delete',
+		              name: 'delete'      // do not change name
+		           }]
 		    } );
+		   
 		    $('#table').css("background","white");
 		} );
 		
@@ -146,7 +179,7 @@
 							$.each(tableData,function(index,value){
 								$('#table').dataTable().fnAddData(
 									[
-										value.pUltMatricula,value.fechaAbandono,
+										value.rd,value.pUltMatricula,value.fechaAbandono,
 										value.pRegMatricula,value.fechaRegreso,
 										value.rd,value.tramite
 									]
@@ -195,14 +228,20 @@
 			$('#limpiarDatos').click(function(){	
 				limpiar();
 			})
+			
+			$('#table tbody').on( 'click', 'button', function () {
+		        var data = $('#table').DataTable().row( $(this).parents('tr') ).data();
+		        alert( data[0] +"es el id. " );
+		    } );
 		});
-
+		
+		
 		
 /**
 * FUNCIONALIDAD: REGISTRO DE TRAMITE
 */
 
-		var string_ws;
+		var string_rt;
 
 		class TramiteMF{
 			constructor (periodoByTramitePeriodoIni,periodoByTramitePeriodoFin,alumnoCodigo,tramiteTipo,tramiteFechaIni,tramiteFechaFin,tramiteRd){
@@ -218,7 +257,7 @@
 		}
 
 
-		function getObjectDP(){
+		function getObjectAlumnoMF(){
 			let codigo = $("#codInput").val();
 			return codigo;
 		}
@@ -262,13 +301,13 @@
 			return 2;
 		}
 
-		function obtenerYmostrarAlumno(objDPjson){
+		function obtenerYmostrarAlumno(objAMFjson){
 			$.ajax({
-				 url: '/jsonDP2',    // cambiar: url: /jsonDP para pruebas 
+				 url: '/obtenerAlumno',    // cambiar: url: /jsonDP para pruebas 
 		         type: 'POST', 
 		         contentType: "application/json; charset=utf-8",
 		         dataType: "json",
-		         data: objDPjson,
+		         data: objAMFjson,
 		         success: function(data){
 		        	 //console.log(data);        	 
 		        	 $("#nameInput").val(data.nombreAlumno); //si esta vacio verificar en el back que no se envie nulo
@@ -310,23 +349,7 @@
 		         },		
 			});
 		}
-
-		function registrarTramite(objDPjson){
-			$.ajax({
-				 url: '/jsonDP',    // cambiar: url: /jsonDP para pruebas 
-		         type: 'POST', 
-		         contentType: "application/json; charset=utf-8",
-		         dataType: "json",
-		         data: objDPjson,
-		         success: function(data){
-		        	 //console.log(data);        	 
-
-		         },
-		         error : function(xhr, status) {
-		             alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
-		         },		
-			});
-		}
+		
 		function check_text(input) {  
 		    if (input.validity.patternMismatch){  
 		        input.setCustomValidity("Debe ingresar solo NUMEROS");  
@@ -337,9 +360,9 @@
 		}
 
 		function enviarReactualizacion(){
-			let ReactobjDP = RegistrarObjReact();
-			let ReactobjDPjson = JSON.stringify(ReactobjDP);
-			string_ws=ReactobjDPjson;
+			let ReactobjAMF = RegistrarObjReact();
+			let ReactobjAMFjson = JSON.stringify(ReactobjAMF);
+			string_rt=ReactobjAMFjson;
 			
 			$.ajax({
 		        url: '/confirmartramitereact',
@@ -348,7 +371,7 @@
 
 
 		        dataType: "html",
-		        data: string_ws,
+		        data: string_rt,
 
 		        success: function(data) {      
 		        	var response=$('<div/>').html(data);
@@ -372,9 +395,9 @@
 		}
 
 		function enviarReserva(){
-			let ResobjDP = RegistrarObjRes();
-			let ResobjDPjson = JSON.stringify(ResobjDP);
-			string_ws=ResobjDPjson;
+			let ResobjAMF = RegistrarObjRes();
+			let ResobjAMFjson = JSON.stringify(ResobjAMF);
+			string_rt=ResobjAMFjson;
 			
 			$.ajax({
 		        url: '/confirmartramiteres',
@@ -383,7 +406,7 @@
 
 
 		        dataType: "html",
-		        data: string_ws,
+		        data: string_rt,
 
 		        success: function(data) {            	             	 
 		        	var response=$('<div/>').html(data);
@@ -409,10 +432,18 @@
 
 		$(document).ready(function(){
 			$("#buscarCod").click(function(){
-				console.log("hola");
-				let objDP = getObjectDP();
-				let objDPjson = JSON.stringify(objDP);
-				console.log("Se envia:"+objDPjson);
-				obtenerYmostrarAlumno(objDPjson);		
+				let objAMF = getObjectAlumnoMF();
+				let objAMFjson = JSON.stringify(objAMF);
+				console.log("Se envia:"+objAMFjson);
+				obtenerYmostrarAlumno(objAMFjson);		
 			});	
+		});
+		
+		$('#codInput').keyup(function(event){
+			if(event.which==13){
+				let objAMF = getObjectAlumnoMF();
+				let objAMFjson = JSON.stringify(objAMF);
+				console.log("Se envia:"+objAMFjson);
+				obtenerYmostrarAlumno(objAMFjson);
+			}
 		});

@@ -22,6 +22,7 @@ public class GeneralController {
 	public PeriodoService periodoservice;
 	
 	protected final Log logger = LogFactory.getLog(GeneralController.class);
+	
 	@ModelAttribute("listaPeriodo")
 	public List<String> listaPeriodo(){		
 		List<String> periodosnombre = null;		
@@ -29,20 +30,20 @@ public class GeneralController {
 		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
 		return periodosnombre;
 	}
+	
 	@ModelAttribute("listaPeriodoIni")
 	public List<String> listaPeriodoIni(){		
 		List<String> periodosnombre = null;		
 		List<Periodo> periodos = periodoservice.listarperiodosini();	
 		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
-		for(String x:periodosnombre){
-			System.out.println(x);
-			System.out.println("x");
+		for(String periodo:periodosnombre){
+			logger.info("Periodo: " + periodo);
 		}
 		return periodosnombre;
 	}
+	
 	@GetMapping(value="/registro")
 	public ModelAndView registro(){
-		
 		return new ModelAndView("modulos/registro").addObject("optSelect","registro");
 	}
 	
