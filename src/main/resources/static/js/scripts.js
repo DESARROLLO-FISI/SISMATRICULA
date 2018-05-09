@@ -16,7 +16,7 @@
 
 			loadBinaryFile(event,function(data){
 
-				var workbook = X LSX.read(data,{type:'binary'});
+				var workbook = XLSX.read(data,{type:'binary'});
 
 				var first_sheet_name = workbook.SheetNames[0];
 
@@ -47,6 +47,9 @@
 		 * @output Mensaje de error o exito
 		 */
 		function enviarDataAlumnos(){
+			$("#cargaExterna").html(null);
+			document.getElementById('loading').style.display = 'block';
+			
 			$.ajax({
 				url: '/carga',
 				type: 'POST',
@@ -59,6 +62,7 @@
 				// código a ejecutar si la petición es satisfactoria;
 				// la respuesta es pasada como argumento a la función
 				success: function(data) {
+					document.getElementById('loading').style.display = 'none';
 					console.log("se entrego datos");
 					$("#file-matricula").val("");
 					$("#cargaExterna").html(data);
@@ -73,7 +77,7 @@
 * FUNCIONALIDAD: CONSULTAR TRAMITES ALUMNOS
 */
 		//Clase utilizada para enviar datos al controller
-		class RegAlumno{
+/*		class RegAlumno{
 			constructor(codAlumno) {
 				this.codAlumno = codAlumno;
 			}
@@ -82,23 +86,11 @@
 		//Variable global
 		var codigo="";
 		
-		
+	*/
 
 		$(document).ready(function() {
-		   $('#table').DataTable( {
+		   $('#dataTable').DataTable( {
 			   
-			   "columnDefs": [ 
-		    		{
-		    			"targets": -1,
-		    			"data": null,
-		    			"defaultContent": "<button>Modificar</button>"
-		    		},
-		    		{
-			            "targets":[0],
-			            "visible": false
-			        }
-		        
-		    	],
 		      
 		      "language": {
 		        "emptyTable":     "No se hallaron resultados",
@@ -124,31 +116,13 @@
 
 		      },
 		      "bFilter":false,
-		      "sPaginationType": "full_numbers",
-		  		dom: 'Bfrtip',        // Needs button container
-		            select: 'single',
-		            responsive: true,
-		            altEditor: true,     // Enable altEditor
-		            buttons: [{
-		              text: 'Add',
-		              name: 'add'        // do not change name
-		            },
-		            {
-		              extend: 'selected', // Bind to Selected row
-		              text: 'Edit',
-		              name: 'edit'        // do not change name
-		            },
-		            {
-		              extend: 'selected', // Bind to Selected row
-		              text: 'Delete',
-		              name: 'delete'      // do not change name
-		           }]
+		      
 		    } );
 		   
-		    $('#table').css("background","white");
+		    $('#dataTable').css("background","white");
 		} );
 		
-		
+		/*
 		function obtenerRegistros(jsonObj){
 			$.ajax({
 				url: "/consulta",
@@ -193,7 +167,14 @@
 		    }
 			});
 		}
-
+*/		$(document).ready(function(){
+	
+			$('#btnBuscar').click(function(){	
+				console.log("limpiar tabla");
+				$('#dataTable').dataTable().fnClearTable();
+			});
+});
+		
 		function limpiar(){
 			$("#txtNombre").text("no existe - nombre");
 			$("#state").attr("style","display:none");
@@ -201,7 +182,7 @@
 			$("#div-clear").attr("style","display:none");
 			$("#Inpt").val("");
 		}
-
+/*
 		function busqueda(){
 			let codAlumno = $("#Inpt").val().trim();
 			if(codAlumno!="" && codigo!=codAlumno){
@@ -225,9 +206,6 @@
 				}
 			});
 			
-			$('#limpiarDatos').click(function(){	
-				limpiar();
-			})
 			
 			$('#table tbody').on( 'click', 'button', function () {
 		        var data = $('#table').DataTable().row( $(this).parents('tr') ).data();
@@ -447,3 +425,10 @@
 				obtenerYmostrarAlumno(objAMFjson);
 			}
 		});
+		
+		
+/**Datatables**/
+		
+ $(document).ready(function() {
+    $('#dataTable').dataTable();
+} );

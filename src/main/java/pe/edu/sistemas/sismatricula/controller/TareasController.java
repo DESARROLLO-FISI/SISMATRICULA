@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,7 +44,10 @@ public class TareasController {
 	public TramiteService tramiteService;
 	@Autowired
 	public PeriodoService periodoservice;
-
+	
+	ArrayList<ProcAlumno> listaProcAlumno = new ArrayList<>();
+	RegAlumno alumAux = new RegAlumno();
+	
 	AlumnoMF alumnomf;
 
 	Alumno alumno;
@@ -54,8 +59,9 @@ public class TareasController {
 	String periodonombre;
 	String periodoini;
 	String periodofin;
-
+	
 	boolean validez;
+	boolean mismaPagina = false;
 
 
 	@PostMapping("/carga")
@@ -101,13 +107,26 @@ public class TareasController {
 
 	}
 	
+	@GetMapping(value="/modulos/consulta")
+	public String consulta(Model model){
+		if(!mismaPagina){
+			alumAux = new RegAlumno();
+			listaProcAlumno.clear();
+		}
+		model.addAttribute("regAlumno", alumAux);
+		model.addAttribute("listaTramite", listaProcAlumno);
+		model.addAttribute("optSelect","consulta");
+		mismaPagina = false;
+		return "modulos/consulta";
+	}
+	
 	@PostMapping("/consulta")
-	public @ResponseBody RegAlumno consultarHistorialAlumno( @RequestBody RegAlumno alumnoReg ){
-		RegAlumno alumAux=alumnoReg;
+	public String consultarHistorialAlumno(Model model, @ModelAttribute("regAlumno") RegAlumno alumnoReg ){
+		listaProcAlumno.clear();
+		alumAux=alumnoReg;
 		Alumno existAlum=alumnoService.obtenerAlumnoPorCodigo(alumAux.getCodAlumno());
 
 		if(existAlum!=null) {
-			ArrayList<ProcAlumno> listaProcAlumno = new ArrayList<>();
 			ProcAlumno procAlumno;
 			int contRsv=0,contReact=0;
 			alumAux.setNombre(alumnoService.obtenerNombreAlumno(existAlum.getAlumnoCodigo()));
@@ -137,13 +156,14 @@ public class TareasController {
 				listaProcAlumno.add(procAlumno);
 			}
 			
-			alumAux = alumnoService.obtenerRegAlumno(alumAux,listaProcAlumno, contReact, contRsv);
-
-			return alumAux;
+			alumAux = alumnoService.obtenerRegAlumno(alumAux,contReact, contRsv);
+			mismaPagina = true;
+			return "redirect:/modulos/consulta";
 		}
 
 		alumAux.setNombre("no existe - nombre");
-		return alumAux;
+		mismaPagina = true;
+		return "redirect:/modulos/consulta";
 	}
 	
 
@@ -208,7 +228,7 @@ public class TareasController {
 	    }
 	    else{
 	    	if(periodof.getPeriodoValor()-periodox.getPeriodoValor()<2){
-	    		System.out.print("EROR: EL ALUMNO SE MATRICULO EN AMBOS PERIODOS ,SE CONSIDERA REGULAR");
+	    		System.out.print("ERROR: EL ALUMNO SE MATRICULO EN AMBOS PERIODOS ,SE CONSIDERA REGULAR");
 	    		return "modulos/registroAvisos :: registroErrorRegular";
 	    	}
 	    	else{

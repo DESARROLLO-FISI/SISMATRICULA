@@ -17,7 +17,7 @@ public class TramiteMF {
 	}
 	
 	
-	public TramiteMF(String periodoByTramitePeriodoIni, String periodoByTramitePeriodoFin, String alumnoCodigo,
+	public TramiteMF( String periodoByTramitePeriodoIni, String periodoByTramitePeriodoFin, String alumnoCodigo,
 			String tramiteTipo, Date tramiteFechaIni, Date tramiteFechaFin, String tramiteRd) {
 		super();
 		this.periodoByTramitePeriodoIni = periodoByTramitePeriodoIni;
@@ -72,4 +72,5 @@ public class TramiteMF {
 	public void setTramiteRd(String tramiteRd) {
 		this.tramiteRd = tramiteRd;
 	}
+
 }

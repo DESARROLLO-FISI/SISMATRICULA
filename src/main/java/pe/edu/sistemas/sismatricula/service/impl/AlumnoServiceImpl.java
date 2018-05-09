@@ -151,6 +151,7 @@ public class AlumnoServiceImpl implements AlumnoService{
 	@Override
 	public ProcAlumno obtenerProcesoAlumno(Tramite tramite) {
 		ProcAlumno procAlumno= new ProcAlumno();
+		procAlumno.setTramiteId(tramite.getIdTramite());
 		procAlumno.setpUltMatricula(tramite.getPeriodoByTramitePeriodoIni().getPeriodoNombre());
 		if(tramite.getTramiteFechaIni()!=null)
 			procAlumno.setFechaAbandono(tramite.getTramiteFechaIni().toString());
@@ -164,10 +165,9 @@ public class AlumnoServiceImpl implements AlumnoService{
 	}
 
 	@Override
-	public RegAlumno obtenerRegAlumno(RegAlumno alumAux, ArrayList<ProcAlumno> listaProcAlumno, int contReact,
+	public RegAlumno obtenerRegAlumno(RegAlumno alumAux, int contReact,
 			int contRsv) {
 		RegAlumno alum = alumAux;
-		alum.setProcAlumno(listaProcAlumno);
 		alum.setPeriodUsados(contReact);
 		alum.setPeriodResvUsados(contRsv);
 		alum.setPeriodRestantes(0);

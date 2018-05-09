@@ -2,6 +2,7 @@ package pe.edu.sistemas.sismatricula.model;
 
 public class ProcAlumno {
 	
+	private Integer tramiteId;
 	private String pUltMatricula;
 	private String fechaAbandono;
 	private String pRegMatricula;
@@ -11,9 +12,10 @@ public class ProcAlumno {
 	
 	public ProcAlumno() {}
 	
-	public ProcAlumno(String pUltMatricula, String fechaAbandono, String pRegMatricula, String fechaRegreso, String rd,
+	public ProcAlumno(Integer tramiteId, String pUltMatricula, String fechaAbandono, String pRegMatricula, String fechaRegreso, String rd,
 			String tramite) {
 		super();
+		this.tramiteId = tramiteId;
 		this.pUltMatricula = pUltMatricula;
 		this.fechaAbandono = fechaAbandono;
 		this.pRegMatricula = pRegMatricula;
@@ -69,6 +71,15 @@ public class ProcAlumno {
 	public void setTramite(String tramite) {
 		this.tramite = tramite;
 	}
+
+	public Integer getTramiteId() {
+		return tramiteId;
+	}
+
+	public void setTramiteId(Integer tramiteId) {
+		this.tramiteId = tramiteId;
+	}
+	
 	
 	
 }

@@ -11,19 +11,16 @@ public class RegAlumno {
 	private boolean matriculaDisp;
 	private int periodResvRestantes;
 	private int periodResvUsados;
-	private List<ProcAlumno> listaProcAlumno;
 	
 	public RegAlumno(){}
 	
-	public RegAlumno(String codAlumno, String nombre, int periodRestantes, int periodUsados, boolean matriculaDisp,
-			List<ProcAlumno> listaProcAlumno) {
+	public RegAlumno(String codAlumno, String nombre, int periodRestantes, int periodUsados, boolean matriculaDisp) {
 		super();
 		this.codAlumno = codAlumno;
 		this.nombre = nombre;
 		this.periodRestantes = periodRestantes;
 		this.periodUsados = periodUsados;
 		this.matriculaDisp = matriculaDisp;
-		this.listaProcAlumno = listaProcAlumno;
 	}
 	
 	public String getCodAlumno() {
@@ -66,14 +63,6 @@ public class RegAlumno {
 		this.matriculaDisp = matriculaDisp;
 	}
 
-	public List<ProcAlumno> getListaProcAlumno() {
-		return listaProcAlumno;
-	}
-
-	public void setProcAlumno(List<ProcAlumno> listaProcAlumno) {
-		this.listaProcAlumno = listaProcAlumno;
-	}
-
 	public int getPeriodResvRestantes() {
 		return periodResvRestantes;
 	}
@@ -94,7 +83,6 @@ public class RegAlumno {
 	public String toString() {
 		return "RegAlumno [codAlumno=" + codAlumno + ", nombre=" + nombre + ", periodRestantes=" + periodRestantes
 				+ ", periodUsados=" + periodUsados + ", matriculaDisp=" + matriculaDisp + ", periodResvRestantes="
-				+ periodResvRestantes + ", periodResvUsados=" + periodResvUsados + ", listaProcAlumno="
-				+ listaProcAlumno + "]";
+				+ periodResvRestantes + ", periodResvUsados=" + periodResvUsados + "]";
 	}
 }

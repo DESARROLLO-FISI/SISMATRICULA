@@ -5,17 +5,17 @@
     <div th:switch=${optSelect}>
       <div th:case="registro" class="btn-group col-md-6" role="group" aria-label="Basic example" >
       	<a href="#"  class="btn btn-info active">Reserva y Reactualizacion</a>
-      	<a href="carga"  class="btn btn-info">Carga Matricula</a>
-      	<a href="consulta"  class="btn btn-info">Consulta General</a>
+      	<a th:href="@{/modulos/carga}"  class="btn btn-info">Carga Matricula</a>
+      	<a th:href="@{/modulos/consulta}"  class="btn btn-info">Consulta General</a>
       </div>
       <div th:case="carga" class="btn-group col-md-6" role="group" aria-label="Basic example" >
-      	<a href="registro"  class="btn btn-info">Reserva y Reactualizacion</a>
+      	<a th:href="@{/modulos/registro}"  class="btn btn-info">Reserva y Reactualizacion</a>
       	<a href="#"  class="btn btn-info active">Carga Matricula</a>
-      	<a href="consulta"  class="btn btn-info">Consulta General</a>
+      	<a th:href="@{/modulos/consulta}"  class="btn btn-info">Consulta General</a>
       </div>
       <div th:case="consulta" class="btn-group col-md-6" role="group" aria-label="Basic example" >
-      	<a href="registro"  class="btn btn-info">Reserva y Reactualizacion</a>
-      	<a href="carga"  class="btn btn-info">Carga Matricula</a>
+      	<a th:href="@{/modulos/registro}"  class="btn btn-info">Reserva y Reactualizacion</a>
+      	<a th:href="@{/modulos/carga}"  class="btn btn-info">Carga Matricula</a>
       	<a href="#"  class="btn btn-info active">Consulta General</a>
       </div>
       

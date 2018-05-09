@@ -6,12 +6,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import pe.edu.sistemas.sismatricula.domain.Periodo;
+import pe.edu.sistemas.sismatricula.model.RegAlumno;
 import pe.edu.sistemas.sismatricula.service.PeriodoService;
 
 @Controller
@@ -52,9 +54,6 @@ public class GeneralController {
 		return new ModelAndView("modulos/carga").addObject("optSelect","carga");
 	}
 	
-	@GetMapping(value="/consulta")
-	public ModelAndView consulta(){
-		return new ModelAndView("modulos/consulta").addObject("optSelect","consulta");
-	}
+	
 	
 }

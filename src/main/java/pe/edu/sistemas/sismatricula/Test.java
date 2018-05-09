@@ -1,5 +1,7 @@
 package pe.edu.sistemas.sismatricula;
 
+import org.junit.Ignore;
+
 import pe.edu.sistemas.sismatricula.controller.TareasController;
 import pe.edu.sistemas.sismatricula.model.ProcAlumno;
 import pe.edu.sistemas.sismatricula.model.RegAlumno;
@@ -7,11 +9,11 @@ import pe.edu.sistemas.sismatricula.model.RegAlumno;
 public class Test {
 	
 	
-	
+	@Ignore
 	public static void main(String[] args) {
 		RegAlumno alumno=new RegAlumno();
 		alumno.setCodAlumno("16200002");
-		new TareasController().consultarHistorialAlumno(alumno);
+		/*new TareasController().consultarHistorialAlumno(alumno);
 		System.out.println("Codigo:"+alumno.getCodAlumno()+
 				"\nNombre:"+alumno.getNombre()+
 				"\nPUsad: "+alumno.getPeriodUsados()+
@@ -25,6 +27,6 @@ public class Test {
 					"\nPeriodo Regreso Matricula: "+pa.getpRegMatricula()+
 					"\nRD: "+pa.getRd()+
 					"\nTipo Tramite: "+pa.getTramite());
-		}
+		}*/
 	}
 }

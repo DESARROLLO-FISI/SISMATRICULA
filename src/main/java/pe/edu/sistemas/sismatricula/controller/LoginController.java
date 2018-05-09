@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pe.edu.sistemas.sismatricula.model.RegAlumno;
+
 
 @Controller
 public class LoginController {
@@ -24,6 +26,7 @@ public class LoginController {
 	@RequestMapping(value="/modulos/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("regAlumno", new RegAlumno());
 		modelAndView.setViewName("modulos/consulta");
 		modelAndView.addObject("optSelect","consulta");
 

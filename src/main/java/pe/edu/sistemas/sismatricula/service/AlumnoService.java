@@ -30,6 +30,6 @@ public interface AlumnoService {
 
 	ProcAlumno obtenerProcesoAlumno(Tramite tramite);
 
-	RegAlumno obtenerRegAlumno(RegAlumno alumAux, ArrayList<ProcAlumno> listaProcAlumno, int contReact, int contRsv);
+	RegAlumno obtenerRegAlumno(RegAlumno alumAux, int contReact, int contRsv);
 
 }
