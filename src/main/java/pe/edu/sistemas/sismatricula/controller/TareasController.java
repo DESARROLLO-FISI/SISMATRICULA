@@ -120,6 +120,27 @@ public class TareasController {
 		return "modulos/consulta";
 	}
 	
+	@ModelAttribute("listaPeriodo")
+	public List<String> listaPeriodo(){		
+		List<String> periodosnombre = null;		
+		List<Periodo> periodos = periodoservice.listarperiodos();	
+		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
+		return periodosnombre;
+	}
+	
+	@ModelAttribute("listaPeriodoIni")
+	public List<String> listaPeriodoIni(){		
+		List<String> periodosnombre = null;		
+		List<Periodo> periodos = periodoservice.listarperiodosini();	
+		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
+		for(String periodo:periodosnombre){
+			logger.info("Periodo: " + periodo);
+		}
+		return periodosnombre;
+	}
+	
+	
+	
 	@PostMapping("/consulta")
 	public String consultarHistorialAlumno(Model model, @ModelAttribute("regAlumno") RegAlumno alumnoReg ){
 		listaProcAlumno.clear();

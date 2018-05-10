@@ -31,6 +31,9 @@
 			});
 		}
 
+		
+	
+	    
 		function loadBinaryFile(path, success) {
             	var files = path.target.files;
             	var reader = new FileReader();

@@ -108,7 +108,7 @@
 							<tr th:each="tramite : ${listaTramite}">
 								<td th:text="${tramite.pUltMatricula}"></td>
 								<td th:text="${tramite.fechaAbandono}"></td>
-								<td th:text="${tramite.pRegMatricula}"></td>
+								<td th:text="${tramite.pRegMatricula}"></td><!-- fecha de la bd -->
 								<td th:text="${tramite.fechaRegreso}"></td>
 								<td th:text="${tramite.rd}"></td>
 								<td th:text="${tramite.tramite}"></td>										
@@ -144,11 +144,12 @@
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<div class="col-lg-6">
-																				<input type ="text" class="form-control"  style="text-align:center;" th:value="${tramite.pUltMatricula}"></input>
-																			</div>
-																			</div>
+																			<select class="form-control has-feedback-left col-sm-6" id="periodoResIni" >
+																			<option th:each="periodoResIni : ${listaPeriodoIni}"  th:text="${periodoResIni}" th:selected="${periodoResIni == tramite.pUltMatricula}" ></option>
+																		 	 </select>
+																		 	 </div>
 																		</div>
+																		
 																		<div class="form-group col-sm-12">
 																			
 																			<div class="row justify-content-center">
@@ -157,21 +158,22 @@
 																			
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}"></input>
+																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}"></input>
 																			</div>
 																			</div>
 																		</div>
+																		
 																		<div class="form-group col-sm-12">
 																			<div class="row justify-content-center">
 																			<label class="col-sm-6 control-label">Periodo Regreso Matricula:</label>
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<div class="col-sm-6">
-																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.pRegMatricula}"></input>
-																			</div>
-																			</div>
-																		</div>	
+																			<select class="form-control has-feedback-left col-sm-6" id="periodoResFinX" >
+																			<option th:each="periodoResFinX : ${listaPeriodo}"  th:text="${periodoResFinX}" th:selected="${periodoResFinX == tramite.pRegMatricula}" ></option>
+																		 	 </select>
+																		 	 </div>
+																		 </div>	
 																																			
 																		<div class="form-group col-sm-12">
 																			<div class="row justify-content-center">
@@ -179,10 +181,11 @@
 																			</div>
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}"></input>
+																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}"></input>
 																			</div>
 																			</div>
-																		</div>																	
+																		</div>			
+																																
 																		<div class="form-group col-sm-12">
 																		
 																			<div class="row justify-content-center">
@@ -205,6 +208,7 @@
 																			</div>
 																			</div>
 																		</div>
+																		
 																	</fieldset>
 																</form>
 															</div>
