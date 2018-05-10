@@ -121,57 +121,88 @@
 												
 												
 												<!-- Modal -->
-												<div class="modal fade" th:id="${tramite.tramiteId}"
+												<div class="modal fade in" th:id="${tramite.tramiteId}"
 													aria-labelledby="alumnoLabel"  role="dialog"
 													aria-hidden="true">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">
-																	<span aria-hidden="true">&times;</span><span
-																		class="sr-only">Close</span>
-																</button> 
-																<h4 class="modal-title">
-																	<span>Detalles de Tramite</span>
-																</h4>
+															<h4 class="modal-title"><span>DETALLES DE TRAMITE</span></h4>
+															<button type="button" class="close" data-dismiss="modal">
+																<span aria-hidden="true">&times;</span>
+																<span class="sr-only">Close</span>
+															</button>
+															
+																
 															</div>
 															<div class="modal-body">
 																<form class="form-horizontal" role="form">
 																	<fieldset>
-																		<div class="form-group col-sm-12">
-																			<label class="col-sm-2 control-label">Periodo Ultima Matricula:</label>
-																			<div class="col-sm-10">
-																				<span class="form-control" th:text="${tramite.pUltMatricula}"></span>
+																		<div class="form-group col-md-12">
+																			<div class="row justify-content-center">
+																			<label class="col-lg-6 control-label">Periodo Ultima Matricula:</label>
+																			</div>
+																			
+																			<div class="row justify-content-center">
+																			<div class="col-lg-6">
+																				<input type ="text" class="form-control"  style="text-align:center;" th:value="${tramite.pUltMatricula}"></input>
+																			</div>
 																			</div>
 																		</div>
 																		<div class="form-group col-sm-12">
-																			<label class="col-sm-2 control-label">Fecha de Abandono:</label>
-																			<div class="col-sm-10">
-																				<span class="form-control" th:text="${tramite.fechaAbandono}"></span>
+																			
+																			<div class="row justify-content-center">
+																			<label class="col-sm-6 control-label">Fecha de Abandono:</label>
+																			</div>
+																			
+																			<div class="row justify-content-center">
+																			<div class="col-sm-6">
+																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}"></input>
+																			</div>
 																			</div>
 																		</div>
 																		<div class="form-group col-sm-12">
-																			<label class="col-sm-2 control-label">Periodo Regreso Matricula:</label>
-																			<div class="col-sm-10">
-																				<span class="form-control" th:text="${tramite.pRegMatricula}"></span>
+																			<div class="row justify-content-center">
+																			<label class="col-sm-6 control-label">Periodo Regreso Matricula:</label>
 																			</div>
-																		</div>																		
+																			
+																			<div class="row justify-content-center">
+																			<div class="col-sm-6">
+																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.pRegMatricula}"></input>
+																			</div>
+																			</div>
+																		</div>	
+																																			
 																		<div class="form-group col-sm-12">
-																			<label class="col-sm-2 control-label">Fecha Matricula:</label>
-																			<div class="col-sm-10">
-																				<span class="form-control" th:text="${tramite.fechaRegreso}"></span>
+																			<div class="row justify-content-center">
+																			<label class="col-sm-6 control-label">Fecha Matricula:</label>
+																			</div>
+																			<div class="row justify-content-center">
+																			<div class="col-sm-6">
+																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}"></input>
+																			</div>
 																			</div>
 																		</div>																	
 																		<div class="form-group col-sm-12">
-																			<label class="col-sm-2 control-label">Resolucion Decanal:</label>
-																			<div class="col-sm-10">
-																				<span class="form-control" th:text="${tramite.rd}"></span>
+																		
+																			<div class="row justify-content-center">
+																			<label class="col-sm-6 control-label">Resolucion Decanal:</label>
+																			</div>
+																			<div class="row justify-content-center">
+																			<div class="col-sm-6">
+																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.rd}"></input>
+																			</div>
 																			</div>
 																		</div>	
+																		
 																		<div class="form-group col-sm-12">
-																			<label class="col-sm-2 control-label">Tipo de Tramite:</label>
-																			<div class="col-sm-10">
-																				<span class="form-control" th:text="${tramite.tramite}"></span>
+																			<div class="row justify-content-center">
+																			<label class="col-sm-6 control-label">Tipo de Tramite:</label>
+																			</div>
+																			<div class="row justify-content-center">
+																			<div class="col-sm-6">
+																				<input type ="text" style="text-align:center;" class="form-control" th:value="${tramite.tramite}"></input>
+																			</div>
 																			</div>
 																		</div>
 																	</fieldset>
