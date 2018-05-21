@@ -136,7 +136,7 @@
 																
 															</div>
 															<div class="modal-body">
-																<form class="form-horizontal" role="form">
+																<form class="form-horizontal" role="form" th:object="${tramite}">
 																	<fieldset>
 																		<div class="form-group col-md-12">
 																			<div class="row justify-content-center">
@@ -148,6 +148,10 @@
 																			<option th:each="periodoResIni : ${listaPeriodoIni}"  th:text="${periodoResIni}" th:selected="${periodoResIni == tramite.pUltMatricula}" ></option>
 																		 	 </select>
 																		 	 </div>
+																		 	 	
+																		 	 <div >
+																			<input >
+																			</div>
 																		</div>
 																		
 																		<div class="form-group col-sm-12">
@@ -209,18 +213,22 @@
 																			</div>
 																		</div>
 																		
+																		 <div class="form-group col-sm-12">
+																			 <div class="row" >
+	          																<div style="margin-left: auto;text-align: right;">
+	          																<button type="submit" class="btn btn-primary ml-2">Guardar</button>
+	          																</div>
+	          																</div>
+       	 																</div>
+																		
 																	</fieldset>
-																</form>
+																	</form>
 															</div>
 														</div>
 													</div>
 												</div> 
 												<!-- /Modal -->
 												
-												<!--  
-												<button class="btn btn-danger">
-													<span class="fa fa-trash" aria-hidden="true"></span>
-												</button-->
 												</td>
 										</tr>
 									</tbody>
