@@ -10,4 +10,6 @@ public interface TramiteService {
 		
 	Boolean GenerarTramite(Tramite tram);
 
+	Tramite ObtenerTramite(Integer idTramite);
+
 }

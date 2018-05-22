@@ -1,6 +1,7 @@
 package pe.edu.sistemas.sismatricula.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -47,12 +48,12 @@ public class TareasController {
 	
 	ArrayList<ProcAlumno> listaProcAlumno = new ArrayList<>();
 	RegAlumno alumAux = new RegAlumno();
-	
+	ProcAlumno tramiteAct = new ProcAlumno();
 	AlumnoMF alumnomf;
 
 	Alumno alumno;
 
-	Tramite tramite=new Tramite();
+	
 
 	String codigoAlumno;
 
@@ -110,9 +111,11 @@ public class TareasController {
 	@GetMapping(value="/modulos/consulta")
 	public String consulta(Model model){
 		if(!mismaPagina){
+			tramiteAct = new ProcAlumno();
 			alumAux = new RegAlumno();
 			listaProcAlumno.clear();
 		}
+		model.addAttribute("tramitePost", tramiteAct);
 		model.addAttribute("regAlumno", alumAux);
 		model.addAttribute("listaTramite", listaProcAlumno);
 		model.addAttribute("optSelect","consulta");
@@ -133,9 +136,6 @@ public class TareasController {
 		List<String> periodosnombre = null;		
 		List<Periodo> periodos = periodoservice.listarperiodosini();	
 		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
-		for(String periodo:periodosnombre){
-			logger.info("Periodo: " + periodo);
-		}
 		return periodosnombre;
 	}
 	
@@ -165,7 +165,7 @@ public class TareasController {
 				switch(tramite.getTramiteTipo()) {
 					case "Reserva":
 						contRsv=contRsv+(tramite.getPeriodoByTramitePeriodoFin().getPeriodoValor() -
-								tramite.getPeriodoByTramitePeriodoIni().getPeriodoValor())-1;
+								tramite.getPeriodoByTramitePeriodoIni().getPeriodoValor());
 						System.out.println(contRsv);
 						break;
 					case "Reactualizacion":
@@ -208,6 +208,7 @@ public class TareasController {
 	
 	@PostMapping("/confirmartramitereact")
 	public String confirmarTramiteAlumnoReact(Model model,@RequestBody TramiteMF tramMF )throws JSONException{
+		Tramite tramite=new Tramite();
 		Periodo periodox = new Periodo();
 		Periodo periodof = new Periodo();
 		codigoAlumno=tramMF.getAlumnoCodigo().replaceAll("\"","");
@@ -226,6 +227,18 @@ public class TareasController {
 		tramite.setTramiteRd(tramMF.getTramiteRd());
 		tramite.setTramiteTipo(tramMF.getTramiteTipo());
 		tramite.setAlumno(alumno);
+		
+		
+		Iterator<Tramite> itr = alumno.getTramites().iterator();
+		int contador = 0;
+		while(itr.hasNext()){
+			Tramite tramTemp = itr.next();
+			Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
+			Periodo periodFinTemp = tramTemp.getPeriodoByTramitePeriodoFin();
+			contador = contador + (periodFinTemp.getPeriodoValor()- periodIniTemp.getPeriodoValor() - 1);
+		}
+		logger.info("CONTADOR REACT: " + contador);
+		
 
 		if(periodof.getPeriodoNombre().equals(periodox.getPeriodoNombre())){
 			System.out.println("LA ULTIMA MATRICULA NO PUEDE SER IGUAL AL PERIODO FINAL!");
@@ -243,7 +256,7 @@ public class TareasController {
 			System.out.println("OK ULTIMA MATRICULA NO ES MAYOR!");
 		}
 		
-	    if(periodof.getPeriodoValor()-periodox.getPeriodoValor()>=6){
+	    if(contador>=6){
 	    	System.out.println("NO SE PUEDE RESERVAR O REACTUALIZAR MAS DE 6 CICLOS");
 	    	return "modulos/registroAvisos :: registroErrorLimite";
 	    }
@@ -275,6 +288,7 @@ public class TareasController {
 	
 	@PostMapping("/confirmartramiteres")
 	public String confirmarTramiteAlumnoRes(Model model,@RequestBody TramiteMF tramMF )throws JSONException{
+		Tramite tramite=new Tramite();
 		Periodo periodox = new Periodo();
 		Periodo periodof = new Periodo();
 		codigoAlumno=tramMF.getAlumnoCodigo().replaceAll("\"","");
@@ -293,6 +307,17 @@ public class TareasController {
 		tramite.setTramiteRd(tramMF.getTramiteRd());
 		tramite.setTramiteTipo(tramMF.getTramiteTipo());
 		tramite.setAlumno(alumno);
+		
+		Iterator<Tramite> itr = alumno.getTramites().iterator();
+		int contador = 0;
+		while(itr.hasNext()){
+			Tramite tramTemp = itr.next();
+			Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
+			Periodo periodFinTemp = tramTemp.getPeriodoByTramitePeriodoFin();
+			contador = contador +  (periodFinTemp.getPeriodoValor()- periodIniTemp.getPeriodoValor());
+		}
+		
+		logger.info("CONTADOR RESERV: " + contador);
 
 		if(periodof.getPeriodoNombre().equals(periodox.getPeriodoNombre())){
 			System.out.println("PERIODO INICIO NO PUEDE SER IGUAL AL PERIODO DE REGRESO!");
@@ -310,7 +335,7 @@ public class TareasController {
 			System.out.println("OK PERIODO INICIO NO ES MAYOR!");
 		}
 		
-	    if(periodof.getPeriodoValor()-periodox.getPeriodoValor()>6){
+	    if(contador>6){
 	    	System.out.println("NO SE PUEDE RESERVAR MAS DE 6 CICLOS");
 	    	return "modulos/registroAvisos :: registroErrorLimiteRES";
 	    }
@@ -329,6 +354,19 @@ public class TareasController {
 	    return "modulos/registroAvisos :: registroExito";
 	}
 
+	
+	@PostMapping("/actualizarTramite")
+	public String actualizarTramiteAlumno(Model model, @ModelAttribute("tramitePost") ProcAlumno tramitePost ){
+		logger.info("valor: " + tramitePost.getFechaRegreso());
+		logger.info("rd: " + tramitePost.getRd());
+		logger.info("matricula: " + tramitePost.getpUltMatricula());
+		Tramite tramiteTemp = tramiteService.ObtenerTramite(tramitePost.getTramiteId());  //Tramite Obtenido
+		//FALTA MODIFICAR EL TRAMITE CON LOS DATOS DE TRAMITEPOST, convertir a Dates. y GenerarTramite() con el servicio.
+		return "redirect:/modulos/consulta";
+	}
 }
+
+
+
 
 

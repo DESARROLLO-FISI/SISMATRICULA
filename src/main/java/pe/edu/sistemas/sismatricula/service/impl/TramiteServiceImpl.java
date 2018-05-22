@@ -37,4 +37,10 @@ public class TramiteServiceImpl implements TramiteService {
 			return false;
 		}
 	}
+	
+	@Override
+	public Tramite ObtenerTramite(Integer idTramite){
+		return  tramiteRepository.findByIdTramite(idTramite);
+		
+	}
 }

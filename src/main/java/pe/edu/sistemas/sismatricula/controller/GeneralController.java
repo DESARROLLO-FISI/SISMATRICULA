@@ -38,9 +38,6 @@ public class GeneralController {
 		List<String> periodosnombre = null;		
 		List<Periodo> periodos = periodoservice.listarperiodosini();	
 		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
-		for(String periodo:periodosnombre){
-			logger.info("Periodo: " + periodo);
-		}
 		return periodosnombre;
 	}
 	

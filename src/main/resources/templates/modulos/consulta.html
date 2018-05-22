@@ -136,7 +136,7 @@
 																
 															</div>
 															<div class="modal-body">
-																<form th:action="@{/actualizarTramite}" class="form-horizontal" role="form" th:object="${tramitePost}">
+																<form th:action="@{/actualizarTramite}" class="form-horizontal" role="form" th:object="${tramitePost}" method="POST" >
 																	<fieldset>
 																		<div class="form-group col-md-12">
 																			<div class="row justify-content-center">
@@ -144,13 +144,13 @@
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<select class="form-control has-feedback-left col-sm-6" id="periodoResIni" th:field="*{pUltMatricula}" >
-																			<option th:each="periodoResIni : ${listaPeriodoIni}"  th:text="${periodoResIni}" th:selected="${periodoResIni == tramite.pUltMatricula}" ></option>
+																			<select class="form-control has-feedback-left col-sm-6" id="pUltMatricula" name="pUltMatricula" >
+																			<option th:each="periodoResIni : ${listaPeriodoIni}" th:value="${periodoResIni}" th:text="${periodoResIni}" th:selected="${periodoResIni == tramite.pUltMatricula}" ></option>
 																		 	 </select>
 																		 	 </div>
-																		 	 	
-																		 	 <div >
-																			<input type="hidden" th:field="*{tramiteId}" th:value="${tramitePost.tramiteId}"/>
+																		 	 
+																		 	 <div>
+																				<input type="hidden" th:value="${tramite.tramiteId}" name="tramiteId" id="tramiteId" />
 																			</div>
 																		</div>
 																		
@@ -162,7 +162,7 @@
 																			
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}" th:field="*{fechaAbandono}"></input>
+																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}" th:id="fechaAbandono" th:name="fechaAbandono" ></input>
 																			</div>
 																			</div>
 																		</div>
@@ -173,8 +173,8 @@
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<select class="form-control has-feedback-left col-sm-6" id="periodoResFinX" >
-																			<option th:each="periodoResFinX : ${listaPeriodo}"  th:text="${periodoResFinX}" th:selected="${periodoResFinX == tramite.pRegMatricula}" ></option>
+																			<select class="form-control has-feedback-left col-sm-6" id="pRegMatricula" name="pRegMatricula">
+																			<option th:each="periodoResFinX : ${listaPeriodo}" th:value="${periodoResFinX}" th:text="${periodoResFinX}" th:selected="${periodoResFinX == tramite.pRegMatricula}" ></option>
 																		 	 </select>
 																		 	 </div>
 																		 </div>	
@@ -185,7 +185,7 @@
 																			</div>
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}"></input>
+																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}" th:id="fechaRegreso" th:name="fechaRegreso"  ></input>
 																			</div>
 																			</div>
 																		</div>			
@@ -197,7 +197,7 @@
 																			</div>
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.rd}"></input>
+																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.rd}" th:id="rd" th:name="rd"></input>
 																			</div>
 																			</div>
 																		</div>	
@@ -208,7 +208,7 @@
 																			</div>
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="text" style="text-align:center;" class="form-control" th:value="${tramite.tramite}"></input>
+																				<input type ="text" style="text-align:center;" class="form-control" th:value="${tramite.tramite}" th:id="tramite" th:name="tramite" ></input>
 																			</div>
 																			</div>
 																		</div>
