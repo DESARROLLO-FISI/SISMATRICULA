@@ -136,7 +136,7 @@
 																
 															</div>
 															<div class="modal-body">
-																<form class="form-horizontal" role="form" th:object="${tramite}">
+																<form th:action="@{/actualizarTramite}" class="form-horizontal" role="form" th:object="${tramitePost}">
 																	<fieldset>
 																		<div class="form-group col-md-12">
 																			<div class="row justify-content-center">
@@ -144,13 +144,13 @@
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<select class="form-control has-feedback-left col-sm-6" id="periodoResIni" >
+																			<select class="form-control has-feedback-left col-sm-6" id="periodoResIni" th:field="*{pUltMatricula}" >
 																			<option th:each="periodoResIni : ${listaPeriodoIni}"  th:text="${periodoResIni}" th:selected="${periodoResIni == tramite.pUltMatricula}" ></option>
 																		 	 </select>
 																		 	 </div>
 																		 	 	
 																		 	 <div >
-																			<input >
+																			<input type="hidden" th:field="*{tramiteId}" th:value="${tramitePost.tramiteId}"/>
 																			</div>
 																		</div>
 																		
@@ -162,7 +162,7 @@
 																			
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}"></input>
+																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}" th:field="*{fechaAbandono}"></input>
 																			</div>
 																			</div>
 																		</div>
