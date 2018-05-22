@@ -132,4 +132,12 @@ public class Tramite implements java.io.Serializable {
 		this.tramiteRd = tramiteRd;
 	}
 
+	@Override
+	public String toString() {
+		return "Tramite [idTramite=" + idTramite + ", alumno=" + alumno + ", periodoByTramitePeriodoIni="
+				+ periodoByTramitePeriodoIni + ", periodoByTramitePeriodoFin=" + periodoByTramitePeriodoFin
+				+ ", tramiteTipo=" + tramiteTipo + ", tramiteFechaIni=" + tramiteFechaIni + ", tramiteFechaFin="
+				+ tramiteFechaFin + ", tramiteRd=" + tramiteRd + "]";
+	}
+
 }
