@@ -206,12 +206,30 @@
 																			<div class="row justify-content-center">
 																			<label class="col-sm-6 control-label">Tipo de Tramite:</label>
 																			</div>
+																			
 																			<div class="row justify-content-center">
-																			<div class="col-sm-6">
+																			<select class="form-control has-feedback-left col-sm-6" id="tramite" name="tramite">
+																				<option th:each="tipoTramite : ${listaTipoTramite}" th:value="${tipoTramite}" th:text="${tipoTramite}" th:selected="${tipoTramite == tramite.tramite}" ></option>
+																		 	 </select>
+																		 	 </div>
+																		 	 
+																			
+																			<!-- <div class="col-sm-6">
 																				<input type ="text" style="text-align:center;" class="form-control" th:value="${tramite.tramite}" th:id="tramite" th:name="tramite" ></input>
-																			</div>
-																			</div>
+																			</div>-->
+																			
 																		</div>
+																		
+																		<!-- VALIDACION -->
+																	      <div class="form-group col-sm-12">
+																	      	<div class="col-md-12">
+																	      	<div id="ValidarRegistro" class="text-center">
+																	      	</div>
+																	      	</div>
+																	      </div>
+																	      
+																	  
+																	 	<!--fin-->
 																		
 																		 <div class="form-group col-sm-12">
 																			 <div class="row" >

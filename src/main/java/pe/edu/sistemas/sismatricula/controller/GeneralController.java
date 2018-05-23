@@ -1,5 +1,6 @@
 package pe.edu.sistemas.sismatricula.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -19,6 +20,7 @@ import pe.edu.sistemas.sismatricula.service.PeriodoService;
 @Controller
 @RequestMapping("/modulos")
 public class GeneralController {
+	
 	
 	@Autowired
 	public PeriodoService periodoservice;
@@ -40,6 +42,17 @@ public class GeneralController {
 		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
 		return periodosnombre;
 	}
+	
+	@ModelAttribute("listaTipoTramite")
+	public List<String> listaTipoTramite(){
+		List<String> listaTipoTramite = new ArrayList<>();
+		listaTipoTramite.add("Reserva");
+		listaTipoTramite.add("Reactualizacion");
+		System.out.println(listaTipoTramite.toString());
+		return listaTipoTramite;
+	}
+	
+
 	
 	@GetMapping(value="/registro")
 	public ModelAndView registro(){

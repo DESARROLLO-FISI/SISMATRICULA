@@ -66,6 +66,8 @@ public class TareasController {
 	boolean validez;
 	boolean mismaPagina = false;
 
+	
+
 
 	@PostMapping("/carga")
 	public String cargaMasivaAlumnos(Model model, @RequestBody String listAlumnoModel ) throws JSONException {
@@ -140,6 +142,19 @@ public class TareasController {
 		periodosnombre = periodoservice.obtenerNombresPeriodos(periodos);
 		return periodosnombre;
 	}
+	
+	@ModelAttribute("listaTipoTramite")
+	public List<String> listaTipoTramite(){		
+		List<String> listaTipoTramite = new ArrayList<>();
+		listaTipoTramite.add("Reserva");
+		listaTipoTramite.add("Reactualizacion");
+		System.out.println(listaTipoTramite.toString());
+		return listaTipoTramite;
+	}
+	
+
+	
+	
 	
 	
 	
@@ -258,7 +273,7 @@ public class TareasController {
 			System.out.println("OK ULTIMA MATRICULA NO ES MAYOR!");
 		}
 		
-	    if(contador>=6){
+	    if(contador>=6 || (periodof.getPeriodoValor()-periodox.getPeriodoValor())>=6 ){
 	    	System.out.println("NO SE PUEDE RESERVAR O REACTUALIZAR MAS DE 6 CICLOS");
 	    	return "modulos/registroAvisos :: registroErrorLimite";
 	    }
@@ -337,7 +352,7 @@ public class TareasController {
 			System.out.println("OK PERIODO INICIO NO ES MAYOR!");
 		}
 		
-	    if(contador>6){
+	    if(contador>=6 || (periodof.getPeriodoValor()-periodox.getPeriodoValor())>6){
 	    	System.out.println("NO SE PUEDE RESERVAR MAS DE 6 CICLOS");
 	    	return "modulos/registroAvisos :: registroErrorLimiteRES";
 	    }
