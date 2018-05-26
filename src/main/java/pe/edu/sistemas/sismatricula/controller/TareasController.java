@@ -25,6 +25,7 @@ import pe.edu.sistemas.sismatricula.domain.Tramite;
 import pe.edu.sistemas.sismatricula.model.RegAlumno;
 import pe.edu.sistemas.sismatricula.model.TramiteMF;
 import pe.edu.sistemas.sismatricula.model.ProcAlumno;
+import pe.edu.sistemas.sismatricula.model.ProcAlumno2;
 import pe.edu.sistemas.sismatricula.service.AlumnoService;
 import pe.edu.sistemas.sismatricula.service.PeriodoService;
 import pe.edu.sistemas.sismatricula.service.TramiteService;
@@ -252,9 +253,12 @@ public class TareasController {
 			Tramite tramTemp = itr.next();
 			Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
 			Periodo periodFinTemp = tramTemp.getPeriodoByTramitePeriodoFin();
+			if(tramTemp.getTramiteTipo().equals("Reactualizacion"))
 			contador = contador + (periodFinTemp.getPeriodoValor()- periodIniTemp.getPeriodoValor() - 1);
 		}
-		logger.info("CONTADOR REACT: " + contador);
+		logger.info("CONTADOR REACT ANTES: " + contador);
+		contador=contador + (periodof.getPeriodoValor()-periodox.getPeriodoValor()-1);
+		logger.info("CONTADOR REACT DESPUES: " + contador);
 		
 
 		if(periodof.getPeriodoNombre().equals(periodox.getPeriodoNombre())){
@@ -273,7 +277,7 @@ public class TareasController {
 			System.out.println("OK ULTIMA MATRICULA NO ES MAYOR!");
 		}
 		
-	    if(contador>=6 || (periodof.getPeriodoValor()-periodox.getPeriodoValor())>=6 ){
+	    if(contador>6 || (periodof.getPeriodoValor()-periodox.getPeriodoValor()-1)>=6 ){
 	    	System.out.println("NO SE PUEDE RESERVAR O REACTUALIZAR MAS DE 6 CICLOS");
 	    	return "modulos/registroAvisos :: registroErrorLimite";
 	    }
@@ -331,10 +335,13 @@ public class TareasController {
 			Tramite tramTemp = itr.next();
 			Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
 			Periodo periodFinTemp = tramTemp.getPeriodoByTramitePeriodoFin();
+			if(tramTemp.getTramiteTipo().equals("Reserva"))
 			contador = contador +  (periodFinTemp.getPeriodoValor()- periodIniTemp.getPeriodoValor());
 		}
 		
-		logger.info("CONTADOR RESERV: " + contador);
+		logger.info("CONTADOR RESERV ANTES: " + contador);
+		contador=contador + (periodof.getPeriodoValor()-periodox.getPeriodoValor());
+		logger.info("CONTADOR RESERV DESPUES: " + contador);
 
 		if(periodof.getPeriodoNombre().equals(periodox.getPeriodoNombre())){
 			System.out.println("PERIODO INICIO NO PUEDE SER IGUAL AL PERIODO DE REGRESO!");
@@ -352,7 +359,7 @@ public class TareasController {
 			System.out.println("OK PERIODO INICIO NO ES MAYOR!");
 		}
 		
-	    if(contador>=6 || (periodof.getPeriodoValor()-periodox.getPeriodoValor())>6){
+	    if(contador>6 || (periodof.getPeriodoValor()-periodox.getPeriodoValor())>6){
 	    	System.out.println("NO SE PUEDE RESERVAR MAS DE 6 CICLOS");
 	    	return "modulos/registroAvisos :: registroErrorLimiteRES";
 	    }
@@ -371,8 +378,133 @@ public class TareasController {
 	    return "modulos/registroAvisos :: registroExito";
 	}
 
-	
 	@PostMapping("/actualizarTramite")
+	public String actualizarTramiteAlumno(Model model, @RequestBody ProcAlumno2 tramitePost ) throws ParseException{
+		
+		logger.info("PERIODO xdddxdd");
+		logger.info(tramitePost.getCodalumno());
+		logger.info(tramitePost.getFechaAbandono());
+		logger.info(tramitePost.getFechaRegreso());
+		logger.info(tramitePost.getpRegMatricula());
+		logger.info(tramitePost.getpUltMatricula());
+		logger.info(tramitePost.getRd());
+		logger.info(tramitePost.getTramite());
+		logger.info(tramitePost.getTramiteId());
+		
+		codigoAlumno=tramitePost.getCodalumno().replaceAll("\"","");
+		alumno = alumnoService.obtenerAlumnoPorCodigo(codigoAlumno);
+		periodoini=tramitePost.getpUltMatricula().replaceAll("\"","");
+		periodofin=tramitePost.getpRegMatricula().replaceAll("\"","");
+		logger.info("PERIODO INI"+periodoini);
+		logger.info("PERIODO INI"+periodofin);
+		
+		Tramite tramitePRUEBA = tramiteService.ObtenerTramite(tramitePost.getTramiteId());
+		logger.info("Tramite PeriodoInic " + tramitePRUEBA.getPeriodoByTramitePeriodoIni());
+		logger.info("CONTADOR REACT ANTES: " + tramitePRUEBA.getPeriodoByTramitePeriodoFin());
+		
+		
+		if(tramitePost.getTramite().equals("Reactualizacion")){
+			Iterator<Tramite> itr = alumno.getTramites().iterator();
+			int contador = 0;
+			while(itr.hasNext()){
+				Tramite tramTemp = itr.next();
+				Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
+				Periodo periodFinTemp = tramTemp.getPeriodoByTramitePeriodoFin();
+				if(tramTemp.getTramiteTipo().equals("Reactualizacion")){
+				contador = contador +  (periodFinTemp.getPeriodoValor()- periodIniTemp.getPeriodoValor());
+				}
+				
+			}
+			
+			logger.info("CONTADOR REACT ANTES: " + contador);
+			contador=contador + (tramitePRUEBA.getPeriodoByTramitePeriodoFin().getPeriodoValor()-tramitePRUEBA.getPeriodoByTramitePeriodoIni().getPeriodoValor());
+			logger.info("CONTADOR RESERV DESPUES: " + contador);
+			
+			
+		}
+		else{
+			if(tramitePost.getTramite().equals("Reserva")){
+				Iterator<Tramite> itr = alumno.getTramites().iterator();
+				int contador = 0;
+				while(itr.hasNext()){
+					Tramite tramTemp = itr.next();
+					Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
+					Periodo periodFinTemp = tramTemp.getPeriodoByTramitePeriodoFin();
+					if(tramTemp.getTramiteTipo().equals("Reserva"))
+					contador = contador +  (periodFinTemp.getPeriodoValor()- periodIniTemp.getPeriodoValor());
+				}
+				
+				logger.info("CONTADOR REACT ANTES: " + contador);
+				contador=contador + (tramitePRUEBA.getPeriodoByTramitePeriodoFin().getPeriodoValor()-tramitePRUEBA.getPeriodoByTramitePeriodoIni().getPeriodoValor());
+				logger.info("CONTADOR RESERV DESPUES: " + contador);
+			}
+			
+			
+		}
+		
+		Iterator<Tramite> itr = alumno.getTramites().iterator();
+		int contador = 0;
+		while(itr.hasNext()){
+			Tramite tramTemp = itr.next();
+			Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
+			Periodo periodFinTemp = tramTemp.getPeriodoByTramitePeriodoFin();
+			if(tramTemp.getTramiteTipo().equals("Reserva"))
+			contador = contador +  (periodFinTemp.getPeriodoValor()- periodIniTemp.getPeriodoValor());
+		}
+		
+		logger.info("CONTADOR RESERV: " + contador);
+		
+		
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		logger.info("valor: " + tramitePost.getFechaRegreso());
+		logger.info("rd: " + tramitePost.getRd());
+		logger.info("matricula: " + tramitePost.getpUltMatricula());
+		Tramite tramiteTemp = tramiteService.ObtenerTramite(tramitePost.getTramiteId());  //Tramite Obtenido
+		logger.info("TRAMITE MODIFICADO: " + tramiteTemp.toString());
+		
+		tramiteTemp.setPeriodoByTramitePeriodoFin(periodoservice.buscarPeriodo(periodofin));
+		tramiteTemp.setPeriodoByTramitePeriodoIni(periodoservice.buscarPeriodo(periodoini));
+		if(tramitePost.getFechaAbandono()!="")
+		tramiteTemp.setTramiteFechaIni(formatter.parse(tramitePost.getFechaAbandono()));
+		if(tramitePost.getFechaRegreso()!="")
+		tramiteTemp.setTramiteFechaFin(formatter.parse(tramitePost.getFechaRegreso()));
+		tramiteTemp.setTramiteRd(tramitePost.getRd());
+		tramiteTemp.setTramiteTipo(tramitePost.getTramite());
+		
+		if(tramiteTemp.getPeriodoByTramitePeriodoFin().getPeriodoNombre().equals(tramiteTemp.getPeriodoByTramitePeriodoIni().getPeriodoNombre())){
+			System.out.println("PERIODO INICIO NO PUEDE SER IGUAL AL PERIODO DE REGRESO!");
+			return "modulos/registroAvisos :: registroErrorIgualesRES";
+		}
+		else{
+			System.out.println("OK PERIODOS NO SON IGUALES!");
+		}
+		
+		if(tramiteTemp.getPeriodoByTramitePeriodoIni().getPeriodoValor()  >= tramiteTemp.getPeriodoByTramitePeriodoFin().getPeriodoValor()){
+			System.out.println("EL PERIODO DE INICIO NO PUEDE MAYOR QUE EL PERIODO FINAL");
+			return "modulos/registroAvisos :: registroErrorUltimaMatriculaMayorRES";
+		}
+		else{
+			System.out.println("OK PERIODO INICIO NO ES MAYOR!");
+		}
+		
+	    if(contador>=6 || (tramiteTemp.getPeriodoByTramitePeriodoFin().getPeriodoValor()-tramiteTemp.getPeriodoByTramitePeriodoIni().getPeriodoValor())>6){
+	    	System.out.println("NO SE PUEDE RESERVAR MAS DE 6 CICLOS");
+	    	return "modulos/registroAvisos :: registroErrorLimiteRES";
+	    }
+	    else{
+	    	System.out.println("OK NO SOBREPASA 6 CICLOS");
+	    }
+		
+		
+		Boolean exito= tramiteService.GenerarTramite(tramiteTemp);
+		logger.info("EXITO EN EL TRAMITE: " +  exito );
+		
+		return "redirect:/modulos/consulta";
+	}
+	
+	
+	/*@PostMapping("/actualizarTramite")
 	public String actualizarTramiteAlumno(Model model, @ModelAttribute("tramitePost") ProcAlumno tramitePost ) throws ParseException{
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		logger.info("valor: " + tramitePost.getFechaRegreso());
@@ -394,7 +526,7 @@ public class TareasController {
 		//FALTA MODIFICAR EL TRAMITE CON LOS DATOS DE TRAMITEPOST, convertir a Dates. y GenerarTramite() con el servicio.
 		//Boolean exito = tramiteService.GenerarTramite(tramiteTemp);
 		return "redirect:/modulos/consulta";
-	}
+	}*/
 }
 
 

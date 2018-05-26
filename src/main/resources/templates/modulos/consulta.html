@@ -136,7 +136,7 @@
 																
 															</div>
 															<div class="modal-body">
-																<form th:action="@{/actualizarTramite}" class="form-horizontal" role="form" th:object="${tramitePost}" method="POST" >
+																<form>
 																	<fieldset>
 																		<div class="form-group col-md-12">
 																			<div class="row justify-content-center">
@@ -167,7 +167,7 @@
 																			</div>
 																		</div>
 																		
-																		<div class="form-group col-sm-12">
+																		<div class="form-group col-sm-12">	
 																			<div class="row justify-content-center">
 																			<label class="col-sm-6 control-label">Periodo Regreso Matricula:</label>
 																			</div>
@@ -185,7 +185,7 @@
 																			</div>
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}" th:id="fechaRegreso" th:name="fechaRegreso"  ></input>
+																				<input type ="date"  class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}" th:id="fechaRegreso" th:name="fechaRegreso"  ></input>
 																			</div>
 																			</div>
 																		</div>			
@@ -196,8 +196,9 @@
 																			<label class="col-sm-6 control-label">Resolucion Decanal:</label>
 																			</div>
 																			<div class="row justify-content-center">
+																			
 																			<div class="col-sm-6">
-																				<input type ="text" class="form-control" style="text-align:center;"  th:value="${tramite.rd}" th:id="rd" th:name="rd"></input>
+																				<input type ="text" id="rdx"  name="rdx" style="text-align:center;"  th:value="${tramite.rd}" ></input>
 																			</div>
 																			</div>
 																		</div>	
@@ -223,7 +224,7 @@
 																		<!-- VALIDACION -->
 																	      <div class="form-group col-sm-12">
 																	      	<div class="col-md-12">
-																	      	<div id="ValidarRegistro" class="text-center">
+																	      	<div id="ValidarCambios" class="text-center">
 																	      	</div>
 																	      	</div>
 																	      </div>
@@ -234,7 +235,7 @@
 																		 <div class="form-group col-sm-12">
 																			 <div class="row" >
 	          																<div style="margin-left: auto;text-align: right;">
-	          																<button type="submit" class="btn btn-primary ml-2">Guardar</button>
+	          																<button type="button" class="btn btn-primary ml-2" onclick="enviarCambios()">Guardar</button>
 	          																</div>
 	          																</div>
        	 																</div>

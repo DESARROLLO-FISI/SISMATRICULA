@@ -236,6 +236,20 @@
 			
 			}
 		}
+		
+		class ProcAlumno2{
+			constructor (idTramite,PeriodoInic,FechaPeriodoInic,PeriodoFin,FechaPeriodoFin,RDCambio,TipoTramite,CodigoAlumno){
+			this.idTramite = idTramite;
+			this.PeriodoInic = PeriodoInic;
+			this.FechaPeriodoInic = FechaPeriodoInic;
+			this.PeriodoFin=PeriodoFin;
+			this.FechaPeriodoFin = FechaPeriodoFin;
+			this.RDCambio=RDCambio;
+			this.TipoTramite=TipoTramite;
+			this.CodigoAlumno=CodigoAlumno;
+			
+			}
+		}
 
 
 		function getObjectAlumnoMF(){
@@ -265,6 +279,27 @@
 			let RD = $("#RDInputRes").val();
 			let tramite = new TramiteMF(PeriodoAusente,PeriodoRegreso,CodigoAlumno,tipoTramite,InicPeriodo,FechaRegreso,RD);
 			return tramite;
+		}
+		
+		function RegistrarCambiosobj(){
+			let PeriodoInic = $("#pUltMatricula").val();
+			let PeriodoFin = $("#pRegMatricula").val();
+			let idTramite =  $("#tramiteId").val();
+			let TipoTramite =  $("#tramite").val();
+			let RDCambio =  $("#rdx").val();
+			let FechaPeriodoInic =  $("#fechaAbandono").val();
+			let FechaPeriodoFin=  $("#fechaRegreso").val();
+			let CodigoAlumno=$("#Inpt").val();
+			console.log(PeriodoInic);
+			console.log(PeriodoFin);
+			console.log(idTramite);
+			console.log(RDCambio);
+			console.log(TipoTramite);;
+			console.log(FechaPeriodoInic);
+			console.log("hik");
+			
+			let ProcAlumno= new ProcAlumno2(idTramite,PeriodoInic,FechaPeriodoInic,PeriodoFin,FechaPeriodoFin,RDCambio,TipoTramite,CodigoAlumno);
+			return ProcAlumno;
 		}
 
 
@@ -373,6 +408,34 @@
 		            alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
 		        },
 		      });
+		}
+		
+		function enviarCambios(){
+			let Cambiosobj = RegistrarCambiosobj();
+			let RegistrarCambiosjson = JSON.stringify(Cambiosobj);
+			string_rt=RegistrarCambiosjson;
+			console.log(string_rt);
+			
+			$.ajax({
+		        url: '/actualizarTramite',
+		        type: 'POST', 
+		        contentType: "application/json; charset=utf-8",
+
+
+		        dataType: "html",
+		        data: string_rt,
+
+		        success: function(data) {            	             	 
+		        	
+		          		$("#ValidarCambios").html(data);
+		          	
+		    
+		        },
+		        error : function(xhr, status) {
+		            alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
+		        },
+		      });
+			
 		}
 
 		function enviarReserva(){
