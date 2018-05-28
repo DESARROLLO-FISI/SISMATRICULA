@@ -115,13 +115,13 @@
 								<td class="text-center">		
 										
 									<button class="btn btn-info" data-toggle="modal"
-											th:attr="data-target='#'+${tramite.tramiteId}">
+											th:attr="data-target='#modal'+${tramite.tramiteId}">
 											<span class="fa fa-pencil" aria-hidden="true"></span>
 												</button>
 												
 												
 												<!-- Modal -->
-												<div class="modal fade in" th:id="${tramite.tramiteId}"
+												<div class="modal fade in" th:id="'modal' + ${tramite.tramiteId}"
 													aria-labelledby="alumnoLabel"  role="dialog"
 													aria-hidden="true">
 													<div class="modal-dialog">
@@ -144,13 +144,13 @@
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<select class="form-control has-feedback-left col-sm-6" id="pUltMatricula" name="pUltMatricula" >
+																			<select class="form-control has-feedback-left col-sm-6" id="pUltMatricula" name="pUltMatricula" class="pUltMatricula" >
 																			<option th:each="periodoResIni : ${listaPeriodoIni}" th:value="${periodoResIni}" th:text="${periodoResIni}" th:selected="${periodoResIni == tramite.pUltMatricula}" ></option>
 																		 	 </select>
 																		 	 </div>
 																		 	 
 																		 	 <div>
-																				<input type="hidden" th:value="${tramite.tramiteId}" name="tramiteId" id="tramiteId" />
+																				<input type="hidden" th:value="${tramite.tramiteId}" name="tramiteId" id="tramiteId" class="tramiteId"/>
 																			</div>
 																		</div>
 																		
@@ -162,7 +162,7 @@
 																			
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}" th:id="fechaAbandono" th:name="fechaAbandono" ></input>
+																				<input type ="date" class="form-control" style="text-align:center;"  th:value="${tramite.fechaAbandono}" th:id="fechaAbandono" th:name="fechaAbandono" class="fechaAbandono" ></input>
 																			</div>
 																			</div>
 																		</div>
@@ -173,7 +173,7 @@
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<select class="form-control has-feedback-left col-sm-6" id="pRegMatricula" name="pRegMatricula">
+																			<select class="form-control has-feedback-left col-sm-6" id="pRegMatricula" name="pRegMatricula" class="pRegMatricula">
 																			<option th:each="periodoResFinX : ${listaPeriodo}" th:value="${periodoResFinX}" th:text="${periodoResFinX}" th:selected="${periodoResFinX == tramite.pRegMatricula}" ></option>
 																		 	 </select>
 																		 	 </div>
@@ -185,7 +185,7 @@
 																			</div>
 																			<div class="row justify-content-center">
 																			<div class="col-sm-6">
-																				<input type ="date"  class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}" th:id="fechaRegreso" th:name="fechaRegreso"  ></input>
+																				<input type ="date"  class="form-control" style="text-align:center;"  th:value="${tramite.fechaRegreso}" th:id="fechaRegreso" th:name="fechaRegreso" class="fechaRegreso"  ></input>
 																			</div>
 																			</div>
 																		</div>			
@@ -198,7 +198,7 @@
 																			<div class="row justify-content-center">
 																			
 																			<div class="col-sm-6">
-																				<input type ="text" id="rdx"  name="rdx" style="text-align:center;"  th:value="${tramite.rd}" ></input>
+																				<input type ="text" id="rdx"  name="rdx" style="text-align:center;"  th:value="${tramite.rd}"  class="rdx"></input>
 																			</div>
 																			</div>
 																		</div>	
@@ -209,7 +209,7 @@
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<select class="form-control has-feedback-left col-sm-6" id="tramite" name="tramite">
+																			<select class="form-control has-feedback-left col-sm-6" id="tramite" name="tramite" class="tramite">
 																				<option th:each="tipoTramite : ${listaTipoTramite}" th:value="${tipoTramite}" th:text="${tipoTramite}" th:selected="${tipoTramite == tramite.tramite}" ></option>
 																		 	 </select>
 																		 	 </div>

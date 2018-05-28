@@ -500,7 +500,7 @@ public class TareasController {
 		Boolean exito= tramiteService.GenerarTramite(tramiteTemp);
 		logger.info("EXITO EN EL TRAMITE: " +  exito );
 		
-		return "redirect:/modulos/consulta";
+		return "modulos/registroAvisos :: registroExito";
 	}
 	
 	

@@ -223,6 +223,7 @@
 */
 
 		var string_rt;
+		var idModal;
 
 		class TramiteMF{
 			constructor (periodoByTramitePeriodoIni,periodoByTramitePeriodoFin,alumnoCodigo,tramiteTipo,tramiteFechaIni,tramiteFechaFin,tramiteRd){
@@ -238,15 +239,15 @@
 		}
 		
 		class ProcAlumno2{
-			constructor (idTramite,PeriodoInic,FechaPeriodoInic,PeriodoFin,FechaPeriodoFin,RDCambio,TipoTramite,CodigoAlumno){
-			this.idTramite = idTramite;
-			this.PeriodoInic = PeriodoInic;
-			this.FechaPeriodoInic = FechaPeriodoInic;
-			this.PeriodoFin=PeriodoFin;
-			this.FechaPeriodoFin = FechaPeriodoFin;
-			this.RDCambio=RDCambio;
-			this.TipoTramite=TipoTramite;
-			this.CodigoAlumno=CodigoAlumno;
+			constructor (tramiteId,pUltMatricula,fechaAbandono,pRegMatricula,fechaRegreso,rd,tramite,codalumno){
+			this.tramiteId = tramiteId;
+			this.pUltMatricula = pUltMatricula;
+			this.fechaAbandono = fechaAbandono;
+			this.pRegMatricula=pRegMatricula;
+			this.fechaRegreso = fechaRegreso;
+			this.rd=rd;
+			this.tramite=tramite;
+			this.codalumno=codalumno;
 			
 			}
 		}
@@ -282,23 +283,29 @@
 		}
 		
 		function RegistrarCambiosobj(){
-			let PeriodoInic = $("#pUltMatricula").val();
-			let PeriodoFin = $("#pRegMatricula").val();
-			let idTramite =  $("#tramiteId").val();
-			let TipoTramite =  $("#tramite").val();
-			let RDCambio =  $("#rdx").val();
-			let FechaPeriodoInic =  $("#fechaAbandono").val();
-			let FechaPeriodoFin=  $("#fechaRegreso").val();
-			let CodigoAlumno=$("#Inpt").val();
-			console.log(PeriodoInic);
-			console.log(PeriodoFin);
-			console.log(idTramite);
-			console.log(RDCambio);
-			console.log(TipoTramite);;
-			console.log(FechaPeriodoInic);
-			console.log("hik");
 			
-			let ProcAlumno= new ProcAlumno2(idTramite,PeriodoInic,FechaPeriodoInic,PeriodoFin,FechaPeriodoFin,RDCambio,TipoTramite,CodigoAlumno);
+			 let periodoInic = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .pUltMatricula')[0].value;
+			 let periodoFin = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .pRegMatricula')[0].value;
+			 let idTramite = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .tramiteId')[0].value;
+			 let fechaPeriodoInic = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > div > .fechaAbandono')[0].value;
+			 let fechaPeriodoFin = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > div >.fechaRegreso')[0].value;
+			 let rdCambio = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > div > .rdx')[0].value;
+			 let tipoTramite = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .tramite')[0].value;
+			 let codigoAlumno=$("#Inpt").val();
+
+		
+		    console.log("pUltMatricula: " + periodoInic);
+		    console.log("pRegMatricula: " + periodoFin);
+		    console.log("idTramite: " + idTramite);
+		    console.log("FechaInic: " + fechaPeriodoInic);
+		    console.log("FechaFin: " + fechaPeriodoFin);
+		    console.log("rdCambio: " + rdCambio);
+		    console.log("tipoTramite: " + tipoTramite);
+		    console.log("codigoAlumno: " + codigoAlumno);
+			console.log("**********************");
+			
+			
+			let ProcAlumno= new ProcAlumno2(idTramite,periodoInic,fechaPeriodoInic,periodoFin,fechaPeriodoFin,rdCambio,tipoTramite,codigoAlumno);
 			return ProcAlumno;
 		}
 
@@ -349,7 +356,8 @@
 		        	 document.getElementById('noencontrado').style.display = 'none';
 		             document.getElementById('datosAlumno').style.display= 'block';
 		             document.getElementById('TramiteT').style.display= 'block';
-		             
+		            
+		            string_rt = null;    
 		         },
 		         error : function(xhr, status) {
 		             document.getElementById('noencontrado').style.display = 'block';
@@ -402,13 +410,15 @@
 		          	else{
 		          		$("#ValidarRegistro").html(data);
 		          	}
-		    
+		          	string_rt = null;
 		        },
 		        error : function(xhr, status) {
 		            alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
 		        },
 		      });
 		}
+		
+		
 		
 		function enviarCambios(){
 			let Cambiosobj = RegistrarCambiosobj();
@@ -428,7 +438,7 @@
 		        success: function(data) {            	             	 
 		        	
 		          		$("#ValidarCambios").html(data);
-		          	
+		          		string_rt = null;
 		    
 		        },
 		        error : function(xhr, status) {
@@ -465,7 +475,7 @@
 		          	else{
 		          		$("#ValidarRegistro").html(data);
 		          	}
-		    
+		        string_rt = null;
 		        },
 		        error : function(xhr, status) {
 		            alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
@@ -490,6 +500,13 @@
 				console.log("Se envia:"+objAMFjson);
 				obtenerYmostrarAlumno(objAMFjson);
 			}
+		});
+		
+		$(document).ready(function(){
+			$('div.modal.fade.in').on('shown.bs.modal', function(){
+			    idModal = $(this).attr('id');
+			    console.log("Seleccionado modal: " + idModal);
+			});
 		});
 		
 		
