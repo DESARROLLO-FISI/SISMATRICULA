@@ -454,8 +454,6 @@ public class TareasController {
 		
 		logger.info("CONTADOR RESERV: " + contador);
 		
-		
-		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		logger.info("valor: " + tramitePost.getFechaRegreso());
 		logger.info("rd: " + tramitePost.getRd());
@@ -504,29 +502,6 @@ public class TareasController {
 	}
 	
 	
-	/*@PostMapping("/actualizarTramite")
-	public String actualizarTramiteAlumno(Model model, @ModelAttribute("tramitePost") ProcAlumno tramitePost ) throws ParseException{
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		logger.info("valor: " + tramitePost.getFechaRegreso());
-		logger.info("rd: " + tramitePost.getRd());
-		logger.info("matricula: " + tramitePost.getpUltMatricula());
-		Tramite tramiteTemp = tramiteService.ObtenerTramite(tramitePost.getTramiteId());  //Tramite Obtenido
-		logger.info("TRAMITE MODIFICADO: " + tramiteTemp.toString());
-		tramiteTemp.setPeriodoByTramitePeriodoFin(periodoservice.buscarPeriodo(tramitePost.getpRegMatricula()));
-		tramiteTemp.setPeriodoByTramitePeriodoIni(periodoservice.buscarPeriodo(tramitePost.getpUltMatricula()));
-		if(tramitePost.getFechaAbandono()!="")
-		tramiteTemp.setTramiteFechaIni(formatter.parse(tramitePost.getFechaAbandono()));
-		if(tramitePost.getFechaRegreso()!="")
-		tramiteTemp.setTramiteFechaFin(formatter.parse(tramitePost.getFechaRegreso()));
-		tramiteTemp.setTramiteRd(tramitePost.getRd());
-		tramiteTemp.setTramiteTipo(tramitePost.getTramite());
-		
-		Boolean exito= tramiteService.GenerarTramite(tramiteTemp);
-		logger.info("EXITO EN EL TRAMITE: " +  exito );
-		//FALTA MODIFICAR EL TRAMITE CON LOS DATOS DE TRAMITEPOST, convertir a Dates. y GenerarTramite() con el servicio.
-		//Boolean exito = tramiteService.GenerarTramite(tramiteTemp);
-		return "redirect:/modulos/consulta";
-	}*/
 }
 
 

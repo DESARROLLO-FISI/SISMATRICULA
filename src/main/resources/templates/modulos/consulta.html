@@ -55,10 +55,10 @@
 	      </div>
 	      <div class="form-row">
 	        <div class="form-group">
-	          <div  class="d-inline-flex border rounded px-3 py-1" th:if="${regAlumno.matriculaDisp}" >
+	          <div  class="d-inline-flex border rounded px-3 py-1 bg-success text-white" th:if="${regAlumno.matriculaDisp}" >
 	            <span  class="">Matricula Disponible</span>
 	          </div>
-	          <div  class="d-inline-flex border rounded px-3 py-1" th:unless="${regAlumno.matriculaDisp}" >
+	          <div  class="d-inline-flex border rounded px-3 py-1 bg-danger text-white" th:unless="${regAlumno.matriculaDisp}" >
 	            <span  class="">Matricula no disponible</span>
 	          </div>
 	        </div>
