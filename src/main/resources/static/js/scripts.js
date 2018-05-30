@@ -292,6 +292,7 @@
 			 let rdCambio = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > div > .rdx')[0].value;
 			 let tipoTramite = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .tramite')[0].value;
 			 let codigoAlumno=$("#Inpt").val();
+			 
 
 		
 		    console.log("pUltMatricula: " + periodoInic);
@@ -423,6 +424,8 @@
 		function enviarCambios(){
 			let Cambiosobj = RegistrarCambiosobj();
 			let RegistrarCambiosjson = JSON.stringify(Cambiosobj);
+			
+			
 			string_rt=RegistrarCambiosjson;
 			console.log(string_rt);
 			
@@ -437,8 +440,9 @@
 
 		        success: function(data) {            	             	 
 		        	
-		          		$("#ValidarCambios").html(data);
-		          		string_rt = null;
+		        	$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > #ValidarCambios').html(data); //criterio de busqueda
+				
+		          	string_rt = null;
 		    
 		        },
 		        error : function(xhr, status) {
