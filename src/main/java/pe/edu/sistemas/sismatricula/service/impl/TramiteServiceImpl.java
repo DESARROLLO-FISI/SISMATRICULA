@@ -43,4 +43,15 @@ public class TramiteServiceImpl implements TramiteService {
 		return  tramiteRepository.findByIdTramite(idTramite);
 		
 	}
+
+	@Override
+	public Boolean eliminarTramite(String id) {
+		try {
+			tramiteRepository.delete(Integer.parseInt(id));
+			return true;
+		} catch (Exception e) {
+			System.out.println("Error al eliminar tramite "+id);
+		}
+		return false;
+	}
 }

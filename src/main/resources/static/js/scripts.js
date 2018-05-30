@@ -6,6 +6,7 @@
 	//Variables Globales
 	var json_ws;
 	var string_ws;
+	var idModal;
 
 	/**
 	 * @input excel
@@ -25,15 +26,15 @@
 				var worksheet = workbook.Sheets[first_sheet_name];
 
 				json_ws = XLSX.utils.sheet_to_json(worksheet);
-            
+
 				string_ws = JSON.stringify(json_ws);
 
 			});
 		}
 
-		
-	
-	    
+
+
+
 		function loadBinaryFile(path, success) {
             	var files = path.target.files;
             	var reader = new FileReader();
@@ -52,7 +53,7 @@
 		function enviarDataAlumnos(){
 			$("#cargaExterna").html(null);
 			document.getElementById('loading').style.display = 'block';
-			
+
 			$.ajax({
 				url: '/carga',
 				type: 'POST',
@@ -85,16 +86,16 @@
 				this.codAlumno = codAlumno;
 			}
 		}
-		
+
 		//Variable global
 		var codigo="";
-		
+
 	*/
 
 		$(document).ready(function() {
 		   $('#dataTable').DataTable( {
-			   
-		      
+
+
 		      "language": {
 		        "emptyTable":     "No se hallaron resultados",
 		        "info":           "Mostrando _START_ - _END_ de _TOTAL_ entradas",
@@ -119,12 +120,12 @@
 
 		      },
 		      "bFilter":false,
-		      
+
 		    } );
-		   
+
 		    $('#dataTable').css("background","white");
 		} );
-		
+
 		/*
 		function obtenerRegistros(jsonObj){
 			$.ajax({
@@ -145,12 +146,12 @@
 						else{
 							$("#divStMatric").removeClass("bg-success text-white");
 							$("#stMatric").text('matricula no disponible');$("#divStMatric").addClass("bg-danger text-white");}
-						
-						
+
+
 							$("#state").attr("style","display:block");
-			
+
 						let tableData = data.listaProcAlumno;
-			
+
 						if(tableData !=null && $.isArray(tableData)){
 							$('#table').dataTable().fnClearTable();
 							$.each(tableData,function(index,value){
@@ -171,19 +172,48 @@
 			});
 		}
 */		$(document).ready(function(){
-	
-			$('#btnBuscar').click(function(){	
-				console.log("limpiar tabla");
-				$('#dataTable').dataTable().fnClearTable();
+
+				$('#btnBuscar').click(function(){
+					console.log("limpiar tabla");
+					$('#dataTable').dataTable().fnClearTable();
+				});
+
+				$('div.modal.fade.out').on('shown.bs.modal',function(){
+					idModal=$(this).attr('id');
+					console.log(idModal);
+				});
 			});
-});
-		
+
 		function limpiar(){
 			$("#txtNombre").text("no existe - nombre");
 			$("#state").attr("style","display:none");
 			$('#table').dataTable().fnClearTable();
 			$("#div-clear").attr("style","display:none");
 			$("#Inpt").val("");
+		}
+
+		function deleteTramite(){
+			console.log("holi :)");
+			let idTramite = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-header > div > .tramiteId')[0].value;
+			let json_data = idTramite;
+			console.log("se envia:"+json_data);
+			$.ajax({
+				url:"/deleteTramite",
+				type:'POST',
+				contentType:"application/json ;charset=utf-8",
+				dataType:'text',
+				data:json_data,
+				success:function (data){
+					console.log("yeeeeee :') ");
+					location.reload(true);
+				},
+				error: function(xhr, status) {
+		      alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
+		    }
+			});
+
+
+			console.log(idTramite);
 		}
 /*
 		function busqueda(){
@@ -202,28 +232,28 @@
 			$('#btnBuscar').click(function(){
 				busqueda();
 			});
-			
+
 			$('#Inpt').keyup(function(event){
 				if(event.which==13){
 					busqueda();
 				}
 			});
-			
-			
+
+
 			$('#table tbody').on( 'click', 'button', function () {
 		        var data = $('#table').DataTable().row( $(this).parents('tr') ).data();
 		        alert( data[0] +"es el id. " );
 		    } );
 		});
-		
-		
-		
+
+
+
 /**
 * FUNCIONALIDAD: REGISTRO DE TRAMITE
 */
 
 		var string_rt;
-		var idModal;
+
 
 		class TramiteMF{
 			constructor (periodoByTramitePeriodoIni,periodoByTramitePeriodoFin,alumnoCodigo,tramiteTipo,tramiteFechaIni,tramiteFechaFin,tramiteRd){
@@ -234,10 +264,10 @@
 			this.tramiteFechaIni = tramiteFechaIni;
 			this.tramiteFechaFin=tramiteFechaFin;
 			this.tramiteRd=tramiteRd;
-			
+
 			}
 		}
-		
+
 		class ProcAlumno2{
 			constructor (tramiteId,pUltMatricula,fechaAbandono,pRegMatricula,fechaRegreso,rd,tramite,codalumno){
 			this.tramiteId = tramiteId;
@@ -248,7 +278,7 @@
 			this.rd=rd;
 			this.tramite=tramite;
 			this.codalumno=codalumno;
-			
+
 			}
 		}
 
@@ -281,9 +311,9 @@
 			let tramite = new TramiteMF(PeriodoAusente,PeriodoRegreso,CodigoAlumno,tipoTramite,InicPeriodo,FechaRegreso,RD);
 			return tramite;
 		}
-		
+
 		function RegistrarCambiosobj(){
-			
+
 			 let periodoInic = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .pUltMatricula')[0].value;
 			 let periodoFin = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .pRegMatricula')[0].value;
 			 let idTramite = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .tramiteId')[0].value;
@@ -293,7 +323,7 @@
 			 let tipoTramite = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > .tramite')[0].value;
 			 let codigoAlumno=$("#Inpt").val();
 
-		
+
 		    console.log("pUltMatricula: " + periodoInic);
 		    console.log("pRegMatricula: " + periodoFin);
 		    console.log("idTramite: " + idTramite);
@@ -303,8 +333,8 @@
 		    console.log("tipoTramite: " + tipoTramite);
 		    console.log("codigoAlumno: " + codigoAlumno);
 			console.log("**********************");
-			
-			
+
+
 			let ProcAlumno= new ProcAlumno2(idTramite,periodoInic,fechaPeriodoInic,periodoFin,fechaPeriodoFin,rdCambio,tipoTramite,codigoAlumno);
 			return ProcAlumno;
 		}
@@ -326,13 +356,13 @@
 
 		function obtenerYmostrarAlumno(objAMFjson){
 			$.ajax({
-				 url: '/obtenerAlumno',    // cambiar: url: /jsonDP para pruebas 
-		         type: 'POST', 
+				 url: '/obtenerAlumno',    // cambiar: url: /jsonDP para pruebas
+		         type: 'POST',
 		         contentType: "application/json; charset=utf-8",
 		         dataType: "json",
 		         data: objAMFjson,
 		         success: function(data){
-		        	 //console.log(data);        	 
+		        	 //console.log(data);
 		        	 $("#nameInput").val(data.nombreAlumno); //si esta vacio verificar en el back que no se envie nulo
 		        	 if(data.estado=="1"){
 		        		 document.getElementById('ActivoOpt').style.display = 'block';
@@ -349,15 +379,15 @@
 		        			 document.getElementById('ActivoOpt').style.display = 'none';
 		                	 document.getElementById('InactivoOpt').style.display = 'block';
 		                	 document.getElementById('ReservaOpt').style.display = 'none';
-		        		 } 
+		        		 }
 		        	 }
 		        	 $("#codInput2").val(data.codigoAlumno);
 		        	 document.getElementById('encontrado').style.display = 'block';
 		        	 document.getElementById('noencontrado').style.display = 'none';
 		             document.getElementById('datosAlumno').style.display= 'block';
 		             document.getElementById('TramiteT').style.display= 'block';
-		            
-		            string_rt = null;    
+
+		            string_rt = null;
 		         },
 		         error : function(xhr, status) {
 		             document.getElementById('noencontrado').style.display = 'block';
@@ -370,34 +400,34 @@
 		        	 document.getElementById('ReservaOpt').style.display = 'none';
 		        	 document.getElementById('datosAlumno').style.display= 'none';
 		        	 document.getElementById('TramiteT').style.display= 'none';
-		         },		
+		         },
 			});
 		}
-		
-		function check_text(input) {  
-		    if (input.validity.patternMismatch){  
-		        input.setCustomValidity("Debe ingresar solo NUMEROS");  
-		    }  
-		    else {  
-		        input.setCustomValidity("");  
-		    }                 
+
+		function check_text(input) {
+		    if (input.validity.patternMismatch){
+		        input.setCustomValidity("Debe ingresar solo NUMEROS");
+		    }
+		    else {
+		        input.setCustomValidity("");
+		    }
 		}
 
 		function enviarReactualizacion(){
 			let ReactobjAMF = RegistrarObjReact();
 			let ReactobjAMFjson = JSON.stringify(ReactobjAMF);
 			string_rt=ReactobjAMFjson;
-			
+
 			$.ajax({
 		        url: '/confirmartramitereact',
-		        type: 'POST', 
+		        type: 'POST',
 		        contentType: "application/json; charset=utf-8",
 
 
 		        dataType: "html",
 		        data: string_rt,
 
-		        success: function(data) {      
+		        success: function(data) {
 		        	var response=$('<div/>').html(data);
 		        	var exito=response.find("#exito");
 		        	console.log("se entrego datoas");
@@ -417,52 +447,52 @@
 		        },
 		      });
 		}
-		
-		
-		
+
+
+
 		function enviarCambios(){
 			let Cambiosobj = RegistrarCambiosobj();
 			let RegistrarCambiosjson = JSON.stringify(Cambiosobj);
 			string_rt=RegistrarCambiosjson;
 			console.log(string_rt);
-			
+
 			$.ajax({
 		        url: '/actualizarTramite',
-		        type: 'POST', 
+		        type: 'POST',
 		        contentType: "application/json; charset=utf-8",
 
 
 		        dataType: "html",
 		        data: string_rt,
 
-		        success: function(data) {            	             	 
-		        	
+		        success: function(data) {
+
 		          		$("#ValidarCambios").html(data);
 		          		string_rt = null;
-		    
+
 		        },
 		        error : function(xhr, status) {
 		            alert('Disculpe, existio un problema -- '+xhr+" -- "+status);
 		        },
 		      });
-			
+
 		}
 
 		function enviarReserva(){
 			let ResobjAMF = RegistrarObjRes();
 			let ResobjAMFjson = JSON.stringify(ResobjAMF);
 			string_rt=ResobjAMFjson;
-			
+
 			$.ajax({
 		        url: '/confirmartramiteres',
-		        type: 'POST', 
+		        type: 'POST',
 		        contentType: "application/json; charset=utf-8",
 
 
 		        dataType: "html",
 		        data: string_rt,
 
-		        success: function(data) {            	             	 
+		        success: function(data) {
 		        	var response=$('<div/>').html(data);
 		        	var exito=response.find("#exito");
 		        	console.log("se entrego datoas");
@@ -489,10 +519,10 @@
 				let objAMF = getObjectAlumnoMF();
 				let objAMFjson = JSON.stringify(objAMF);
 				console.log("Se envia:"+objAMFjson);
-				obtenerYmostrarAlumno(objAMFjson);		
-			});	
+				obtenerYmostrarAlumno(objAMFjson);
+			});
 		});
-		
+
 		$('#codInput').keyup(function(event){
 			if(event.which==13){
 				let objAMF = getObjectAlumnoMF();
@@ -501,17 +531,17 @@
 				obtenerYmostrarAlumno(objAMFjson);
 			}
 		});
-		
+
 		$(document).ready(function(){
 			$('div.modal.fade.in').on('shown.bs.modal', function(){
 			    idModal = $(this).attr('id');
 			    console.log("Seleccionado modal: " + idModal);
 			});
 		});
-		
-		
+
+
 /**Datatables**/
-		
+
  $(document).ready(function() {
     $('#dataTable').dataTable();
 } );

@@ -305,8 +305,7 @@ public class TareasController {
 		model.addAttribute("exito","exito");
 	    return "modulos/registroAvisos :: registroExito";
 	}
-	
-	
+		
 	@PostMapping("/confirmartramiteres")
 	public String confirmarTramiteAlumnoRes(Model model,@RequestBody TramiteMF tramMF )throws JSONException{
 		Tramite tramite=new Tramite();
@@ -501,7 +500,35 @@ public class TareasController {
 		return "modulos/registroAvisos :: registroExito";
 	}
 	
+	@PostMapping("/deleteTramite")
+	public String EliminarTramite(Model model, @RequestBody String idTramite) throws JSONException {
+		
+		if(tramiteService.eliminarTramite(idTramite)) {
+			listaProcAlumno.clear();
+			ProcAlumno procAlumno;
+			int contRsv=0,contReact=0;
 	
+			for (Tramite tramite : tramiteService.obtenerListaTramites(alumAux.getCodAlumno())) {
+				procAlumno = alumnoService.obtenerProcesoAlumno(tramite);
+				
+				switch(tramite.getTramiteTipo()) {
+					case "Reserva":
+						contRsv=contRsv+(tramite.getPeriodoByTramitePeriodoFin().getPeriodoValor() -
+								tramite.getPeriodoByTramitePeriodoIni().getPeriodoValor());
+						break;
+					case "Reactualizacion":
+						contReact=contReact+(tramite.getPeriodoByTramitePeriodoFin().getPeriodoValor() -
+								tramite.getPeriodoByTramitePeriodoIni().getPeriodoValor())-1;
+						break;
+				}
+				listaProcAlumno.add(procAlumno);
+			}
+		}else {
+			return "redirect:/modulos/consulta";
+		}
+		mismaPagina = true;
+		return "redirect:/modulos/consulta";
+	}
 }
 
 
