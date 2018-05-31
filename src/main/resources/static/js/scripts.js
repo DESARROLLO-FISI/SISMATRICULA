@@ -421,6 +421,7 @@
 		
 		
 		
+		
 		function enviarCambios(){
 			let Cambiosobj = RegistrarCambiosobj();
 			let RegistrarCambiosjson = JSON.stringify(Cambiosobj);
@@ -428,6 +429,7 @@
 			
 			string_rt=RegistrarCambiosjson;
 			console.log(string_rt);
+			console.log("chau");
 			
 			$.ajax({
 		        url: '/actualizarTramite',
@@ -440,7 +442,24 @@
 
 		        success: function(data) {            	             	 
 		        	
-		        	$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > #ValidarCambios').html(data); //criterio de busqueda
+		        	//criterio de busqueda
+		        	console.log("entroo");
+		        	var response=$('<div/>').html(data);
+		        	var exito=response.find("#btnConfirma");
+		        	console.log("se entrego datoas");
+		          	console.log(data);
+		          	console.log("exito"+exito.text());
+		          	if(exito.text().length!=0){
+		          		console.log("exitox2x2x2");
+		          		$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > #ValidarCambios').html(data);
+		          		$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > #confirma').hide();
+		          		$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-header > #spancerrar').hide();
+		          		/*document.getElementById('confirma').style.display = 'none';
+		          		document.getElementById('spancerrar').style.display = 'none';*/
+		          	 }
+		          	else{
+		          		$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > #ValidarCambios').html(data);
+		          	}
 				
 		          	string_rt = null;
 		    

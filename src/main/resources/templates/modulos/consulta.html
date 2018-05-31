@@ -128,11 +128,14 @@
 														<div class="modal-content">
 															<div class="modal-header">
 															<h4 class="modal-title"><span>DETALLES DE TRAMITE</span></h4>
-															<button type="button" class="close" data-dismiss="modal">
-																<span aria-hidden="true">&times;</span>
-																<span class="sr-only">Close</span>
-															</button>
 															
+															<form th:object="${regAlumno}" th:action="@{/consulta}" method="POST">
+															<input type="hidden" th:field="*{codAlumno}">
+															<button type="submit" class="close" id="spancerrar">x
+																<!-- <span aria-hidden="true">&times;</span>
+																<span class="sr-only">Close</span>-->
+															</button>
+															</form>															
 																
 															</div>
 															<div class="modal-body">
@@ -234,7 +237,7 @@
 																		
 																		 <div class="form-group col-sm-12">
 																			 <div class="row" >
-	          																<div style="margin-left: auto;text-align: right;">
+	          																<div style="margin-left: auto;text-align: right;" id="confirma">
 	          																<button type="button" class="btn btn-primary ml-2" onclick="enviarCambios()">Guardar</button>
 	          																</div>
 	          																</div>

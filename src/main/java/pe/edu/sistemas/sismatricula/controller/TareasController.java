@@ -63,6 +63,7 @@ public class TareasController {
 	String periodonombre;
 	String periodoini;
 	String periodofin;
+	String tipotramite;
 	
 	boolean validez;
 	boolean mismaPagina = false;
@@ -380,8 +381,7 @@ public class TareasController {
 
 	@PostMapping("/actualizarTramite")
 	public String actualizarTramiteAlumno(Model model, @RequestBody ProcAlumno2 tramitePost ) throws ParseException{
-		
-		logger.info("PERIODO xdddxdd");
+		int contador = 0;
 		logger.info(tramitePost.getCodalumno());
 		logger.info(tramitePost.getFechaAbandono());
 		logger.info(tramitePost.getFechaRegreso());
@@ -390,6 +390,8 @@ public class TareasController {
 		logger.info(tramitePost.getRd());
 		logger.info(tramitePost.getTramite());
 		logger.info(tramitePost.getTramiteId());
+		
+		tipotramite=tramitePost.getTramite().replaceAll("\"","");
 		
 		codigoAlumno=tramitePost.getCodalumno().replaceAll("\"","");
 		alumno = alumnoService.obtenerAlumnoPorCodigo(codigoAlumno);
@@ -404,13 +406,30 @@ public class TareasController {
 		Tramite tramitePRUEBA = tramiteService.ObtenerTramite(tramitePost.getTramiteId());
 		logger.info("Tramite PeriodoInic " + tramitePRUEBA.getPeriodoByTramitePeriodoIni().getPeriodoNombre());
 		logger.info("tRAMITE PeriodoFin: " + tramitePRUEBA.getPeriodoByTramitePeriodoFin().getPeriodoNombre());
+		logger.info(tipotramite);
+		logger.info(tramitePRUEBA.getTramiteTipo());
+		
+		if(tramitePRUEBA.getTramiteTipo().equals(tipotramite)){
+			logger.info("TRAMITES SON IGUALES!!!!");
+		}
+		
+		else{
+			if(tramitePost.getTramite().equals("Reactualizacion")){
+			logger.info("TRAMITES SON DISTINTOS!!!!");
+			contador=contador + (tramitePRUEBA.getPeriodoByTramitePeriodoFin().getPeriodoValor()-tramitePRUEBA.getPeriodoByTramitePeriodoIni().getPeriodoValor()-1);
+			}
+			
+			if(tramitePost.getTramite().equals("Reserva")){
+				logger.info("TRAMITES SON DISTINTOS!!!!");
+				contador=contador + (tramitePRUEBA.getPeriodoByTramitePeriodoFin().getPeriodoValor()-tramitePRUEBA.getPeriodoByTramitePeriodoIni().getPeriodoValor());
+			}
+		}
 		
 		
 		if(tramitePost.getTramite().equals("Reactualizacion")){
 			logger.info("ESTAS EN REACTUALIZACION");
 			
 			Iterator<Tramite> itr = alumno.getTramites().iterator();
-			int contador = 0;
 			while(itr.hasNext()){
 				Tramite tramTemp = itr.next();
 				Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
@@ -485,7 +504,6 @@ public class TareasController {
 				
 				logger.info("ESTAS EN RESERVA");
 				Iterator<Tramite> itr = alumno.getTramites().iterator();
-				int contador = 0;
 				while(itr.hasNext()){
 					Tramite tramTemp = itr.next();
 					Periodo periodIniTemp = tramTemp.getPeriodoByTramitePeriodoIni();
