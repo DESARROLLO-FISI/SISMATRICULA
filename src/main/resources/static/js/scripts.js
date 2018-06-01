@@ -314,11 +314,13 @@
 		function reactualizacion(){
 			document.getElementById('reactualizacion').style.display = 'block';
 			document.getElementById('reserva').style.display = 'none';
+			document.getElementById('ValidarRegistro').style.display='none';
 			}
 
 		function reserva(){
 			document.getElementById('reserva').style.display = 'block';
 			document.getElementById('reactualizacion').style.display = 'none';
+			document.getElementById('ValidarRegistro').style.display='none';
 			}
 
 		function sumar(){
@@ -385,6 +387,7 @@
 		}
 
 		function enviarReactualizacion(){
+			document.getElementById('ValidarRegistro').style.display ='block';
 			let ReactobjAMF = RegistrarObjReact();
 			let ReactobjAMFjson = JSON.stringify(ReactobjAMF);
 			string_rt=ReactobjAMFjson;
@@ -472,6 +475,7 @@
 		}
 
 		function enviarReserva(){
+			document.getElementById('ValidarRegistro').style.display ='block';
 			let ResobjAMF = RegistrarObjRes();
 			let ResobjAMFjson = JSON.stringify(ResobjAMF);
 			string_rt=ResobjAMFjson;
