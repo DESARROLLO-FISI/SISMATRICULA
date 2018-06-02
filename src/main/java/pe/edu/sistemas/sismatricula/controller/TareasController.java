@@ -196,7 +196,8 @@ public class TareasController {
 				listaProcAlumno.add(procAlumno);
 			}
 			
-			alumAux = alumnoService.obtenerRegAlumno(alumAux,contReact, contRsv);
+			//alumAux = alumnoService.obtenerRegAlumno(alumAux,contReact, contRsv);
+			alumAux = alumnoService.obtenerRegAlumnov2(alumAux,contReact, contRsv);
 			mismaPagina = true;
 			return "redirect:/modulos/consulta";
 		}
@@ -277,20 +278,15 @@ public class TareasController {
 		else{
 			System.out.println("OK ULTIMA MATRICULA NO ES MAYOR!");
 		}
-		
-	    if(contador>6 || (periodof.getPeriodoValor()-periodox.getPeriodoValor()-1)>=6 ){
-	    	System.out.println("NO SE PUEDE RESERVAR O REACTUALIZAR MAS DE 6 CICLOS");
-	    	return "modulos/registroAvisos :: registroErrorLimite";
-	    }
-	    else{
-	    	if(periodof.getPeriodoValor()-periodox.getPeriodoValor()<2){
-	    		System.out.print("ERROR: EL ALUMNO SE MATRICULO EN AMBOS PERIODOS ,SE CONSIDERA REGULAR");
-	    		return "modulos/registroAvisos :: registroErrorRegular";
-	    	}
-	    	else{
-	    		System.out.println("OK REACTUALIZACION MAYOR DE 2 CICLOS");
-	    	}
-	    }
+	
+    	if(periodof.getPeriodoValor()-periodox.getPeriodoValor()<2){
+    		System.out.print("ERROR: EL ALUMNO SE MATRICULO EN AMBOS PERIODOS ,SE CONSIDERA REGULAR");
+    		return "modulos/registroAvisos :: registroErrorRegular";
+    	}
+    	else{
+    		System.out.println("OK REACTUALIZACION MAYOR DE 2 CICLOS");
+    	}
+	    
 	    
 	    
 	    validez=tramiteService.GenerarTramite(tramite);
@@ -360,13 +356,7 @@ public class TareasController {
 			System.out.println("OK PERIODO INICIO NO ES MAYOR!");
 		}
 		
-	    if(contador>6 || (periodof.getPeriodoValor()-periodox.getPeriodoValor())>6){
-	    	System.out.println("NO SE PUEDE RESERVAR MAS DE 6 CICLOS");
-	    	return "modulos/registroAvisos :: registroErrorLimiteRES";
-	    }
-	    else{
-	    	System.out.println("OK NO SOBREPASA 6 CICLOS");
-	    }
+	   
 	    validez=tramiteService.GenerarTramite(tramite);
 
 	    
@@ -477,19 +467,15 @@ public class TareasController {
 				System.out.println("OK PERIODO INICIO NO ES MAYOR!");
 			}
 			
-		    if(contador>6 || (tramiteTemp.getPeriodoByTramitePeriodoFin().getPeriodoValor()-tramiteTemp.getPeriodoByTramitePeriodoIni().getPeriodoValor())>6){
-		    	System.out.println("NO SE PUEDE RESERVAR O REACTUALIZAR MAS DE 6 CICLOS");
-		    	return "modulos/registroAvisos :: registroErrorLimite";
-		    }
-		    else{
-		    	if(tramiteTemp.getPeriodoByTramitePeriodoFin().getPeriodoValor()- tramiteTemp.getPeriodoByTramitePeriodoIni().getPeriodoValor()<2){
-		    		System.out.print("ERROR: EL ALUMNO SE MATRICULO EN AMBOS PERIODOS ,SE CONSIDERA REGULAR");
-		    		return "modulos/registroAvisos :: registroErrorRegular";
-		    	}
-		    	else{
-		    		System.out.println("OK REACTUALIZACION MAYOR DE 2 CICLOS");
-		    	}
-		    }
+		    
+	    	if(tramiteTemp.getPeriodoByTramitePeriodoFin().getPeriodoValor()- tramiteTemp.getPeriodoByTramitePeriodoIni().getPeriodoValor()<2){
+	    		System.out.print("ERROR: EL ALUMNO SE MATRICULO EN AMBOS PERIODOS ,SE CONSIDERA REGULAR");
+	    		return "modulos/registroAvisos :: registroErrorRegular";
+	    	}
+	    	else{
+	    		System.out.println("OK REACTUALIZACION MAYOR DE 2 CICLOS");
+	    	}
+		    
 			
 			
 			Boolean exito= tramiteService.GenerarTramite(tramiteTemp);
@@ -549,14 +535,7 @@ public class TareasController {
 					System.out.println("OK PERIODO INICIO NO ES MAYOR!");
 				}
 				
-			    if(contador>6 || (tramiteTemp.getPeriodoByTramitePeriodoFin().getPeriodoValor()-tramiteTemp.getPeriodoByTramitePeriodoIni().getPeriodoValor())>=6){
-			    	System.out.println("NO SE PUEDE RESERVAR O REACTUALIZAR MAS DE 6 CICLOS");
-			    	return "modulos/registroAvisos :: registroErrorLimiteRES";
-			    }
-			    else{
-			    	System.out.println("OK NO SOBREPASA 6 CICLOS");
-			    }
-				
+			    				
 				
 				Boolean exito= tramiteService.GenerarTramite(tramiteTemp);
 				logger.info("EXITO EN EL TRAMITE: " +  exito );

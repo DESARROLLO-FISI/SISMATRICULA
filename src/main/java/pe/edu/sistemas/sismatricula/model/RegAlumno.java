@@ -11,10 +11,12 @@ public class RegAlumno {
 	private boolean matriculaDisp;
 	private int periodResvRestantes;
 	private int periodResvUsados;
+	private boolean reservaDisp;
+	private boolean reactDisp;
 	
 	public RegAlumno(){}
 	
-	public RegAlumno(String codAlumno, String nombre, int periodRestantes, int periodUsados, boolean matriculaDisp) {
+	public RegAlumno(String codAlumno, String nombre, int periodRestantes, int periodUsados, boolean matriculaDisp, boolean reservaDisp, boolean reservaReact) {
 		super();
 		this.codAlumno = codAlumno;
 		this.nombre = nombre;
@@ -84,5 +86,21 @@ public class RegAlumno {
 		return "RegAlumno [codAlumno=" + codAlumno + ", nombre=" + nombre + ", periodRestantes=" + periodRestantes
 				+ ", periodUsados=" + periodUsados + ", matriculaDisp=" + matriculaDisp + ", periodResvRestantes="
 				+ periodResvRestantes + ", periodResvUsados=" + periodResvUsados + "]";
+	}
+
+	public boolean isReactDisp() {
+		return reactDisp;
+	}
+
+	public void setReactDisp(boolean reactDisp) {
+		this.reactDisp = reactDisp;
+	}
+
+	public boolean isReservaDisp() {
+		return reservaDisp;
+	}
+
+	public void setReservaDisp(boolean reservaDisp) {
+		this.reservaDisp = reservaDisp;
 	}
 }

@@ -54,12 +54,22 @@
 	        </div>
 	      </div>
 	      <div class="form-row">
+	       	        
 	        <div class="form-group">
-	          <div  class="d-inline-flex border rounded px-3 py-1 bg-success text-white" th:if="${regAlumno.matriculaDisp}" >
-	            <span  class="">Matricula Disponible</span>
+	          <div  class="d-inline-flex border rounded px-3 py-1 bg-success text-white" th:if="${regAlumno.reservaDisp}" >
+	            <span  class="">Reserva Disponible</span>
 	          </div>
-	          <div  class="d-inline-flex border rounded px-3 py-1 bg-danger text-white" th:unless="${regAlumno.matriculaDisp}" >
-	            <span  class="">Matricula no disponible</span>
+	          <div  class="d-inline-flex border rounded px-3 py-1 bg-danger text-white" th:unless="${regAlumno.reservaDisp}" >
+	            <span  class="">Reserva no disponible</span>
+	          </div>
+	        </div>
+	        
+	         <div class="form-group">
+	          <div  class="d-inline-flex border rounded px-3 py-1 bg-success text-white" th:if="${regAlumno.reactDisp}" >
+	            <span  class="">Reactualizacion Disponible</span>
+	          </div>
+	          <div  class="d-inline-flex border rounded px-3 py-1 bg-danger text-white" th:unless="${regAlumno.reactDisp}" >
+	            <span  class="">Reactualizacion no disponible</span>
 	          </div>
 	        </div>
 	      </div>
@@ -142,8 +152,16 @@
 																<form>
 																	<fieldset>
 																		<div class="form-group col-md-12">
-																			<div class="row justify-content-center">
-																			<label class="col-lg-6 control-label">Periodo Ultima Matricula:</label>
+																			<div th:switch="${tramite.tramite}">
+																			
+																			<div th:case="'Reactualizacion'" class="row justify-content-center">
+																			<label class="col-lg-6 control-label" id="labelReact">Periodo Ultima Matricula:</label>
+																			</div>
+																			
+																			<div th:case="'Reserva'" class="row justify-content-center">
+																			<label class="col-lg-6 control-label" id="labelRes">Periodo Inicio Reserva:</label>
+																			</div>
+																			
 																			</div>
 																			
 																			<div class="row justify-content-center">
@@ -212,7 +230,7 @@
 																			</div>
 																			
 																			<div class="row justify-content-center">
-																			<select class="form-control has-feedback-left col-sm-6" id="tramite" name="tramite" class="tramite">
+																			<select class="form-control has-feedback-left col-sm-6" id="tramite" name="tramite" class="tramite" onchange="cambiarTramite()">
 																				<option th:each="tipoTramite : ${listaTipoTramite}" th:value="${tipoTramite}" th:text="${tipoTramite}" th:selected="${tipoTramite == tramite.tramite}" ></option>
 																		 	 </select>
 																		 	 </div>

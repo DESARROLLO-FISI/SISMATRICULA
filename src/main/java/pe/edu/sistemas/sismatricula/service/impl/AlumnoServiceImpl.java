@@ -181,4 +181,36 @@ public class AlumnoServiceImpl implements AlumnoService{
 		}
 		return alum;
 	}
+
+	@Override
+	public RegAlumno obtenerRegAlumnov2(RegAlumno alumAux, int contReact, int contRsv) {
+		RegAlumno alum = alumAux;
+		alum.setPeriodUsados(contReact);
+		alum.setPeriodResvUsados(contRsv);
+		alum.setPeriodRestantes(0);
+		alum.setPeriodResvRestantes(0);
+		alum.setMatriculaDisp(false);
+		alum.setReactDisp(false);
+		alum.setReservaDisp(false);
+
+
+		if(6-contReact>0) {
+			alumAux.setPeriodRestantes(6-contReact);
+			alum.setReactDisp(true);
+		}
+		else{
+			alumAux.setPeriodRestantes(6-contReact);
+			alum.setReactDisp(false);
+		}
+		
+		if(6-contRsv>0){
+			alumAux.setPeriodResvRestantes(6-contRsv);
+			alum.setReservaDisp(true);
+		}
+		else{
+			alumAux.setPeriodResvRestantes(6-contRsv);
+			alum.setReservaDisp(false);
+		}
+		return alum;
+	}
 }

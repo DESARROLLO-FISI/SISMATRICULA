@@ -473,6 +473,21 @@
 		      });
 			
 		}
+		function cambiarTramite() {
+		    var option_value = $("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > #tramite')[0].value;
+		    console.log(option_value);
+		    if (option_value == "Reactualizacion") {
+		    	$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > div > #labelReact').text("Periodo Ultima Matricula:1");
+		    	$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > div > #labelRes').text("Periodo Ultima Matricula:2");
+		    }
+		    else{
+			    if (option_value == "Reserva") {
+			    	$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > div > #labelRes').text("Periodo Inicio Reserva:4");
+			    	$("#" + idModal + ' > .modal-dialog > .modal-content > .modal-body > form > fieldset > div > div > div > #labelReact').text("Periodo Inicio Reserva:3");
+			    	
+			    }
+		    }
+		}
 
 		function enviarReserva(){
 			document.getElementById('ValidarRegistro').style.display ='block';
