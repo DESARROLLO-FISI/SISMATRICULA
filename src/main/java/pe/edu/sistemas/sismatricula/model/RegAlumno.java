@@ -1,7 +1,5 @@
 package pe.edu.sistemas.sismatricula.model;
 
-import java.util.List;
-
 public class RegAlumno {
 	
 	private String codAlumno;

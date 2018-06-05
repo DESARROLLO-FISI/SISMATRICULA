@@ -1,6 +1,5 @@
 package pe.edu.sistemas.sismatricula.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pe.edu.sistemas.sismatricula.domain.Alumno;

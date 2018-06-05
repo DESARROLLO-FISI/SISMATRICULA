@@ -11,5 +11,7 @@ public interface TramiteService {
 	Boolean GenerarTramite(Tramite tram);
 
 	Tramite ObtenerTramite(Integer idTramite);
-
+	
+	Boolean eliminarTramite(String id);
+	
 }
