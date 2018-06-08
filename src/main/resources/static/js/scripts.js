@@ -55,7 +55,7 @@
 			document.getElementById('loading').style.display = 'block';
 
 			$.ajax({
-				url: '/carga',
+				url: '/sismatricula/carga',
 				type: 'POST',
 				contentType: "application/json; charset=utf-8",
 				// el tipo de información que se espera de respuesta
@@ -140,7 +140,7 @@
 			let idTramite = document.querySelectorAll( "#" + idModal + ' > .modal-dialog > .modal-content > .modal-header > div > .tramiteId')[0].value;
 			let json_data = idTramite;
 			$.ajax({
-				url:"/deleteTramite",
+				url:"/sismatricula/deleteTramite",
 				type:'POST',
 				contentType:"application/json ;charset=utf-8",
 				dataType:'text',
@@ -266,7 +266,7 @@
 
 		function obtenerYmostrarAlumno(objAMFjson){
 			$.ajax({
-				 url: '/obtenerAlumno',    // cambiar: url: /jsonDP para pruebas
+				 url: '/sismatricula/obtenerAlumno',    // cambiar: url: /jsonDP para pruebas
 		         type: 'POST',
 		         contentType: "application/json; charset=utf-8",
 		         dataType: "json",
@@ -324,13 +324,15 @@
 		}
 
 		function enviarReactualizacion(){
+			document.getElementById('enviarReact').style.display='none';
 			document.getElementById('ValidarRegistro').style.display ='block';
+			$("#ValidarRegistro").html(null);
 			let ReactobjAMF = RegistrarObjReact();
 			let ReactobjAMFjson = JSON.stringify(ReactobjAMF);
 			string_rt=ReactobjAMFjson;
 
 			$.ajax({
-		        url: '/confirmartramitereact',
+		        url: '/sismatricula/confirmartramitereact',
 		        type: 'POST',
 		        contentType: "application/json; charset=utf-8",
 
@@ -349,6 +351,7 @@
 		          		$("#todo").html(data);
 		          	 }
 		          	else{
+		          		document.getElementById('enviarReact').style.display ='block';
 		          		$("#ValidarRegistro").html(data);
 		          	}
 		          	string_rt = null;
@@ -372,7 +375,7 @@
 			console.log("chau");
 
 			$.ajax({
-		        url: '/actualizarTramite',
+		        url: '/sismatricula/actualizarTramite',
 		        type: 'POST',
 		        contentType: "application/json; charset=utf-8",
 
@@ -427,13 +430,15 @@
 		}
 
 		function enviarReserva(){
+			document.getElementById('enviarReserva').style.display ='none';
 			document.getElementById('ValidarRegistro').style.display ='block';
+			$("#ValidarRegistro").html(null);
 			let ResobjAMF = RegistrarObjRes();
 			let ResobjAMFjson = JSON.stringify(ResobjAMF);
 			string_rt=ResobjAMFjson;
 
 			$.ajax({
-		        url: '/confirmartramiteres',
+		        url: '/sismatricula/confirmartramiteres',
 		        type: 'POST',
 		        contentType: "application/json; charset=utf-8",
 
@@ -452,6 +457,7 @@
 		          		$("#todo").html(data);
 		          	 }
 		          	else{
+		          		document.getElementById('enviarReserva').style.display ='block';
 		          		$("#ValidarRegistro").html(data);
 		          	}
 		        string_rt = null;
